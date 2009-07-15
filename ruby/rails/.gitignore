@@ -1,0 +1,4 @@
+db/schema.rb
+*.swp
+tmp/*
+log/*
