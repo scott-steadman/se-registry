@@ -1,0 +1,18 @@
+This e-mail is being sent to notify you that one or more members
+of your group have an occasion coming up:
+
+<% @friends.each do |friend| -%>
+  <% friend.occasions.each do |event| -%>
+    <%= friend.display_name %>	<%= event.description %>	<%= event.event_date.to_formatted_s(:event) %>
+  <% end -%>
+<% end -%>
+
+Please visit The E Registry at http://<%= SITE_HOST %>/
+to see what these people have placed on their lists and for
+references to internet sites where their gifts may be purchased.
+
+Thank you for using The E Registry.
+
+--
+If you do not wish to receive these reminders, you can change your settings
+by going to: http://<%= SITE_HOST %>/settings

@@ -1,0 +1,8 @@
+This email is being sent to remind you of the following events:
+
+<% @reminders.each do |event| -%>
+  <%= event.description %>	<%= event.event_date.to_formatted_s(:event) %>
+<% end %>
+
+If you do not wish to receive these reminders, you can change your settings
+by going to: http://<%= SITE_HOST %>/settings
