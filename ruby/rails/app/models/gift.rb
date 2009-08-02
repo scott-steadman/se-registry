@@ -1,5 +1,4 @@
 # == Schema Information
-# Schema version: 10
 #
 # Table name: gifts
 #
