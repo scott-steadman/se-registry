@@ -1,0 +1,16 @@
+<p>
+  <b>Login:</b>
+  <%=h @user.login %>
+</p>
+
+<p>
+  <b>Current login at:</b>
+  <%=h @user.current_login_at %>
+</p>
+
+<p>
+  <b>Last login at:</b>
+  <%=h @user.last_login_at %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %>

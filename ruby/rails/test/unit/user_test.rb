@@ -1,3 +1,24 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                :integer(4)      not null, primary key
+#  login             :string(255)
+#  email             :string(255)
+#  crypted_password  :string(255)     default(""), not null
+#  password_salt     :string(255)     default(""), not null
+#  created_at        :datetime
+#  updated_at        :datetime
+#  persistence_token :string(255)
+#  role              :string(32)      default("user"), not null
+#  postal_code       :string(16)
+#  lead_time         :integer(4)
+#  lead_frequency    :integer(4)      default(1), not null
+#  notes             :string(255)
+#  current_login_at  :datetime
+#  last_login_at     :datetime
+#
+
 require File.dirname(__FILE__) + '/../test_helper'
 
 class UserTest < ActiveRecord::TestCase
@@ -37,25 +58,8 @@ class UserTest < ActiveRecord::TestCase
     end
   end
 
-  def test_should_authenticate_user
-    u = create_user(:login=>'quentin', :password=>'test', :password_confirmation=>'test')
-    assert_equal u, User.authenticate('quentin', 'test')
-  end
-
-  def test_should_reset_password
-    u = create_user(:login=>'quentin', :password=>'test', :password_confirmation=>'test')
-    u.update_attributes(:password => 'new password', :password_confirmation => 'new password')
-    assert_equal u, User.authenticate('quentin', 'new password')
-  end
-
-  def test_should_not_rehash_password
-    u = create_user(:login=>'quentin', :password=>'test', :password_confirmation=>'test')
-    u.update_attributes(:login => 'quentin2')
-    assert_equal u, User.authenticate('quentin2', 'test')
-  end
-
   def test_role_defaults_to_user
-    assert_equal 'user', create_user.role
+    assert_equal 'user', User.new.role
   end
 
   def test_admin?

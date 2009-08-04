@@ -29,8 +29,4 @@ class Gift < ActiveRecord::Base
   validates_length_of       :url,         :within => 1..256,  :allow_nil => true
   validates_numericality_of :price,                           :allow_nil => true
 
-  def label
-    description
-  end
-
 end

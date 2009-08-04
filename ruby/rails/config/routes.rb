@@ -17,7 +17,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Sample resource route with sub-resources:
   #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
+
   # Sample resource route with more complex sub-resources
   #   map.resources :products do |products|
   #     products.resources :comments
@@ -32,6 +32,16 @@ ActionController::Routing::Routes.draw do |map|
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   # map.root :controller => "welcome"
+
+  map.login  '/login',  :controller=>'user_sessions', :action=>'new'
+  map.logout '/logout', :controller=>'user_sessions', :action=>'destroy'
+  map.home   '/home',   :controller=>'users',         :action=>'home'
+
+  map.resources :users,
+    :has_many => [:gifts, :events, :reminders, :occasions, :givings, :friends]
+
+  map.resource :user_session
+  map.root :controller => 'users', :action => 'home'
 
   # See how all your routes lay out with "rake routes"
 
