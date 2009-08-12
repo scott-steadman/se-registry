@@ -1,18 +1,16 @@
-# == Schema Information
-#
-# Table name: events
-#
-#  id          :integer(4)      not null, primary key
-#  user_id     :integer(4)      not null
-#  description :string(64)      default(""), not null
-#  event_type  :string(32)      default("occasion")
-#  event_date  :date            not null
-#  recur       :boolean(1)
-#
-
 require File.dirname(__FILE__) + '/../test_helper'
 
 class EventTest < ActiveRecord::TestCase
+
+  def test_reminder
+    create_reminder
+    assert_equal Reminder, Event.first.class
+  end
+
+  def test_occasion
+    create_occasion
+    assert_equal Occasion, Event.first.class
+  end
 
   def test_advance
     e = Event.new(:event_date=>Time.now, :recur=>true)

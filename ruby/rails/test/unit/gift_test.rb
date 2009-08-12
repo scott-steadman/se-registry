@@ -1,15 +1,3 @@
-# == Schema Information
-#
-# Table name: gifts
-#
-#  id          :integer(4)      not null, primary key
-#  user_id     :integer(4)      not null
-#  description :string(256)     default(""), not null
-#  url         :string(256)
-#  price       :integer(10)
-#  multi       :boolean(1)
-#
-
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GiftTest < ActiveRecord::TestCase

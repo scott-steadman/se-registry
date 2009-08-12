@@ -38,26 +38,29 @@ class ActiveSupport::TestCase
     end
   end
 
-  def create_occasion(attrs={})
+  def create_event(attrs={})
     attrs = {:description=>attrs} if attrs.is_a?(String)
-    Occasion.create({
-      :description => 'Recurring Occasion',
+    attrs[:class] ||= Event
+    attrs.delete(:class).create({
       :event_date  => 10.days.from_now,
       :recur       => true
     }.merge(attrs)) do |event|
-      event.user ||= create_user('event')
+      event.user = (attrs[:user] || create_user('event'))
     end
+  end
+
+  def create_occasion(attrs={})
+    attrs = {:description=>attrs} if attrs.is_a?(String)
+    attrs[:description] ||=  'Recurring Occasion'
+    attrs[:class] = Occasion
+    create_event(attrs)
   end
 
   def create_reminder(attrs={})
     attrs = {:description=>attrs} if attrs.is_a?(String)
-    Reminder.create({
-      :description => 'Recurring Reminder',
-      :event_date  => 10.days.from_now,
-      :recur       => true
-    }.merge(attrs)) do |event|
-      event.user ||= create_user('event')
-    end
+    attrs[:description] ||=  'Recurring reminder'
+    attrs[:class] = Reminder
+    create_event(attrs)
   end
 
 

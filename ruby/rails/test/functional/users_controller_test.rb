@@ -104,7 +104,7 @@ class UsersControllerTest < ActionController::TestCase
     create_user(:login=>'user', :role=>'admin')
     login_as 'user'
     put :update, :id=>other.id
-    assert_redirected_to user_url(other)
+    assert_redirected_to home_url
     assert_equal other, assigns['user']
   end
 
@@ -112,7 +112,7 @@ class UsersControllerTest < ActionController::TestCase
     user = create_user('user')
     login_as 'user'
     put :update, :user=>{:email=>'new@example.com'}
-    assert_redirected_to user_url(user)
+    assert_redirected_to home_url
     assert_equal 'new@example.com', user.reload.email
   end
 

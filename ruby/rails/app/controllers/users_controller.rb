@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.xml
   def index
-    @users = User.paginate :page=>(params[:page] || 1), :per_page=>(params[:per_page] || 20)
+    @users = User.paginate :page=>page, :per_page=>per_page
   end
 
   # GET /users/new
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
     @user = page_user
     if request.put? && @user.update_attributes(params[:user])
       flash[:notice] = "Account updated!"
-      redirect_to user_url(@user)
+      redirect_back_or_default home_url
     else
       render :action => :edit
     end
@@ -60,12 +60,7 @@ class UsersController < ApplicationController
   end
 
   def home
-  end
-
-private
-
-  def page_user
-    current_user.admin? ? User.find(params[:id]) : current_user
+    store_location
   end
 
 end

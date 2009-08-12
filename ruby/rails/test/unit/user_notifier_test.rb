@@ -25,8 +25,8 @@ class UserNotifierTest < ActionMailer::TestCase
 
   def test_send_occasions
     u1 = create_user('user1')
-    r1 = u1.reminders.create(:description=>'Occasion 1', :event_date=>Date.tomorrow)
-    r2 = u1.reminders.create(:description=>'Occasion 2', :event_date=>Date.tomorrow)
+    r1 = u1.occasions.create(:description=>'Occasion 1', :event_date=>Date.tomorrow)
+    r2 = u1.occasions.create(:description=>'Occasion 2', :event_date=>Date.tomorrow)
 
     u2 = create_user('user2')
     u2.friends << u1

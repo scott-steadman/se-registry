@@ -1,0 +1,17 @@
+<h1><%= possessivize(page_user.display_name) %> <%= event_type %>s</h1>
+<%= new_event_links %>
+<br />
+<table border='1' width='100%'>
+  <tr>
+    <th>Description</th>
+  <%- if 'Event' == event_type -%>
+    <th>Type</th>
+  <%- end -%>
+    <th width='10%'>Date</th>
+    <th width='10%'>Recurring</th>
+    <th width='10%'>Actions</th>
+  </tr>
+  <% @events.each do |event| %>
+    <%= render :partial=>'event', :object=>event %>
+  <% end %>
+</table>

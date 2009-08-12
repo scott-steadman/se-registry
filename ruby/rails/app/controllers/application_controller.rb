@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
 
-  helper_method :current_user_session, :current_user
+  helper_method :current_user_session, :current_user, :page_user
 
   # See ActionController::RequestForgeryProtection for details
   protect_from_forgery
@@ -10,6 +10,14 @@ class ApplicationController < ActionController::Base
 
 private
 
+  def page
+    params[:page] || 1
+  end
+
+  def per_page
+    params[:per_page] || 20
+  end
+
   def current_user_session
     return @current_user_session if defined?(@current_user_session)
     @current_user_session = UserSession.find
@@ -18,6 +26,14 @@ private
   def current_user
     return @current_user if defined?(@current_user)
     @current_user = current_user_session && current_user_session.record
+  end
+
+  def page_user
+    if current_user.admin?
+      User.find_by_id(params[:user_id] || params[:id]) || current_user
+    else
+      current_user
+    end
   end
 
   def require_user

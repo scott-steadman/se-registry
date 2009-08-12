@@ -11,9 +11,13 @@
 #
 
 class Event < ActiveRecord::Base
-  inheritence_column = :event_type
+  self.inheritance_column = 'event_type'
+
+  attr_accessible :description, :event_date, :recur
 
   belongs_to :user
+
+  before_save :assure_type
 
   def deleted?
     return @deleted
@@ -40,5 +44,10 @@ class Event < ActiveRecord::Base
     end
   end
 
+private
+
+  def assure_type
+    self.event_type ||= self.class.name
+  end
 
 end

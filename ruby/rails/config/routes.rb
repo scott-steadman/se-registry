@@ -1,4 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
+
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
@@ -37,10 +38,18 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller=>'user_sessions', :action=>'destroy'
   map.home   '/home',   :controller=>'users',         :action=>'home'
 
-  map.resources :users,
-    :has_many => [:gifts, :events, :reminders, :occasions, :givings, :friends]
-
   map.resource :user_session
+
+  map.resources :users, :has_many => [:gifts, :givings, :friends] do |users|
+    users.resources :events,    :controller=>'events'
+    users.resources :occasions, :controller=>'events'
+    users.resources :reminders, :controller=>'events'
+  end
+
+  map.resources :events
+  map.resources :occasions, :controller=>'events'
+  map.resources :reminders, :controller=>'events'
+
   map.root :controller => 'users', :action => 'home'
 
   # See how all your routes lay out with "rake routes"

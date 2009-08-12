@@ -1,0 +1,9 @@
+<tr>
+  <td><%= h event.description %></td>
+<%- if 'Event' == event_type -%>
+  <td align='center'><%= event.class.name %></td>
+<%- end -%>
+  <td align='center'><%= event.event_date.to_s(:db) %></td>
+  <td align='center'><%= event.recur ? 'yes' : 'no' %></td>
+  <td align='center'><%= event_actions(event) %></td>
+</tr>

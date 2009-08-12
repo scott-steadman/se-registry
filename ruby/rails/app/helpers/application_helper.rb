@@ -1,3 +1,7 @@
-# Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+
+  def possessivize(name)
+    "#{name}'#{'s' if 's' != name[-1,1]}"
+  end
+
 end

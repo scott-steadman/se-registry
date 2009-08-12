@@ -1,11 +1,3 @@
-# == Schema Information
-#
-# Table name: friends
-#
-#  user_id   :integer(4)      not null
-#  friend_id :integer(4)      not null
-#
-
 require File.dirname(__FILE__) + '/../test_helper'
 
 class FriendshipTest < ActiveRecord::TestCase
