@@ -25,7 +25,7 @@ class UserSessionsControllerTest < ActionController::TestCase
     create_user(:login=>'user', :password=>'testme1', :password_confirmation=>'testme1')
     @controller.send(:current_user_session).destroy
     post :create, :user_session=>{:login=>'user', :password=>'foo'}
-    assert_template :action=>:new
+    assert_template 'new'
   end
 
   def test_destroy_when_logged_out

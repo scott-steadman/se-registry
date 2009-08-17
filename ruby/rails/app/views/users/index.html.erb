@@ -1,4 +1,12 @@
-<table>
-  <tr><th>Login</th><th>Last on</th></tr>
+<%= will_paginate @users %>
+<table border='1'>
+  <tr>
+    <th>Login</th>
+    <% if page_user.admin? -%>
+    <th>Last on</th>
+    <th>Role</th>
+    <% end -%>
+    <th>Actions</th>
+  </tr>
   <%= render :partial=>'user', :collection=>@users %>
 </table>

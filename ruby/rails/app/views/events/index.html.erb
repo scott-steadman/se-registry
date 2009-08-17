@@ -1,6 +1,7 @@
 <h1><%= possessivize(page_user.display_name) %> <%= event_type %>s</h1>
 <%= new_event_links %>
 <br />
+<%= will_paginate @events %>
 <table border='1' width='100%'>
   <tr>
     <th>Description</th>

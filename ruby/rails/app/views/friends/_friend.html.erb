@@ -1,0 +1,7 @@
+<tr>
+  <td><%= h friend.login %></td>
+  <td>
+    <%= link_to 'gifts', user_gifts_path(friend) %>
+    <%= link_to 'remove', user_friend_path(page_user, friend), :confirm=>'Are you sure?', :method=>:delete %>
+  </td>
+</tr>

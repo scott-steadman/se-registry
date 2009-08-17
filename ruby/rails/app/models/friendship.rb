@@ -26,27 +26,27 @@ class Friendship < ActiveRecord::Base
 
   # overridden because there is no id on this model
   def destroy
-    Friendship.delete_all ["user_id=? and friend_id=?", user_id, friend_id]
+    Friendship.delete_all ['user_id=? and friend_id=?', user_id, friend_id]
   end
 
   def validate_on_create
 
     if login_or_email.blank?
-      errors.add(:login_or_email, "cannot be blank.")
+      errors.add(:login_or_email, 'cannot be blank.')
       return
     end
 
-    unless self.friend = User.find(:first, :conditions=>["login = ? or email = ?", login_or_email, login_or_email])
+    unless self.friend = User.find(:first, :conditions=>['login = ? or email = ?', login_or_email, login_or_email])
       errors.add_to_base "'#{login_or_email}' not found."
       return
     end
 
     if user_id == friend_id
-      errors.add_to_base "You cannot befriend yourself."
+      errors.add_to_base 'You cannot befriend yourself.'
       return
     end
 
-    if Friendship.find(:first, :conditions=>["user_id = ? and friend_id = ?", user.id, friend.id])
+    if Friendship.find(:first, :conditions=>['user_id = ? and friend_id = ?', user.id, friend.id])
       errors.add_to_base "'#{login_or_email}' is already your friend."
       return
     end

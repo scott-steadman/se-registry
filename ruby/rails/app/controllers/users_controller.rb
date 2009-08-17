@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.xml
   def index
-    @users = User.paginate :page=>page, :per_page=>per_page
+    @users = User.paginate :page=>page, :per_page=>per_page, :order=>order
   end
 
   # GET /users/new
@@ -61,6 +61,12 @@ class UsersController < ApplicationController
 
   def home
     store_location
+  end
+
+private
+
+  def order
+    'login'
   end
 
 end

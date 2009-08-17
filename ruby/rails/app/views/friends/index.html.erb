@@ -1,0 +1,9 @@
+<%= @errors %>
+<%= will_paginate @friends %>
+<table border='1'>
+  <tr>
+    <th>Friend</th>
+    <th>Actions</th>
+  </tr>
+  <%= render :partial=>'friend', :collection=>@friends %>
+</table>
