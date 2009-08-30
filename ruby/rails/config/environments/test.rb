@@ -2,7 +2,6 @@
 
 require 'pp'
 
-config.gem 'jscruggs-metric_fu', :lib=>'metric_fu', :source=>'http://gems.github.com'
 config.gem 'mocha'
 config.gem 'ss-se_gem',          :lib=>'se_gem', :source=>'http://gems.github.com'
 
