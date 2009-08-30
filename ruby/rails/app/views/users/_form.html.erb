@@ -1,22 +1,26 @@
-<%= form.label :login %><br/>
+<%= form.label :login %>:
 <%= form.text_field :login %><br/>
 <br/>
-<%= form.label :email %><br/>
-<%= form.text_field :email %><br/>
-<br/>
-<%= form.label :password, form.object.new_record? ? nil : "Change password" %><br/>
+<%= form.label :password, form.object.new_record? ? nil : "Change password" %>:
 <%= form.password_field :password %><br/>
 <br/>
-<%= form.label :password_confirmation %><br/>
+<%= form.label :password_confirmation %>:
 <%= form.password_field :password_confirmation %><br/>
-<hr/>
-<%= form.label :postal_code %><br/>
-<%= form.text_field :postal_code %><br/>
 <br/>
 <%= form.label :notes %><br/>
 <%= form.text_area :notes, :rows=>5 %><br/>
-<% if @user.admin? %>
+<hr/>
+<h3>Contact Information</h3>
+<%= form.label :email %>: <%= form.text_field :email %><br/>
+<p>I want to be notified <%= form.text_field :lead_time, :size=>2 %> days prior to event.</p>
+<p>I want to be nofified every <%= form.text_field :lead_frequency, :size=>2 %> days.</p>
+<hr/>
+<h3>Demographic Information</h3>
+<%= form.label :postal_code %>:
+<%= form.text_field :postal_code %><br/>
+<% if current_user.try(:admin?) %>
   <br/>
-  <%= form.label :role %><br/>
+  <%= form.label :role %>:
   <%= form.text_field :role %><br/>
 <% end %>
+<hr/>

@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
 
-  helper_method :current_user_session, :current_user, :page_user
+  helper_method :current_user_session, :current_user, :page_user, :tabs
 
   # See ActionController::RequestForgeryProtection for details
   protect_from_forgery
@@ -39,7 +39,6 @@ private
   def require_user
     unless current_user
       store_location
-      flash[:notice] = "You must be logged in to access that page."
       redirect_to login_url
     end
   end
@@ -63,6 +62,22 @@ private
   def redirect_back_or_default(default)
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
+  end
+
+  def tabs
+    @tabs ||= begin
+      nav = []
+      nav << ['My Gifts', gifts_path]
+      nav << ['My Friends', user_friends_path(current_user)]
+      nav << ['My Occasions', occasions_path]
+      nav << ['My Reminders', reminders_path]
+      nav << ['My Settings', edit_user_path(current_user)]
+      nav << ['Users', users_path]
+      nav << ['About', about_path]
+      nav << ['Logout', logout_path]
+
+      nav
+    end
   end
 
 end

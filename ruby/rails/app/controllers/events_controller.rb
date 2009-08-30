@@ -45,6 +45,8 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.xml
   def create
+    redirect_to index_path and return unless request.post?
+
     @event = events.new(params[:event])
 
     respond_to do |format|
@@ -62,6 +64,8 @@ class EventsController < ApplicationController
   # PUT /events/1
   # PUT /events/1.xml
   def update
+    redirect_to index_path and return unless request.put?
+
     @event = events.find(params[:id])
 
     respond_to do |format|
@@ -79,6 +83,8 @@ class EventsController < ApplicationController
   # DELETE /events/1
   # DELETE /events/1.xml
   def destroy
+    redirect_to index_path and return unless request.delete?
+
     @event = events.find(params[:id])
     @event.destroy
 

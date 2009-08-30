@@ -37,7 +37,7 @@ ActionController::Routing::Routes.draw do |map|
   map.about  '/about',  :controller=>'users',         :action=>'about'
   map.login  '/login',  :controller=>'user_sessions', :action=>'new'
   map.logout '/logout', :controller=>'user_sessions', :action=>'destroy'
-  map.home   '/home',   :controller=>'users',         :action=>'home'
+  map.home   '/home',   :controller=>'gifts',         :action=>'index'
 
   map.resource :user_session
 
@@ -53,7 +53,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :occasions, :controller=>'events'
   map.resources :reminders, :controller=>'events'
 
-  map.root :controller => 'users', :action => 'home'
+  map.root :controller => 'gifts', :action => 'index'
 
   # See how all your routes lay out with "rake routes"
 

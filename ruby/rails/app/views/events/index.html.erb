@@ -1,7 +1,9 @@
+<% if current_user != page_user %>
 <h1><%= possessivize(page_user.display_name) %> <%= event_type %>s</h1>
+<% end %>
 <%= new_event_links %>
 <br />
-<%= will_paginate @events %>
+<%= render :partial=>'layouts/pagination', :object=>@events %>
 <table border='1' width='100%'>
   <tr>
     <th>Description</th>

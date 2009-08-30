@@ -3,15 +3,15 @@
 <% if page_user.admin? -%>
   <td><%= user.last_login_at || '&nbsp;' %></td>
   <td><%= user.role %></td>
-  <td>
+  <td align='right'>
     <%= link_to 'befriend', user_friends_path(page_user, :friend_id=>user.id), :method=>:post %>
     | <%= link_to 'gifts', user_gifts_path(user) %>
     | <%= link_to 'friends', user_friends_path(user) %>
     | <%= link_to 'edit', edit_user_path(user) %>
-    | <%= link_to 'delete', user_path(user), :confirm=>'Are you sure?', :action=>:delete %>
+    | <%= link_to 'delete', user_path(user), :confirm=>'Are you sure?', :method=>:delete %>
   </td>
 <% else -%>
-  <td>
+  <td align='right'>
     <%= link_to 'befriend', user_friends_path(page_user, :friend_id=>user.id), :method=>:post %>
   </td>
 <% end -%>

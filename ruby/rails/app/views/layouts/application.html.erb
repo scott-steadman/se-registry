@@ -3,10 +3,31 @@
   <head>
     <meta http-equiv='content-type' content='text/html;charset=UTF-8' />
     <title><%= @page_title || 'The Internet Gift Registry' %></title>
-    <%= stylesheet_link_tag 'scaffold' %>
+    <%= stylesheet_link_tag 'http://yui.yahooapis.com/combo?2.7.0/build/fonts/fonts-min.css&2.7.0/build/grids/grids-min.css' %>
+    <%#= stylesheet_link_tag 'scaffold' %>
+    <%= yield :head %>
   </head>
   <body>
-    <%= render :partial=>'layouts/flashes' %>
-    <%= yield %>
+    <div id='doc3'>
+      <div id='hd'>
+        <%= yield :header %>
+      </div>
+      <div id='bd'>
+        <div class='yui-gf'>
+          <div class='yui-u first'>
+            <%= render :partial=>'layouts/navigation' if logged_in? %>
+            <%= yield :left %>
+          </div>
+          <div class='yui-u'>
+            <%= render :partial=>'layouts/flashes' %>
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+      <div id='ft'>
+        <%= render :partial=>'layouts/footer' %>
+        <%= yield :footer %>
+      </div>
+    </div>
   </body>
 </html>

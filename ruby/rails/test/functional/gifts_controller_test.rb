@@ -2,7 +2,6 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class GiftsControllerTest < ActionController::TestCase
 
-
   test 'index requires login' do
     get :index
     assert_redirected_to login_url

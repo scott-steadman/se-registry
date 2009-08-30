@@ -80,6 +80,10 @@ class ActiveSupport::TestCase
     UserSession.create(User.first(:conditions=>{:login=>user}) || create_user(user))
   end
 
+  def logout
+    UserSession.find.destroy
+  end
+
 end
 
 class Object

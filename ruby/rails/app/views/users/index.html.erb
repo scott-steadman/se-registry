@@ -1,12 +1,12 @@
-<%= will_paginate @users %>
-<table border='1'>
+<%= render :partial=>'layouts/pagination', :object=>@users %>
+<table border='1' width='100%'>
   <tr>
-    <th>Login</th>
-    <% if page_user.admin? -%>
-    <th>Last on</th>
-    <th>Role</th>
-    <% end -%>
-    <th>Actions</th>
+    <th align='center'>Login</th>
+<% if page_user.admin? -%>
+    <th align='center'>Last on</th>
+    <th align='center'>Role</th>
+<% end -%>
+    <th align='center'>Actions</th>
   </tr>
   <%= render :partial=>'user', :collection=>@users %>
 </table>

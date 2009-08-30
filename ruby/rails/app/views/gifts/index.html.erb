@@ -1,10 +1,12 @@
 <%= @errors %>
+<% if current_user != page_user %>
 <h1><%= possessivize(page_user.display_name) %> Gifts</h1>
+<% end %>
 <h2>Notes:</h2>
 <pre><%= page_user.notes %></pre>
 <%= link_to 'New', new_user_gift_path(page_user) if page_user == current_user %>
-<%= will_paginate @gifts %>
-<table border='1'>
+<%= render :partial=>'layouts/pagination', :object=>@gifts %>
+<table border='1' width='100%'>
   <tr>
     <th>Tags</th>
     <th>Description</th>

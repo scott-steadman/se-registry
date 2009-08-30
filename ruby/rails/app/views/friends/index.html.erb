@@ -1,6 +1,9 @@
+<% if current_user != page_user %>
+<h1><%= possessivize(page_user.display_name) %> Friends</h1>
+<% end %>
 <%= @errors %>
-<%= will_paginate @friends %>
-<table border='1'>
+<%= render :partial=>'layouts/pagination', :object=>@friends %>
+<table border='1' width='100%'>
   <tr>
     <th>Friend</th>
     <th>Actions</th>

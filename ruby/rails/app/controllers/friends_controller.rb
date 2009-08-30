@@ -16,6 +16,14 @@ class FriendsController < ApplicationController
   # POST /friends
   # POST /friends.xml
   def create
+    redirect_to user_friends_path(page_user) and return unless request.post?
+
+    if current_user == friend
+      flash[:notice] = "You can't befriend yourself."
+      redirect_to users_path
+      return
+    end
+
     if friends.include?(friend)
       flash[:notice] = "#{you_or_user} already friends with #{friend.login}."
       redirect_to users_path
@@ -34,6 +42,8 @@ class FriendsController < ApplicationController
   # DELETE /friends/1
   # DELETE /friends/1.xml
   def destroy
+    redirect_to user_friends_path(page_user) and return unless request.delete?
+
     friends.delete(friend)
 
     respond_to do |format|
