@@ -71,11 +71,12 @@ class ActiveSupport::TestCase
       :url         => 'url',
       :price       => 1.00
     }.merge(attrs)) do |gift|
-      gift.user ||= create_user('gift')
+      gift.user = (attrs[:user] || create_user('gift'))
     end
   end
 
   def login_as(user)
+    user = user.login if user.respond_to?(:login)
     UserSession.create(User.first(:conditions=>{:login=>user}) || create_user(user))
   end
 

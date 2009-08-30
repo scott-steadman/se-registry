@@ -12,11 +12,6 @@ class GiftTest < ActiveRecord::TestCase
     assert_match /is too short/, gift.errors.on(:description)
   end
 
-  def test_url_must_not_be_blank
-    gift = Gift.create(:description=>'test', :url=>'')
-    assert_match /is too short/, gift.errors.on(:url)
-  end
-
   def test_price_must_be_number
     gift = Gift.create(:description=>'description', :price=>'a')
     assert_equal "is not a number", gift.errors.on(:price)
@@ -27,6 +22,15 @@ class GiftTest < ActiveRecord::TestCase
       gift = create_gift
       assert !gift.new_record?, "#{gift.errors.full_messages.to_sentence}"
     end
+  end
+
+  test 'work around bug in acts_as_taggable' do
+    gift = create_gift(:tag_names=>'one two')
+    gift.reload
+    gift.tags.clear
+    gift.update_attributes(:tag_names=>'one two three')
+    gift.reload
+    assert_equal %w[one three two], gift.tag_names.sort
   end
 
 end

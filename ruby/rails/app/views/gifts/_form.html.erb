@@ -1,0 +1,15 @@
+<%= form.label :tags %><br/>
+<%= text_field_tag 'gift[tag_names]', @gift.tag_names.join(' ') %><br/>
+<br/>
+<%= form.label :description %><br/>
+<%= form.text_field :description %><br/>
+<br/>
+<%= form.label :url %><br/>
+<%= form.text_field :url %><br/>
+<br/>
+<%= form.label :price %><br/>
+<%= form.text_field :price %><br/>
+<br/>
+<%= form.label :multi %><br/>
+<%= form.check_box :multi%><br/>
+<br/>

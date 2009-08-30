@@ -41,13 +41,15 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resource :user_session
 
-  map.resources :users, :has_many => [:gifts, :givings, :friends] do |users|
+  map.resources :users, :has_many => [:gifts, :friends] do |users|
     users.resources :events,    :controller=>'events'
+    users.resources :gifts,     :controller=>'gifts', :member=>{:will=>:post, :wont=>:delete}
     users.resources :occasions, :controller=>'events'
     users.resources :reminders, :controller=>'events'
   end
 
   map.resources :events
+  map.resources :gifts,     :controller=>'gifts'
   map.resources :occasions, :controller=>'events'
   map.resources :reminders, :controller=>'events'
 

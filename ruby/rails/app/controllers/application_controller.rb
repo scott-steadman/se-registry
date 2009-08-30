@@ -29,7 +29,7 @@ private
   end
 
   def page_user
-    if current_user.admin?
+    @page_user ||= if current_user.admin?
       User.find_by_id(params[:user_id] || params[:id]) || current_user
     else
       current_user

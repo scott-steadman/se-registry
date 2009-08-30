@@ -1,0 +1,11 @@
+<tr>
+  <td><%= h gift.tag_names.join(' ') %></td>
+  <td><%= description_of(gift) %></td>
+  <td><%= gift.multi ? 'Yes' : 'No' %></td>
+  <td align='right'><%= number_to_currency(gift.price) %></td>
+<% if page_user != current_user %>
+  <td><%= intent(gift) %></td>
+<% end %>
+  <td align='right'><%= gift_actions(gift) %></td>
+  </td>
+</tr>
