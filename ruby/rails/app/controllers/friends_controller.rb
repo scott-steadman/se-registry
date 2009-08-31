@@ -1,4 +1,5 @@
 class FriendsController < ApplicationController
+  include ActionView::Helpers::NumberHelper
 
   before_filter :require_user
 
@@ -51,6 +52,29 @@ class FriendsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  # GET /friends/1/export
+  def export
+    require 'csv'
+    data = ''
+    CSV::Writer.generate(data, ',', "\r\n") do |writer|
+      writer << ['Friend/Tags','Description','Multiples','Price', 'Giver']
+      current_user.friends.each do |friend|
+        writer << [friend.display_name]
+        friend.gifts.each do |gift|
+          writer << [
+            gift.tag_names,
+            gift.description,
+            gift.multi,
+            number_to_currency(gift.price),
+            gift.givings.map {|ii| ii.display_name}.join(' & ')
+          ]
+        end
+      end
+    end
+    send_data(data, {:filename => 'gifts.csv', :type => 'text/csv', :disposition => 'inline'})
+  end
+
 
 private
 

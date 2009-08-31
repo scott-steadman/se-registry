@@ -1,7 +1,7 @@
 <% if current_user != page_user %>
 <h1><%= possessivize(page_user.display_name) %> Friends</h1>
 <% end %>
-<%= @errors %>
+<%= link_to 'Export', :controller=>'friends', :action=>'export' %>
 <%= render :partial=>'layouts/pagination', :object=>@friends %>
 <table border='1' width='100%'>
   <tr>
