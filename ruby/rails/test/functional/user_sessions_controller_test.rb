@@ -9,7 +9,7 @@ class UserSessionsControllerTest < ActionController::TestCase
 
   test 'create when logged out' do
     create_user(:login=>'user', :password=>'testme1', :password_confirmation=>'testme1')
-    @controller.send(:current_user_session).destroy
+    logout
     post :create, :user_session=>{:login=>'user', :password=>'testme1'}
     assert_redirected_to home_url
     assert_match 'successful', @response.flash[:notice]
@@ -23,7 +23,7 @@ class UserSessionsControllerTest < ActionController::TestCase
 
   test 'create with failed save' do
     create_user(:login=>'user', :password=>'testme1', :password_confirmation=>'testme1')
-    @controller.send(:current_user_session).destroy
+    logout
     post :create, :user_session=>{:login=>'user', :password=>'foo'}
     assert_template 'new'
   end

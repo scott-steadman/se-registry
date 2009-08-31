@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
 
-  helper_method :current_user_session, :current_user, :page_user, :tabs
+  helper_method :current_user_session, :current_user, :page_user, :tabs,
+                :logged_in?
 
   # See ActionController::RequestForgeryProtection for details
   protect_from_forgery
@@ -64,14 +65,18 @@ private
     session[:return_to] = nil
   end
 
+  def logged_in?
+    not current_user_session.nil?
+  end
+
   def tabs
     @tabs ||= begin
       nav = []
       nav << ['My Gifts', gifts_path]
-      nav << ['My Friends', user_friends_path(current_user)]
+      nav << ['My Friends', user_friends_path(current_user)] if logged_in?
       nav << ['My Occasions', occasions_path]
       nav << ['My Reminders', reminders_path]
-      nav << ['My Settings', edit_user_path(current_user)]
+      nav << ['My Settings', edit_user_path(current_user)] if logged_in?
       nav << ['Users', users_path]
       nav << ['About', about_path]
       nav << ['Logout', logout_path]
