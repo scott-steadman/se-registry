@@ -9,6 +9,18 @@ module GiftsHelper
     h(gift.givings.map {|user| user.display_name}.sort.join(', ') << ' Will')
   end
 
+  def tags_for(gift)
+    gift.tag_names.map {|tag| tag_or_link(tag)}.join(' ')
+  end
+
+  def tag_or_link(tag)
+    if tag != params[:tag]
+      link_to tag, url_for(:overwrite_params => {:tag => tag})
+    else
+      tag
+    end
+  end
+
   def gift_actions(gift)
     links = []
 

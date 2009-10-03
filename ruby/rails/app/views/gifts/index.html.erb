@@ -10,7 +10,10 @@
 <%= render :partial=>'layouts/pagination', :object=>@gifts %>
 <table border='1' width='100%'>
   <tr>
-    <th>Tags</th>
+    <th>
+      Tags
+      <%= link_to '(see_all)', url_for(:overwrite_params => {:tag => nil}) if params[:tag] %>
+    </th>
     <th><%= sortable_column_header('Description', 'description') %></th>
     <th>Multi</th>
     <th><%= sortable_column_header('Price', 'price') %></th>

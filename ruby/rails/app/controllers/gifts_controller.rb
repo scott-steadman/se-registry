@@ -6,7 +6,7 @@ class GiftsController < ApplicationController
   # GET /gifts
   # GET /gifts.xml
   def index
-    @gifts = gifts.paginate :page=>page, :per_page=>per_page, :order=>order
+    @gifts = gifts.paginate :conditions=>conditions, :joins=>joins, :page=>page, :per_page=>per_page, :order=>order
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml=>@gifts }
@@ -83,6 +83,23 @@ class GiftsController < ApplicationController
   end
 
 private
+
+  def conditions
+    conditions, values = tag_conditions
+    [conditions, *values] if conditions
+  end
+
+  def tag_conditions
+    ['tags.name IN (?)', params[:tag]] if params[:tag]
+  end
+
+
+  def joins
+    [
+      "JOIN #{GiftTag.table_name} on (#{GiftTag.table_name}.gift_id = #{Gift.table_name}.id)",
+      "JOIN #{Tag.table_name} on (#{Tag.table_name}.id = #{GiftTag.table_name}.tag_id)"
+    ] if params[:tag]
+  end
 
   def per_page
     params[:per_page] || 20
