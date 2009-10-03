@@ -104,8 +104,9 @@ private
     params[:gift_id] || params[:id]
   end
 
+  helper_method :order
   def order
-    'description'
+    params[:order] || 'description ASC'
   end
 
   def export

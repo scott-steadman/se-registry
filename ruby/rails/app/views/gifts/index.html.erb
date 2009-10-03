@@ -4,16 +4,16 @@
 <% end %>
 <h2>Notes:</h2>
 <pre><%= page_user.notes %></pre>
-<%= link_to 'New', new_user_gift_path(page_user) if page_user == current_user %>
-<%= link_to 'View All', gifts_path(page_user, :per_page=>@gifts.total_entries) if @gifts.total_pages > 1 %>
+<%= link_to 'New', new_user_gift_path(page_user) if page_user == current_user %> |
+<%= link_to 'View All', gifts_path(page_user, :per_page=>@gifts.total_entries) if @gifts.total_pages > 1 %> |
 <%= link_to 'Export', user_gifts_path(page_user, :format=>'csv') %>
 <%= render :partial=>'layouts/pagination', :object=>@gifts %>
 <table border='1' width='100%'>
   <tr>
     <th>Tags</th>
-    <th>Description</th>
+    <th><%= sortable_column_header('Description', 'description') %></th>
     <th>Multi</th>
-    <th>Price</th>
+    <th><%= sortable_column_header('Price', 'price') %></th>
 <% if page_user != current_user %>
     <th>Intent</th>
 <% end %>
