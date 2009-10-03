@@ -9,8 +9,18 @@ class GiftsControllerTest < ActionController::TestCase
 
   test 'index' do
     login_as user = create_user
-    gift = create_gift(:user=>user)
+    create_gift(:user=>user)
+    create_gift(:user=>user)
     get :index
+    assert_response :success
+    assert_equal 2, assigns['gifts'].size
+  end
+
+  test 'view_all' do
+    login_as user = create_user
+    create_gift(:user=>user)
+    create_gift(:user=>user)
+    get :index, :per_page => 1
     assert_response :success
     assert_equal 1, assigns['gifts'].size
   end

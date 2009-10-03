@@ -84,7 +84,7 @@ class GiftsController < ApplicationController
 private
 
   def per_page
-    20
+    params[:per_page] || 20
   end
 
   def page_user
