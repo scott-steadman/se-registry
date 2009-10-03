@@ -1,4 +1,5 @@
 class GiftsController < ApplicationController
+  include ActionView::Helpers::NumberHelper
 
   before_filter :require_user
 
@@ -9,6 +10,7 @@ class GiftsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml=>@gifts }
+      format.csv  { export }
     end
   end
 
@@ -80,7 +82,6 @@ class GiftsController < ApplicationController
     end
   end
 
-
 private
 
   def per_page
@@ -106,5 +107,25 @@ private
   def order
     'description'
   end
+
+  def export
+    require 'csv'
+    data = ''
+    CSV::Writer.generate(data, ',', "\r\n") do |writer|
+      writer << ['Friend/Tags','Description','Multiples','Price', 'Giver']
+      writer << [page_user.display_name]
+      page_user.gifts.each do |gift|
+        writer << [
+          gift.tag_names,
+          gift.description,
+          gift.multi,
+          number_to_currency(gift.price),
+          gift.givings.map {|ii| ii.display_name}.join(' & ')
+        ]
+      end
+    end
+    send_data(data, {:filename => 'gifts.csv', :type => 'text/csv', :disposition => 'inline'})
+  end
+
 
 end
