@@ -24,10 +24,13 @@ class GiftsController < ApplicationController
   def create
     @gift = gifts.new(params[:gift])
     render :action=>:new and return unless request.post?
-    @gift.save
-    respond_to do |format|
-      format.html { redirect_to user_gifts_path(page_user) }
-      format.xml  { render :xml=>@gift, :status=>:created, :location=>@gift }
+    if @gift.save
+      respond_to do |format|
+        format.html { redirect_to user_gifts_path(page_user) }
+        format.xml  { render :xml=>@gift, :status=>:created, :location=>@gift }
+      end
+    else
+      render :action=>:new
     end
   end
 

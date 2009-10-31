@@ -58,6 +58,13 @@ class GiftsControllerTest < ActionController::TestCase
     assert_redirected_to user_gifts_path(user)
   end
 
+  test 'create with error' do
+    login_as user = create_user
+    post :create
+    assert_template :new
+    assert_select "form>div[class='errorExplanation']"
+  end
+
   test 'edit requires login' do
     get :edit
     assert_redirected_to login_url
