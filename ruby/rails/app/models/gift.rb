@@ -47,4 +47,15 @@ class Gift < ActiveRecord::Base
   def editable_by?(other)
     other.admin? || user == other
   end
+
+  def price=(value)
+    super sanitize_price(value)
+  end
+
+private
+
+  def sanitize_price(value)
+    value.is_a?(String) ? value.gsub(/[^\d.]/, '') : value
+  end
+
 end

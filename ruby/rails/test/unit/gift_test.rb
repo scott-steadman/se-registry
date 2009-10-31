@@ -2,22 +2,22 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class GiftTest < ActiveRecord::TestCase
 
-  def test_description_must_not_be_nil
+  test 'description must not be nil' do
     gift = Gift.create
     assert_match /is too short/, gift.errors.on(:description)
   end
 
-  def test_description_must_not_be_blank
+  test 'description must not be blank' do
     gift = Gift.create(:description=>'')
     assert_match /is too short/, gift.errors.on(:description)
   end
 
-  def test_price_must_be_number
-    gift = Gift.create(:description=>'description', :price=>'a')
-    assert_equal "is not a number", gift.errors.on(:price)
+  test 'price sanitization' do
+    gift = Gift.new(:description=>'description', :price=>'$1 million dollars')
+    assert_equal 1, gift.price
   end
 
-  def test_should_create_gift
+  test 'should create gift' do
     assert_difference 'Gift.count' do
       gift = create_gift
       assert !gift.new_record?, "#{gift.errors.full_messages.to_sentence}"
