@@ -78,7 +78,13 @@ class GiftsController < ApplicationController
 
   # DELETE /gifts/:id/wont
   def wont
-    current_user.givings.delete(gift) if request.delete?
+    if request.delete?
+      if current_user.admin? && page_user != current_user
+        gift.givings.clear
+      else
+        current_user.givings.delete(gift)
+      end
+    end
     respond_to do |format|
       format.html { redirect_to user_gifts_path(page_user) }
       format.xml  { head :ok }

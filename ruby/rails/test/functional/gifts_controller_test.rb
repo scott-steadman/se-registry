@@ -175,6 +175,33 @@ class GiftsControllerTest < ActionController::TestCase
     assert_redirected_to user_gifts_path(friend)
   end
 
+  test 'admin can remove others givings' do
+    login_as create_user(:role=>'admin')
+    other = create_user('other')
+    other.friends << friend = create_user('friend')
+    gift = create_gift(:user=>other)
+    friend.givings << gift
+
+    assert_difference 'Giving.count', -1 do
+      delete :wont, :user_id=>other.id, :id=>gift.id
+    end
+    assert_redirected_to user_gifts_path(other)
+  end
+
+  test 'non-admin cannot remove others givings' do
+    login_as create_user
+    other = create_user('other')
+    other.friends << friend = create_user('friend')
+    gift = create_gift(:user=>other)
+    friend.givings << gift
+
+    assert_no_difference 'Giving.count' do
+      delete :wont, :user_id=>other.id, :id=>gift.id
+    end
+    assert_redirected_to user_gifts_path(other)
+  end
+
+
 
 private
 
