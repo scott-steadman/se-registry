@@ -40,6 +40,7 @@ class ActiveSupport::TestCase
 
   def create_event(attrs={})
     attrs = {:description=>attrs} if attrs.is_a?(String)
+    attrs[:description] ||=  'Recurring Event'
     attrs[:class] ||= Event
     attrs.delete(:class).create({
       :event_date  => 10.days.from_now,

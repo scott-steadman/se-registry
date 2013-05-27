@@ -8,7 +8,7 @@ class UserNotifierTest < ActionMailer::TestCase
     r2 = u1.reminders.create(:description=>'Reminder 2', :event_date=>Date.tomorrow)
 
     u2 = create_user('user2')
-    r3 = u2.reminders.create(:event_date=>Date.tomorrow)
+    r3 = u2.reminders.create(:event_date => Date.tomorrow, :description => 'Tomorrow')
 
     count = 0
     UserNotifier.send_reminders do |user|

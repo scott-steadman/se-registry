@@ -6,7 +6,7 @@ class EventsControllerTest < ActionController::TestCase
     @user = create_user('user')
     @occasion = create_occasion(:user=>@user)
     @reminder = create_reminder(:user=>@user)
-    @event = create_event(:user=>@user)
+    @event = create_event(:user=>@user, :description => '')
   end
 
   test 'index requires login' do
@@ -74,7 +74,7 @@ class EventsControllerTest < ActionController::TestCase
 
   test 'create' do
     assert_difference 'Event.count', 1 do
-      post :create, :event => {:event_date => Date.today}
+      post :create, :event => {:event_date => Date.today, :description => 'Today'}
     end
     assert_redirected_to user_events_path(@user)
   end
