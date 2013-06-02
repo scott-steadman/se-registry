@@ -1,7 +1,11 @@
 module GiftsHelper
 
   def description_of(gift)
-    gift.url.blank? ? h(gift.description) : link_to(h(gift.description), gift.url, :target=>'_new')
+    if gift.url.blank?
+      h(gift.description)
+    else
+      link_to(h(gift.description), gift.url, :target=>'_new')
+    end
   end
 
   def intent(gift)
@@ -28,8 +32,7 @@ module GiftsHelper
       links << link_to('will', will_user_gift_path(page_user, gift), :method=>:post)
     end
 
-    if gift.given_by?(current_user) ||
-      (current_user.admin? && page_user != current_user && gift.given?)
+    if gift.given_by?(current_user) or admin_can_remove?
       links << link_to("won't", wont_user_gift_path(page_user, gift), :method=>:delete)
     end
 
@@ -41,4 +44,7 @@ module GiftsHelper
     links.join('|')
   end
 
+  def admin_can_remove?
+    current_user.admin? and page_user != current_user and gift.given?
+  end
 end
