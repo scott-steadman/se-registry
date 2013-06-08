@@ -17,7 +17,10 @@ class FriendsController < ApplicationController
   # POST /friends
   # POST /friends.xml
   def create
-    redirect_to user_friends_path(page_user) and return unless request.post?
+    unless request.post?
+      redirect_to user_friends_path(page_user)
+      return
+    end
 
     if current_user == friend
       flash[:notice] = "You can't befriend yourself."

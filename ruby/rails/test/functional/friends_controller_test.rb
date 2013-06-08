@@ -30,10 +30,33 @@ class FriendsControllerTest < ActionController::TestCase
   test 'create' do
     another_friend = create_user('another_friend')
     assert_difference 'Friendship.count' do
-      post :create, :id => another_friend.id
+      post :create, :id => another_friend.to_param
     end
     assert_redirected_to user_friends_path(@user)
     assert_equal 2, @user.friends(true).size
+  end
+
+  test 'create requires post' do
+    assert_no_difference 'Friendship.count' do
+      get :create
+      assert_redirected_to user_friends_path(@user)
+    end
+  end
+
+  test 'cannot friend self' do
+    assert_no_difference 'Friendship.count' do
+      post :create, :id => @user.to_param
+      assert_redirected_to users_path
+    end
+    assert_match 'yourself', flash[:notice]
+  end
+
+  test 'cannot add friend again' do
+    assert_no_difference 'Friendship.count' do
+      post :create, :id => @friend.to_param
+      assert_redirected_to users_path
+    end
+    assert_match 'already friends with', flash[:notice]
   end
 
   test 'destroy requires login' do
@@ -44,16 +67,23 @@ class FriendsControllerTest < ActionController::TestCase
 
   test 'destroy fails on GET' do
     assert_no_difference 'Friendship.count' do
-      get :destroy, :id => @friend.id
+      get :destroy, :id => @friend.to_param
     end
     assert_redirected_to user_friends_path(@user)
   end
 
   test 'destroy' do
     assert_difference 'Friendship.count', -1 do
-      delete :destroy, :id => @friend.id
+      delete :destroy, :id => @friend.to_param
     end
     assert_redirected_to user_friends_path(@user)
+  end
+
+  test 'export' do
+    @friend.gifts.create!(:description => 'description', :price => 1.00, :multi => true)
+    get :export
+    assert_response :success
+    assert_equal 3, @response.body.split(/\r\n/m).size, 'header, friend, and gift lines'
   end
 
 end
