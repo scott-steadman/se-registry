@@ -44,6 +44,7 @@ class GiftsController < ApplicationController
   def update
     gift
     render :action=>:edit and return unless request.put?
+
     # work-around bug in acts_as_taggable
     gift.tags.clear
     if gift.update_attributes(params[:gift])
@@ -139,8 +140,7 @@ private
     require 'csv'
     data = ''
     CSV::Writer.generate(data, ',', "\r\n") do |writer|
-      writer << ['Friend/Tags','Description','Multiples','Price', 'Giver']
-      writer << [page_user.display_name]
+      writer << ['Tags','Description','Multiples','Price', 'Giver']
       page_user.gifts.each do |gift|
         writer << [
           gift.tag_names,
@@ -153,6 +153,5 @@ private
     end
     send_data(data, {:filename => 'gifts.csv', :type => 'text/csv', :disposition => 'inline'})
   end
-
 
 end

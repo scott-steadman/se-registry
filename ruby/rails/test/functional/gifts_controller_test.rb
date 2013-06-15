@@ -16,13 +16,30 @@ class GiftsControllerTest < ActionController::TestCase
     assert_equal 2, assigns['gifts'].size
   end
 
-  test 'view_all' do
+  test 'index with per_page param' do
     login_as user = create_user
     create_gift(:user=>user)
     create_gift(:user=>user)
     get :index, :per_page => 1
     assert_response :success
     assert_equal 1, assigns['gifts'].size
+  end
+
+  test 'index with tag param' do
+    login_as user = create_user
+    create_gift(:user=>user, :tag_names => 'foo')
+    create_gift(:user=>user, :tag_names => 'bar')
+    get :index, :tag => 'foo'
+    assert_response :success
+    assert_equal 1, assigns['gifts'].size
+  end
+
+  test 'index with csv format' do
+    login_as user = create_user
+    create_gift(:user => user, :description => 'one', :price => 1.00, :multi => false)
+    get :index, :format => 'csv'
+    assert_response :success
+    assert_equal 2, @response.body.split(/\r\n/m).size, 'header, gift lines should be returned'
   end
 
   test 'new requires login' do
@@ -87,6 +104,7 @@ class GiftsControllerTest < ActionController::TestCase
     login_as user = create_user
     gift = create_gift(:user=>user)
     get :update, :id=>gift.id, :gift=>gift.attributes
+    assert_response :success
     assert_template :edit
   end
 
@@ -98,6 +116,13 @@ class GiftsControllerTest < ActionController::TestCase
     assert_equal 'new url', gift.reload.url
   end
 
+  test 'update fails with bad data' do
+    login_as user = create_user
+    gift = create_gift(:user => user)
+    put :update, :id => gift.id, :gift => {:description => ''}
+    assert_response :success
+    assert_template :edit
+  end
 
   test 'destroy requires login' do
     delete :destroy
@@ -200,8 +225,6 @@ class GiftsControllerTest < ActionController::TestCase
     end
     assert_redirected_to user_gifts_path(other)
   end
-
-
 
 private
 

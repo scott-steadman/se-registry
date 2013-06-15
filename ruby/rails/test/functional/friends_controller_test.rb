@@ -83,7 +83,7 @@ class FriendsControllerTest < ActionController::TestCase
     @friend.gifts.create!(:description => 'description', :price => 1.00, :multi => true)
     get :export
     assert_response :success
-    assert_equal 3, @response.body.split(/\r\n/m).size, 'header, friend, and gift lines'
+    assert_equal 3, @response.body.split(/\r\n/m).size, 'header, friend, and gift lines should be returned'
   end
 
 end
