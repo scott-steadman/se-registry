@@ -1,11 +1,5 @@
 class UserNotifier < ActionMailer::Base
 
-  def signup_notification(user)
-    setup_email(user)
-    @subject    += 'Please activate your new account.'
-    @body[:url]  = "http://#{SITE_HOST}/activate/#{user.activation_code}"
-  end
-
   def reset_password(user)
     setup_email(user)
     @subject    += 'Password Reset.'
