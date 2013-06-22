@@ -15,9 +15,11 @@ class Event < ActiveRecord::Base
 
   attr_accessible :description, :event_date, :recur
 
+  validates_presence_of :description, :event_date
+
   belongs_to :user
 
-  before_save :assure_type
+  before_save :ensure_type
 
   def deleted?
     return @deleted
@@ -27,7 +29,7 @@ class Event < ActiveRecord::Base
     if recur? && event_date
       self.event_date = event_date.to_date >> 12
     else
-      self.destroy
+      destroy
       @deleted = true
     end
   end
@@ -46,7 +48,7 @@ class Event < ActiveRecord::Base
 
 private
 
-  def assure_type
+  def ensure_type
     self.event_type ||= self.class.name
   end
 

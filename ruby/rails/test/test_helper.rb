@@ -27,7 +27,7 @@ class ActiveSupport::TestCase
 
   def create_user(attrs={})
     attrs = {:login=>attrs} if attrs.is_a?(String)
-    User.create({
+    User.create!({
       :login                 => 'quire',
       :password              => 'quire',
       :password_confirmation => 'quire',
@@ -42,7 +42,7 @@ class ActiveSupport::TestCase
     attrs = {:description=>attrs} if attrs.is_a?(String)
     attrs[:description] ||=  'Recurring Event'
     attrs[:class] ||= Event
-    attrs.delete(:class).create({
+    attrs.delete(:class).create!({
       :event_date  => 10.days.from_now,
       :recur       => true
     }.merge(attrs)) do |event|
@@ -67,7 +67,7 @@ class ActiveSupport::TestCase
 
   def create_gift(attrs={})
     attrs = {:description=>attrs} if attrs.is_a?(String)
-    Gift.create({
+    Gift.create!({
       :description => 'gift',
       :url         => 'url',
       :price       => 1.00

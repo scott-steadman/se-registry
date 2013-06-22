@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class UserTest < ActiveRecord::TestCase
 
-  def test_should_create_user
+  test 'user creation' do
     assert_difference 'User.count' do
       user = create_user
       assert !user.new_record?, "#{user.errors.full_messages.to_sentence}"
@@ -10,31 +10,31 @@ class UserTest < ActiveRecord::TestCase
   end
 
   def test_should_require_login
-    assert_no_difference 'User.count' do
-      u = create_user(:login => nil)
-      assert u.errors.on(:login)
+    ex = assert_raise ActiveRecord::RecordInvalid do
+      create_user(:login => nil)
     end
+    assert_match 'Login is too short', ex.message
   end
 
   def test_should_require_password
-    assert_no_difference 'User.count' do
-      u = create_user(:password => nil)
-      assert u.errors.on(:password)
+    ex = assert_raise ActiveRecord::RecordInvalid do
+      create_user(:password => nil)
     end
+    assert_match 'Password is too short', ex.message
   end
 
   def test_should_require_password_confirmation
-    assert_no_difference 'User.count' do
-      u = create_user(:password_confirmation => nil)
-      assert u.errors.on(:password_confirmation)
+    ex = assert_raise ActiveRecord::RecordInvalid do
+      create_user(:password_confirmation => nil)
     end
+    assert_match 'Password confirmation is too short', ex.message
   end
 
   def test_should_require_email
-    assert_no_difference 'User.count' do
-      u = create_user(:email => nil)
-      assert u.errors.on(:email)
+    ex = assert_raise ActiveRecord::RecordInvalid do
+      create_user(:email => nil)
     end
+    assert_match 'Email is too short', ex.message
   end
 
   def test_role_defaults_to_user

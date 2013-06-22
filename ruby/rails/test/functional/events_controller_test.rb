@@ -4,9 +4,9 @@ class EventsControllerTest < ActionController::TestCase
 
   def setup
     @user = create_user('user')
-    @occasion = create_occasion(:user=>@user)
-    @reminder = create_reminder(:user=>@user)
-    @event = create_event(:user=>@user, :description => '')
+    @occasion = create_occasion(:user => @user, :description => 'Occasion')
+    @reminder = create_reminder(:user => @user, :description => 'Reminder')
+    @event = create_event(:user => @user, :description => 'Event')
   end
 
   test 'index requires login' do
@@ -79,6 +79,14 @@ class EventsControllerTest < ActionController::TestCase
     assert_redirected_to user_events_path(@user)
   end
 
+  test 'create fails' do
+    assert_no_difference 'Event.count' do
+      post :create
+      assert_response :success
+      assert_match "can't be blank", @response.body
+    end
+  end
+
   test 'edit requires login' do
     logout
     get :edit
@@ -100,13 +108,19 @@ class EventsControllerTest < ActionController::TestCase
   test 'update fails on GET' do
     get :update, :id => @event, :event => {:description => 'foo'}
     assert_redirected_to user_events_path(@user)
-    assert_equal '', Event.find(@event.id).description
+    assert_equal 'Event', Event.find(@event.id).description
   end
 
   test 'update' do
     put :update, :id => @event, :event => {:description => 'foo'}
     assert_redirected_to user_events_path(@user)
     assert_equal 'foo', Event.find(@event.id).description
+  end
+
+  test 'update fails' do
+    put :update, :id => @event, :event => {:description => nil}
+    assert_response :success
+    assert_match "can't be blank", @response.body
   end
 
   test 'destroy requires login' do

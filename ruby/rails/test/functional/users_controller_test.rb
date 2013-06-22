@@ -15,8 +15,11 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'new' do
-    get :new
-    assert_not_nil assigns['user']
+    assert_no_difference 'User.count' do
+      get :new
+      assert_response :success
+      assert_not_nil assigns['user']
+    end
   end
 
   test 'create should allow signup' do
