@@ -1,10 +1,5 @@
 class UserNotifier < ActionMailer::Base
 
-  def reset_password(user)
-    setup_email(user)
-    @subject    += 'Password Reset.'
-  end
-
   def reminders(user)
     setup_email(user)
     @subject += (user.reminders.size > 1 ? 'Reminders' : 'Reminder')

@@ -123,6 +123,7 @@ class EventsControllerTest < ActionController::TestCase
     assert_match "can't be blank", @response.body
   end
 
+
   test 'destroy requires login' do
     logout
     get :destroy
