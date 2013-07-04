@@ -93,6 +93,10 @@ class User < ActiveRecord::Base
     givings << gift
   end
 
+  def befriend(friend)
+    friends << friend
+  end
+
 private
 
   def remove_from_friends

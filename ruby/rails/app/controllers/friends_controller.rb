@@ -34,7 +34,7 @@ class FriendsController < ApplicationController
       return
     end
 
-    friends << friend
+    page_user.befriend(friend)
 
     respond_to do |format|
       flash[:notice] = "#{you_or_user} now friends with #{friend.login}."

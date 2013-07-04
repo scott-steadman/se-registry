@@ -51,19 +51,17 @@ class UserTest < ActiveRecord::TestCase
     assert 'user', u.role
   end
 
-  def test_befriending
+  test 'befriend' do
     user = create_user(:login=>'quentin')
     friend = create_user(:login=>'friend')
-    user.friends << friend
-    user.save
-    user.reload
-    assert_equal 1, user.friends.size
+    user.befriend(friend)
+    assert_equal 1, user.reload.friends.size
   end
 
   def test_friend_removed_on_destroy
     user = create_user(:login=>'user')
     friend = create_user(:login=>'friend')
-    user.friends << friend
+    user.befriend(friend)
     user.save!
 
     assert_equal 1, user.friends.size
@@ -84,15 +82,15 @@ class UserTest < ActiveRecord::TestCase
     assert_equal 2, users[0].reminders.size
   end
 
-  def test_find_has_occasions_none
+  test 'find_has_occasions none' do
     assert_equal 0, User.find_has_occasions.size
   end
 
-  def test_find_has_occasions
+  test 'find_has_occasions' do
     u = create_user
     u.occasions.create(:description=>'Occasion 1', :event_date=>Date.tomorrow)
     u.occasions.create(:description=>'Occasion 2', :event_date=>Date.tomorrow)
-    create_user('friend').friends << u
+    create_user('friend').befriend(u)
 
     users = User.find_has_occasions
     assert_equal 1, users.size

@@ -5,7 +5,7 @@ class FriendsControllerTest < ActionController::TestCase
   def setup
     @user = create_user('user')
     @friend = create_user('friend')
-    @user.friends << @friend
+    @user.befriend(@friend)
   end
 
   test 'index requires login' do

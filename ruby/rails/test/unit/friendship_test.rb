@@ -26,8 +26,7 @@ class FriendshipTest < ActiveRecord::TestCase
   def test_create_prevents_duplicates
     user = create_user(:login=>'user')
     friend = create_user(:login=>'friend')
-    user.friends << friend
-    user.save!
+    user.befriend(friend)
 
     model = Friendship.create(:user=>user, :login_or_email=>'friend')
     assert_equal "'friend' is already your friend.", model.errors.on_base

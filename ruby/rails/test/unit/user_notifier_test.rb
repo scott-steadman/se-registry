@@ -29,8 +29,7 @@ class UserNotifierTest < ActionMailer::TestCase
     r2 = u1.occasions.create(:description=>'Occasion 2', :event_date=>Date.tomorrow)
 
     u2 = create_user('user2')
-    u2.friends << u1
-    u2.save!
+    u2.befriend(u1)
 
     count = 0
     UserNotifier.send_occasions do |user|

@@ -155,7 +155,7 @@ class GiftsControllerTest < ActionController::TestCase
 
   test 'will fails on GET' do
     login_as user = create_user
-    user.friends << friend = create_user('friend')
+    user.befriend(friend = create_user('friend'))
     gift = create_gift(:user=>friend)
     assert_no_difference 'Giving.count' do
       get :will, :user_id=>friend.id, :id=>gift.id
@@ -165,7 +165,7 @@ class GiftsControllerTest < ActionController::TestCase
 
   test 'will' do
     login_as user = create_user
-    user.friends << friend = create_user('friend')
+    user.befriend(friend = create_user('friend'))
     gift = create_gift(:user=>friend)
     assert_difference 'Giving.count', 1 do
       post :will, :user_id=>friend.id, :id=>gift.id
@@ -180,7 +180,7 @@ class GiftsControllerTest < ActionController::TestCase
 
   test 'wont fails on GET' do
     login_as user = create_user
-    user.friends << friend = create_user('friend')
+    user.befriend(friend = create_user('friend'))
     gift = create_gift(:user=>friend)
     user.give(gift)
     assert_no_difference 'Giving.count' do
@@ -191,7 +191,7 @@ class GiftsControllerTest < ActionController::TestCase
 
   test 'wont' do
     login_as user = create_user
-    user.friends << friend = create_user('friend')
+    user.befriend(friend = create_user('friend'))
     gift = create_gift(:user=>friend)
     user.give(gift)
     assert_difference 'Giving.count', -1 do
@@ -203,7 +203,7 @@ class GiftsControllerTest < ActionController::TestCase
   test 'admin can remove others givings' do
     login_as create_user(:role=>'admin')
     other = create_user('other')
-    other.friends << friend = create_user('friend')
+    other.befriend(friend = create_user('friend'))
     gift = create_gift(:user=>other)
     friend.give(gift)
 
@@ -216,7 +216,7 @@ class GiftsControllerTest < ActionController::TestCase
   test 'non-admin cannot remove others givings' do
     login_as create_user
     other = create_user('other')
-    other.friends << friend = create_user('friend')
+    other.befriend(friend = create_user('friend'))
     gift = create_gift(:user=>other)
     friend.give(gift)
 
