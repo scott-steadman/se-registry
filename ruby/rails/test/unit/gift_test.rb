@@ -33,4 +33,37 @@ class GiftTest < ActiveRecord::TestCase
     assert_equal %w[one three two], gift.tag_names.sort
   end
 
+  test 'given' do
+    assert ! gift.given?
+    giver.give(gift)
+    assert gift.reload.given?
+  end
+
+  test 'givable_by' do
+    gift(:multi => true)
+
+    assert ! gift.givable_by?(recipient), 'cannot give self a gift'
+    assert gift.givable_by?(giver), 'gifts should be givable if not already given'
+
+    giver.give(gift)
+    assert ! gift.reload.givable_by?(giver), 'giver cannot give same gift more than once'
+
+    assert gift.givable_by?(create_user), 'multi gifts can be give by many givers'
+  end
+
+
+private
+
+  def recipient
+    @recipient ||= create_user(:login => 'recip')
+  end
+
+  def giver
+    @giver ||= create_user(:login => 'giver')
+  end
+
+  def gift(attrs={})
+    @gift ||= create_gift({:user => recipient}.merge!(attrs))
+  end
+
 end
