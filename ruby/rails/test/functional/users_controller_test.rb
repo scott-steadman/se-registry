@@ -193,6 +193,18 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to users_url
   end
 
+  test 'home logged out' do
+    get :home
+    assert_redirected_to login_url
+  end
+
+  test 'home logged in' do
+    login_as user = create_user(:login=>'user')
+    get :home
+    assert_response :success
+    assert_equal '/users/home', @response.session[:return_to]
+  end
+
 private
 
   def user_params(options={})
