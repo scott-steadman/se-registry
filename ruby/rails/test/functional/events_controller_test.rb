@@ -83,7 +83,7 @@ class EventsControllerTest < ActionController::TestCase
     assert_no_difference 'Event.count' do
       post :create
       assert_response :success
-      assert_match "can't be blank", @response.body
+      assert_match escape("can't be blank"), @response.body
     end
   end
 
@@ -120,7 +120,7 @@ class EventsControllerTest < ActionController::TestCase
   test 'update fails' do
     put :update, :id => @event, :event => {:description => nil}
     assert_response :success
-    assert_match "can't be blank", @response.body
+    assert_match escape("can't be blank"), @response.body
   end
 
 

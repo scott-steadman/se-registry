@@ -85,6 +85,10 @@ class ActiveSupport::TestCase
     UserSession.find.destroy
   end
 
+  def escape(string)
+    ERB::Util.h(string)
+  end
+
 end
 
 class Object
