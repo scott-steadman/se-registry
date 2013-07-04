@@ -70,7 +70,7 @@ class GiftsController < ApplicationController
 
   # POST /gifts/:id/will
   def will
-    current_user.givings << gift if request.post?
+    current_user.give(gift) if request.post?
     respond_to do |format|
       format.html { redirect_to user_gifts_path(page_user) }
       format.xml  { head :ok }

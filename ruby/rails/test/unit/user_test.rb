@@ -102,4 +102,11 @@ class UserTest < ActiveRecord::TestCase
     assert_equal 2, friend.occasions.size
   end
 
+  test 'give' do
+    giver = create_user
+    gift  = create_gift
+    giver.give(gift)
+    assert gift.given?
+  end
+
 end

@@ -182,7 +182,7 @@ class GiftsControllerTest < ActionController::TestCase
     login_as user = create_user
     user.friends << friend = create_user('friend')
     gift = create_gift(:user=>friend)
-    user.givings << gift
+    user.give(gift)
     assert_no_difference 'Giving.count' do
       get :wont, :user_id=>friend.id, :id=>gift.id
     end
@@ -193,7 +193,7 @@ class GiftsControllerTest < ActionController::TestCase
     login_as user = create_user
     user.friends << friend = create_user('friend')
     gift = create_gift(:user=>friend)
-    user.givings << gift
+    user.give(gift)
     assert_difference 'Giving.count', -1 do
       delete :wont, :user_id=>friend.id, :id=>gift.id
     end
@@ -205,7 +205,7 @@ class GiftsControllerTest < ActionController::TestCase
     other = create_user('other')
     other.friends << friend = create_user('friend')
     gift = create_gift(:user=>other)
-    friend.givings << gift
+    friend.give(gift)
 
     assert_difference 'Giving.count', -1 do
       delete :wont, :user_id=>other.id, :id=>gift.id
@@ -218,7 +218,7 @@ class GiftsControllerTest < ActionController::TestCase
     other = create_user('other')
     other.friends << friend = create_user('friend')
     gift = create_gift(:user=>other)
-    friend.givings << gift
+    friend.give(gift)
 
     assert_no_difference 'Giving.count' do
       delete :wont, :user_id=>other.id, :id=>gift.id
