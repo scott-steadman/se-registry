@@ -1,4 +1,5 @@
+bundler/*
 db/schema.rb
-*.swp
-tmp/*
 log/*
+tmp/*
+*.swp

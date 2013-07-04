@@ -14,10 +14,6 @@ Rails::Initializer.run do |config|
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
 
-  config.gem 'acts_as_taggable',      :lib=>'taggable'
-  config.gem 'binarylogic-authlogic', :lib=>'authlogic',     :source=>'http://gems.github.com'
-  config.gem 'mislav-will_paginate',  :lib=>'will_paginate', :source=>'http://gems.github.com'
-
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
@@ -39,3 +35,5 @@ Rails::Initializer.run do |config|
 
   SITE_HOST="localhost:3000" unless defined?(SITE_HOST)
 end
+
+require 'will_paginate'

@@ -10,6 +10,8 @@
 #  multi       :boolean(1)
 #
 
+require 'taggable'
+
 class Gift < ActiveRecord::Base
 
   attr_accessible :description, :url, :multi, :price, :tag_names
