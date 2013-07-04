@@ -62,8 +62,11 @@ class User < ActiveRecord::Base
 
   validates_presence_of     :login, :email
   validates_length_of       :login, :within => 3..40
-  validates_uniqueness_of   :login, :case_sensitive => false
   validates_length_of       :email, :within => 3..100
+  validates_format_of       :login, :with => /\A[^@]+\z/,
+                                    :message => 'cannot be an email'
+  validates_uniqueness_of   :login, :case_sensitive => false
+
 
   before_destroy :remove_from_friends
 

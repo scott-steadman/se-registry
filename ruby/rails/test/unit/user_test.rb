@@ -16,6 +16,13 @@ class UserTest < ActiveRecord::TestCase
     assert_match 'Login is too short', ex.message
   end
 
+  test 'login cannot be email' do
+    ex = assert_raise ActiveRecord::RecordInvalid do
+      create_user(:login => 'me@here.com', :email => 'me@here.com')
+    end
+    assert_match 'cannot be an email', ex.message
+  end
+
   test 'password required' do
     ex = assert_raise ActiveRecord::RecordInvalid do
       create_user(:password => nil)
@@ -35,6 +42,13 @@ class UserTest < ActiveRecord::TestCase
       create_user(:email => nil)
     end
     assert_match 'Email is too short', ex.message
+  end
+
+  test 'email must be correct format' do
+    ex = assert_raise ActiveRecord::RecordInvalid do
+      create_user(:email => 'invalid')
+    end
+    assert_match 'should look like an email address', ex.message
   end
 
   test 'role defaults to user' do
