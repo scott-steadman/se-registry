@@ -70,19 +70,16 @@ private
   end
 
   def tabs
-    @tabs ||= begin
-      nav = []
-      nav << ['My Gifts', gifts_path]
-      nav << ['My Friends', user_friends_path(current_user)] if logged_in?
-      nav << ['My Occasions', occasions_path]
-      nav << ['My Reminders', reminders_path]
-      nav << ['My Settings', edit_user_path(current_user)] if logged_in?
-      nav << ['Users', users_path]
-      nav << ['About', about_path]
-      nav << ['Logout', logout_path]
-
-      nav
-    end
+    @tabs ||= [
+      ['My Gifts', gifts_path],
+      ['My Friends', user_friends_path(current_user)],
+      ['My Occasions', occasions_path],
+      ['My Reminders', reminders_path],
+      ['My Settings', edit_user_path(current_user)],
+      ['Users', users_path],
+      ['About', about_path],
+      ['Logout', logout_path],
+    ]
   end
 
 end
