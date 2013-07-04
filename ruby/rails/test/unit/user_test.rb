@@ -9,43 +9,43 @@ class UserTest < ActiveRecord::TestCase
     end
   end
 
-  def test_should_require_login
+  test 'login required' do
     ex = assert_raise ActiveRecord::RecordInvalid do
       create_user(:login => nil)
     end
     assert_match 'Login is too short', ex.message
   end
 
-  def test_should_require_password
+  test 'password required' do
     ex = assert_raise ActiveRecord::RecordInvalid do
       create_user(:password => nil)
     end
     assert_match 'Password is too short', ex.message
   end
 
-  def test_should_require_password_confirmation
+  test 'password confirmation required' do
     ex = assert_raise ActiveRecord::RecordInvalid do
       create_user(:password_confirmation => nil)
     end
     assert_match 'Password confirmation is too short', ex.message
   end
 
-  def test_should_require_email
+  test 'email required' do
     ex = assert_raise ActiveRecord::RecordInvalid do
       create_user(:email => nil)
     end
     assert_match 'Email is too short', ex.message
   end
 
-  def test_role_defaults_to_user
+  test 'role defaults to user' do
     assert_equal 'user', User.new.role
   end
 
-  def test_admin?
+  test 'admin?' do
     assert create_user(:role=>'admin').admin?
   end
 
-  def test_should_not_allow_role_mass_update
+  test 'role mass update denied' do
     u = create_user
     assert u.update_attributes(:role => 'foo')
     assert 'user', u.role
@@ -58,7 +58,7 @@ class UserTest < ActiveRecord::TestCase
     assert_equal 1, user.reload.friends.size
   end
 
-  def test_friend_removed_on_destroy
+  test 'friend removed on destroy' do
     user = create_user(:login=>'user')
     friend = create_user(:login=>'friend')
     user.befriend(friend)
@@ -70,7 +70,7 @@ class UserTest < ActiveRecord::TestCase
     assert_equal 0, user.friends.size
   end
 
-  def test_find_needs_reminding
+  test 'find_needs_reminding' do
     u = create_user
     u.reminders.create(:description=>'Reminder 1', :event_date=>Date.tomorrow)
     u.reminders.create(:description=>'Reminder 2', :event_date=>Date.tomorrow)
