@@ -1,5 +1,7 @@
 abort "needs capistrano 2" unless respond_to?(:namespace)
 
+require 'bundler/capistrano'
+
 set :application, 'gifts.stdmn.com'
 #set :application, 'foo'
 set :repository,  'git://github.com/ss/se-registry.git'
@@ -21,13 +23,13 @@ namespace :deploy do
     cleanup
   end
 
-  task :before_finalize_update, :roles=>:app do
+  before 'bundle:install', :roles => :app do
     set :latest_release, "#{current_release}/ruby/rails"
   end
 
   desc 'Restart the app server'
-  task :restart, :roles=>:app do
-    sudo "chgrp -R apache #{current_release}", :pty=>true
+  task :restart, :roles => :app do
+    sudo "chgrp -R apache #{current_release}", :pty => true
     run "touch #{current_path}/tmp/restart.txt"
   end
 end
