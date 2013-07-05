@@ -138,11 +138,10 @@ private
 
   def export
     require 'csv'
-    data = ''
-    CSV::Writer.generate(data, ',', "\r\n") do |writer|
-      writer << ['Tags','Description','Multiples','Price', 'Giver']
+    data = CSV.generate(:row_sep => "\r\n") do |csv|
+      csv << ['Tags','Description','Multiples','Price', 'Giver']
       page_user.gifts.each do |gift|
-        writer << [
+        csv << [
           gift.tag_names,
           gift.description,
           gift.multi,

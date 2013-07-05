@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class UserNotifierTest < ActionMailer::TestCase
 
@@ -18,7 +18,7 @@ class UserNotifierTest < ActionMailer::TestCase
     assert_equal 2, count
 
     mails = ActionMailer::Base.deliveries
-    assert 2, mails.size
+    assert_equal 2, mails.size
     check_reminder_email(mails[0], [r1, r2])
     check_reminder_email(mails[1], [r3])
   end
@@ -39,7 +39,7 @@ class UserNotifierTest < ActionMailer::TestCase
     assert_equal 1, count
 
     mails = ActionMailer::Base.deliveries
-    assert 1, mails.size
+    assert_equal 1, mails.size
     check_occasion_email(mails[0], [r1, r2])
   end
 

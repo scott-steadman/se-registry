@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class EventTest < ActiveRecord::TestCase
 
@@ -16,7 +16,7 @@ class EventTest < ActiveRecord::TestCase
     e = Event.new(:event_date=>Time.now, :recur=>true)
     e.advance_or_delete
     expected = Date.today >> 12
-    assert expected, e.event_date
+    assert_equal expected, e.event_date
   end
 
   def test_delete

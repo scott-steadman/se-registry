@@ -23,6 +23,7 @@ GEM
       activesupport
     mocha (0.9.7)
       rake
+    multi_json (1.7.7)
     mysql (2.8.1)
     rack (1.1.6)
     rails (2.3.18)
@@ -32,9 +33,13 @@ GEM
       activeresource (= 2.3.18)
       activesupport (= 2.3.18)
       rake (>= 0.8.3)
-    rake (0.8.7)
-    turn (0.8.2)
-      ansi (>= 1.2.2)
+    rake (0.9.2.2)
+    simplecov (0.7.1)
+      multi_json (~> 1.0)
+      simplecov-html (~> 0.7.1)
+    simplecov-html (0.7.1)
+    turn (0.9.6)
+      ansi
     will_paginate (2.3.11)
 
 PLATFORMS
@@ -46,7 +51,8 @@ DEPENDENCIES
   mocha (= 0.9.7)
   mysql (= 2.8.1)
   rails (= 2.3.18)
-  rake (= 0.8.7)
+  rake (= 0.9.2.2)
   se_gem!
-  turn (= 0.8.2)
+  simplecov (= 0.7.1)
+  turn (= 0.9.6)
   will_paginate (= 2.3.11)

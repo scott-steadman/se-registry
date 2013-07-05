@@ -59,13 +59,12 @@ class FriendsController < ApplicationController
   # GET /friends/1/export
   def export
     require 'csv'
-    data = ''
-    CSV::Writer.generate(data, ',', "\r\n") do |writer|
-      writer << ['Friend/Tags','Description','Multiples','Price', 'Giver']
+    data = CSV.generate(:row_sep => "\r\n") do |csv|
+      csv << ['Friend/Tags','Description','Multiples','Price', 'Giver']
       current_user.friends.each do |friend|
-        writer << [friend.display_name]
+        csv << [friend.display_name]
         friend.gifts.each do |gift|
-          writer << [
+          csv << [
             gift.tag_names,
             gift.description,
             gift.multi,
