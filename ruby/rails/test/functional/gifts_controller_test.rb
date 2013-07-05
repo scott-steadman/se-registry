@@ -35,8 +35,11 @@ class GiftsControllerTest < ActionController::TestCase
   end
 
   test 'index with csv format' do
-    login_as user = create_user
-    create_gift(:user => user, :description => 'one', :price => 1.00, :multi => false)
+    user = create_user('user')
+    gift = create_gift(:user => user, :description => 'one', :price => 1.00, :multi => false)
+    giver = create_user('giver')
+    giver.give(gift)
+    login_as user
     get :index, :format => 'csv'
     assert_response :success
     assert_equal 2, @response.body.split(/\r\n/m).size, 'header, gift lines should be returned'
