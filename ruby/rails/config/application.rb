@@ -58,5 +58,7 @@ module Registry
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    SITE_HOST="localhost:3000" unless defined?(SITE_HOST)
   end
 end

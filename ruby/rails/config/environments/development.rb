@@ -34,6 +34,4 @@ Registry::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-
-  SITE_HOST="localhost:3000" unless defined?(SITE_HOST)
 end
