@@ -3,16 +3,16 @@ source 'https://rubygems.org'
 gem 'acts_as_taggable'
 gem 'authlogic'
 gem 'jquery-rails'
-gem 'mysql2'
+gem 'mysql'
 gem 'rails',            '3.2.14'
 gem 'rake'
 gem 'will_paginate'
 
 group :test do
-  gem 'mocha'
-  gem 'simplecov'
+  gem 'mocha',          :require => 'mocha/setup'
   gem 'se_gem',         :git => 'git@github.com:ss/se_gem.git'
-  gem 'turn'
+  gem 'simplecov'
+  gem 'turn',           :require => false
 end
 
 # Gems used only for assets and not required
