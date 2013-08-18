@@ -35,7 +35,7 @@ class Event < ActiveRecord::Base
   end
 
   def self.find_expired_events(date=Time.now)
-    find(:all, :conditions=>["event_date <= ?", date])
+    all(:conditions=>["event_date <= ?", date])
   end
 
   def self.expire_events(date=Time.now)

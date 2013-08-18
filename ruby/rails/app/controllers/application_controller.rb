@@ -6,9 +6,6 @@ class ApplicationController < ActionController::Base
   # See ActionController::RequestForgeryProtection for details
   protect_from_forgery
 
-  # Scrub sensitive parameters from your log
-  filter_parameter_logging :password, :password_confirmation
-
 private
 
   def page

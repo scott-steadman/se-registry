@@ -1,6 +1,6 @@
 This email is being sent to remind you of the following events:
 
-<% @reminders.each do |event| -%>
+<% @user.reminders.each do |event| -%>
   <%= event.description %>	<%= event.event_date.to_formatted_s(:event) %>
 <% end %>
 

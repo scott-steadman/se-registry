@@ -1,6 +1,6 @@
 <h1>Edit <%= event_type %></h1>
 
-<% form_for(:event, @event, :url=>user_event_path(page_user, @event), :html=>{:method=>:put}) do |f| %>
+<%= form_for(:event, @event, :url=>user_event_path(page_user, @event), :html=>{:method=>:put}) do |f| %>
   <%= f.error_messages %>
   <%= render :partial=>'form', :object=>f %>
   <p><%= f.submit 'Update' %></p>

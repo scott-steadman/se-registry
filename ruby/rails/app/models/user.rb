@@ -79,14 +79,14 @@ class User < ActiveRecord::Base
   end
 
   def self.find_needs_reminding(date=Time.now)
-    find(:all,
+    all(
       :include => :reminders,
       :conditions => ['datediff(events.event_date, ?) <= users.lead_time and datediff(events.event_date, ?) mod users.lead_frequency = 0', date, date]
     )
   end
 
   def self.find_has_occasions(date=Time.now)
-    find(:all,
+    all(
       :include => {:friends => :occasions},
       :conditions => ['datediff(events.event_date, ?) <= users.lead_time and datediff(events.event_date, ?) mod users.lead_frequency = 0', date, date]
     )

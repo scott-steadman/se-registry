@@ -12,7 +12,6 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 
-
   def create_user(attrs={})
     attrs = {:login=>attrs} if attrs.is_a?(String)
     User.create!({

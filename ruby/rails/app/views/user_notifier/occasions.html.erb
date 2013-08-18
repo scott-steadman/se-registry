@@ -1,7 +1,7 @@
 This e-mail is being sent to notify you that one or more members
 of your group have an occasion coming up:
 
-<% @friends.each do |friend| -%>
+<% @user.friends.each do |friend| -%>
   <% friend.occasions.each do |event| -%>
     <%= friend.display_name %>	<%= event.description %>	<%= event.event_date.to_formatted_s(:event) %>
   <% end -%>
