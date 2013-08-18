@@ -19,12 +19,14 @@ GEM
     activesupport (2.3.18)
     acts_as_taggable (2.0.2)
     ansi (1.4.3)
-    authlogic (2.1.1)
-      activesupport
-    mocha (0.9.7)
-      rake
-    multi_json (1.7.7)
-    mysql (2.8.1)
+    authlogic (2.1.9)
+      activerecord (~> 2.3.0)
+      activesupport (~> 2.3.0)
+    metaclass (0.0.1)
+    mocha (0.14.0)
+      metaclass (~> 0.0.1)
+    multi_json (1.7.9)
+    mysql (2.9.1)
     rack (1.1.6)
     rails (2.3.18)
       actionmailer (= 2.3.18)
@@ -33,26 +35,26 @@ GEM
       activeresource (= 2.3.18)
       activesupport (= 2.3.18)
       rake (>= 0.8.3)
-    rake (0.9.2.2)
+    rake (10.1.0)
     simplecov (0.7.1)
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
     turn (0.9.6)
       ansi
-    will_paginate (2.3.11)
+    will_paginate (2.3.16)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  acts_as_taggable (= 2.0.2)
-  authlogic (= 2.1.1)
-  mocha (= 0.9.7)
-  mysql (= 2.8.1)
+  acts_as_taggable
+  authlogic
+  mocha
+  mysql
   rails (= 2.3.18)
-  rake (= 0.9.2.2)
+  rake
   se_gem!
-  simplecov (= 0.7.1)
-  turn (= 0.9.6)
-  will_paginate (= 2.3.11)
+  simplecov
+  turn
+  will_paginate (= 2.3.16)
