@@ -2,10 +2,11 @@ source 'https://rubygems.org'
 
 gem 'acts_as_taggable'
 gem 'authlogic'
-gem 'mysql'
-gem 'rails',            '2.3.18'
+gem 'jquery-rails'
+gem 'mysql2'
+gem 'rails',            '3.2.14'
 gem 'rake'
-gem 'will_paginate',    '2.3.16'
+gem 'will_paginate'
 
 group :test do
   gem 'mocha'
@@ -13,3 +14,16 @@ group :test do
   gem 'se_gem',         :git => 'git@github.com:ss/se_gem.git'
   gem 'turn'
 end
+
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
+
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  gem 'therubyracer', :platforms => :ruby
+
+  gem 'uglifier', '>= 1.0.3'
+end
+
