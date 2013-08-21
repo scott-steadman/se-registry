@@ -13,7 +13,8 @@
 class Event < ActiveRecord::Base
   self.inheritance_column = 'event_type'
 
-  attr_accessible :description, :event_date, :recur
+  attr_accessible :description, :event_date, :recur, :as => [:admin, :tester, :user]
+  attr_accessible :user, :as => :tester
 
   validates_presence_of :description, :event_date
 

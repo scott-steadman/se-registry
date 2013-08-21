@@ -3,12 +3,12 @@ require 'test_helper'
 class GiftsHelperTest < ActionView::TestCase
 
   def test_description_of_no_url
-    gift = Gift.new(:description => 'desc')
+    gift = Gift.new({:description => 'desc'}, :as => :tester)
     assert_equal 'desc', description_of(gift)
   end
 
   def test_description_of_with_url
-    gift = Gift.new(:description => 'desc', :url => 'http://www.foo.com')
+    gift = Gift.new({:description => 'desc', :url => 'http://www.foo.com'}, :as => :tester)
     assert_match 'http://www.foo.com', description_of(gift)
   end
 

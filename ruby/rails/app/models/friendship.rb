@@ -10,7 +10,9 @@ class Friendship < ActiveRecord::Base
 
   self.table_name = 'friends'
 
-  belongs_to :user, :class_name=>'User', :foreign_key=>'user_id'
+  attr_accessible :friend, :login_or_email, :user, :as => :tester
+
+  belongs_to :user,   :class_name=>'User', :foreign_key=>'user_id'
   belongs_to :friend, :class_name=>'User', :foreign_key=>'friend_id'
 
   attr_accessor :login_or_email

@@ -4,11 +4,11 @@ class UserNotifierTest < ActionMailer::TestCase
 
   def test_send_reminders
     u1 = create_user('user1')
-    r1 = u1.reminders.create(:description=>'Reminder 1', :event_date=>Date.tomorrow)
-    r2 = u1.reminders.create(:description=>'Reminder 2', :event_date=>Date.tomorrow)
+    r1 = u1.reminders.create({:description => 'Reminder 1', :event_date => Date.tomorrow}, :as => :tester)
+    r2 = u1.reminders.create({:description => 'Reminder 2', :event_date => Date.tomorrow}, :as => :tester)
 
     u2 = create_user('user2')
-    r3 = u2.reminders.create(:event_date => Date.tomorrow, :description => 'Tomorrow')
+    r3 = u2.reminders.create({:event_date => Date.tomorrow, :description => 'Tomorrow'}, :as => :tester)
 
     count = 0
     UserNotifier.send_reminders do |user|
@@ -25,8 +25,8 @@ class UserNotifierTest < ActionMailer::TestCase
 
   def test_send_occasions
     u1 = create_user('user1')
-    r1 = u1.occasions.create(:description=>'Occasion 1', :event_date=>Date.tomorrow)
-    r2 = u1.occasions.create(:description=>'Occasion 2', :event_date=>Date.tomorrow)
+    r1 = u1.occasions.create({:description => 'Occasion 1', :event_date => Date.tomorrow}, :as => :tester)
+    r2 = u1.occasions.create({:description => 'Occasion 2', :event_date => Date.tomorrow}, :as => :tester)
 
     u2 = create_user('user2')
     u2.befriend(u1)
@@ -45,8 +45,8 @@ class UserNotifierTest < ActionMailer::TestCase
 
   # Ticket #8
   def test_lead_frequency
-    user = create_user(:login=>'scott', :lead_time=>10, :lead_frequency=>1)
-    user.reminders.create(:description=>'test reminder', :event_date=>Date.tomorrow)
+    user = create_user(:login => 'scott', :lead_time => 10, :lead_frequency => 1)
+    user.reminders.create({:description => 'test reminder', :event_date => Date.tomorrow}, :as => :tester)
 
     UserNotifier.send_reminders do |uu|
       assert_equal user, uu

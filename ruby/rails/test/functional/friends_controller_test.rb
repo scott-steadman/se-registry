@@ -80,7 +80,7 @@ class FriendsControllerTest < ActionController::TestCase
   end
 
   test 'export' do
-    gift = @friend.gifts.create!(:description => 'description', :price => 1.00, :multi => true)
+    gift = @friend.gifts.create!({:description => 'description', :price => 1.00, :multi => true}, :as => :tester)
     @user.give(gift)
     get :export
     assert_response :success

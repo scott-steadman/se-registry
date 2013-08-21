@@ -61,7 +61,7 @@ class UserTest < ActiveRecord::TestCase
 
   test 'role mass update denied' do
     u = create_user
-    assert u.update_attributes(:role => 'foo')
+    assert u.update_attributes({:role => 'foo'}, :as => :tester)
     assert 'user', u.role
   end
 
@@ -86,8 +86,8 @@ class UserTest < ActiveRecord::TestCase
 
   test 'find_needs_reminding' do
     u = create_user
-    u.reminders.create(:description=>'Reminder 1', :event_date=>Date.tomorrow)
-    u.reminders.create(:description=>'Reminder 2', :event_date=>Date.tomorrow)
+    u.reminders.create!({:description => 'Reminder 1', :event_date => Date.tomorrow}, :as => :tester)
+    u.reminders.create!({:description => 'Reminder 2', :event_date => Date.tomorrow}, :as => :tester)
 
     users = User.find_needs_reminding
     assert_equal 1, users.size
@@ -102,8 +102,8 @@ class UserTest < ActiveRecord::TestCase
 
   test 'find_has_occasions' do
     u = create_user
-    u.occasions.create(:description=>'Occasion 1', :event_date=>Date.tomorrow)
-    u.occasions.create(:description=>'Occasion 2', :event_date=>Date.tomorrow)
+    u.occasions.create!({:description => 'Occasion 1', :event_date => Date.tomorrow}, :as => :tester)
+    u.occasions.create!({:description => 'Occasion 2', :event_date => Date.tomorrow}, :as => :tester)
     create_user('friend').befriend(u)
 
     users = User.find_has_occasions

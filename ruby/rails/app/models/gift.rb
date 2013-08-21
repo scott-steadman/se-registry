@@ -14,7 +14,8 @@ require 'taggable'
 
 class Gift < ActiveRecord::Base
 
-  attr_accessible :description, :url, :multi, :price, :tag_names
+  attr_accessible :description, :url, :multi, :price, :tag_names, :as => [:admin, :tester, :user]
+  attr_accessible :user, :as => [:tester]
 
   belongs_to :user
 

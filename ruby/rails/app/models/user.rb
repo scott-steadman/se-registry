@@ -36,9 +36,10 @@ class User < ActiveRecord::Base
     config.transition_from_crypto_providers = OldCrypto
   end
 
-  # only allow these fields to be assigned using update_attributes
   attr_accessible :login, :password, :password_confirmation, :email,
-                  :postal_code, :notes, :lead_time, :lead_frequency
+                  :postal_code, :notes, :lead_time, :lead_frequency, :as => [:admin, :tester, :user]
+
+  attr_accessible :role, :as => [:admin, :tester]
 
 
   has_many :gifts, :dependent => :destroy

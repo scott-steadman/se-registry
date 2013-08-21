@@ -13,8 +13,8 @@ class GiftTest < ActiveRecord::TestCase
   end
 
   test 'price sanitization' do
-    assert_equal 1, Gift.new(:description=>'description', :price=>'$1 million dollars').price
-    assert_equal 1, Gift.new(:description=>'description', :price=>'1.50').price
+    assert_equal 1, Gift.new({:description => 'description', :price => '$1 million dollars'}, :as => :tester).price
+    assert_equal 1, Gift.new({:description => 'description', :price => '1.50'}, :as => :tester).price
   end
 
   test 'should create gift' do

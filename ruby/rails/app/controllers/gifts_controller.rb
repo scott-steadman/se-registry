@@ -22,7 +22,7 @@ class GiftsController < ApplicationController
   # POST /gifts
   # POST /gifts.xml
   def create
-    @gift = gifts.new(params[:gift])
+    @gift = gifts.new(params[:gift], :as => role)
     render :action=>:new and return unless request.post?
     if @gift.save
       respond_to do |format|
@@ -47,7 +47,7 @@ class GiftsController < ApplicationController
 
     # work-around bug in acts_as_taggable
     gift.tags.clear
-    if gift.update_attributes(params[:gift])
+    if gift.update_attributes(params[:gift], :as => role)
       flash[:notice] = 'Gift updated!'
       respond_to do |format|
         format.html { redirect_to user_gifts_path(page_user) }

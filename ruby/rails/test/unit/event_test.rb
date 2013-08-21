@@ -13,21 +13,21 @@ class EventTest < ActiveRecord::TestCase
   end
 
   def test_advance
-    e = Event.new(:event_date=>Time.now, :recur=>true)
+    e = Event.new({:event_date => Time.now, :recur => true}, :as  =>  :tester)
     e.advance_or_delete
     expected = Date.today >> 12
     assert_equal expected, e.event_date
   end
 
   def test_delete
-    e = Event.new(:event_date=>Time.now, :recur=>false)
+    e = Event.new({:event_date => Time.now, :recur => false}, :as => :tester)
     e.expects(:destroy).times(1)
     e.advance_or_delete
     assert e.deleted?
   end
 
   def test_null_dates_deleted
-    e = Event.new(:event_date => nil)
+    e = Event.new({:event_date => nil}, :as => :tester)
     e.expects(:destroy).times(1)
     e.advance_or_delete
     assert e.deleted?

@@ -47,7 +47,7 @@ class EventsController < ApplicationController
   def create
     redirect_to index_path and return unless request.post?
 
-    @event = events.new(params[:event])
+    @event = events.new(params[:event], :as => role)
 
     respond_to do |format|
       if @event.save
@@ -69,7 +69,7 @@ class EventsController < ApplicationController
     @event = events.find(params[:id])
 
     respond_to do |format|
-      if @event.update_attributes(params[:event])
+      if @event.update_attributes(params[:event], :as => role)
         flash[:notice] = 'Event was successfully updated.'
         format.html { redirect_to index_path }
         format.xml  { head :ok }

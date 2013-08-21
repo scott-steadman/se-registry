@@ -12,15 +12,15 @@ class FriendshipTest < ActiveRecord::TestCase
   end
 
   def test_create_requires_valid_user
-    user = create_user(:login=>'user')
-    model = Friendship.create(:user=>user, :login_or_email=>'foo')
-    assert_equal "'foo' not found.", model.errors.on_base
+    user  = create_user(:login => 'user')
+    model = Friendship.create({:user => user, :login_or_email => 'foo'}, :as => :tester)
+    assert_equal ["'foo' not found."], model.errors[:base]
   end
 
   def test_create_requires_other
-    user = create_user(:login=>'user')
-    model = Friendship.create(:user=>user, :login_or_email=>'user')
-    assert_equal "You cannot befriend yourself.", model.errors.on_base
+    user  = create_user(:login => 'user')
+    model = Friendship.create({:user => user, :login_or_email => 'user'}, :as => :tester)
+    assert_equal ['You cannot befriend yourself.'], model.errors[:base]
   end
 
   def test_create_prevents_duplicates
@@ -28,8 +28,8 @@ class FriendshipTest < ActiveRecord::TestCase
     friend = create_user(:login=>'friend')
     user.befriend(friend)
 
-    model = Friendship.create(:user=>user, :login_or_email=>'friend')
-    assert_equal "'friend' is already your friend.", model.errors.on_base
+    model = Friendship.create({:user => user, :login_or_email => 'friend'}, :as => :tester)
+    assert_equal ["'friend' is already your friend."], model.errors[:base]
   end
 
   def test_destroy
@@ -37,7 +37,7 @@ class FriendshipTest < ActiveRecord::TestCase
     friend = create_user(:login=>'friend')
     friendship = nil
     assert_difference 'Friendship.count' do
-      friendship = Friendship.create(:user=>user, :friend=>friend)
+      friendship = Friendship.create({:user => user, :friend => friend}, :as => :tester)
     end
 
     assert_difference 'Friendship.count', -1 do
