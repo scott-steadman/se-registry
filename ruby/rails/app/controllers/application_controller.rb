@@ -54,7 +54,7 @@ private
   end
 
   def store_location
-    session[:return_to] = request.request_uri
+    session[:return_to] = request.url
   end
 
   def redirect_back_or_default(default)
@@ -77,6 +77,14 @@ private
       ['About', about_path],
       ['Logout', logout_path],
     ]
+  end
+
+  def role
+    if current_user
+      current_user.role.to_sym
+    else
+      :user
+    end
   end
 
 end

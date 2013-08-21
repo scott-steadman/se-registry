@@ -106,8 +106,10 @@ private
 
   def joins
     [
-      "JOIN #{GiftTag.table_name} on (#{GiftTag.table_name}.gift_id = #{Gift.table_name}.id)",
-      "JOIN #{Tag.table_name} on (#{Tag.table_name}.id = #{GiftTag.table_name}.tag_id)"
+      %{JOIN #{Tagging.table_name} ON
+        (#{Tagging.table_name}.taggable_type = 'Gift' AND #{Tagging.table_name}.taggable_id = #{Gift.table_name}.id)
+      },
+      "JOIN #{Tag.table_name} on (#{Tag.table_name}.id = #{Tagging.table_name}.tag_id)"
     ] if params[:tag]
   end
 

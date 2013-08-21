@@ -33,7 +33,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_no_difference 'User.count' do
       post :create, user_params(:login => nil)
     end
-    assert assigns(:user).errors.on(:login)
+    assert assigns(:user).errors[:login]
     assert_response :success
   end
 
@@ -41,7 +41,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_no_difference 'User.count' do
       post :create, user_params(:password => nil)
     end
-    assert assigns(:user).errors.on(:password)
+    assert assigns(:user).errors[:password]
     assert_response :success
   end
 
@@ -49,7 +49,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_no_difference 'User.count' do
       post :create, user_params(:password_confirmation => nil)
     end
-    assert assigns(:user).errors.on(:password_confirmation)
+    assert assigns(:user).errors[:password_confirmation]
     assert_response :success
   end
 
@@ -57,7 +57,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_no_difference 'User.count' do
       post :create, user_params(:email => nil)
     end
-    assert assigns(:user).errors.on(:email)
+    assert assigns(:user).errors[:email]
     assert_response :success
   end
 
@@ -202,7 +202,7 @@ class UsersControllerTest < ActionController::TestCase
     login_as user = create_user(:login=>'user')
     get :home
     assert_response :success
-    assert_equal '/users/home', @response.session[:return_to]
+    assert_match '/users/home', session[:return_to]
   end
 
 private

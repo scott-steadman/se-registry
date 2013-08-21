@@ -42,17 +42,17 @@ private
   def friendship
 
     unless self.friend = User.first(:conditions=>['login = ? or email = ?', login_or_email, login_or_email])
-      errors.add_to_base "'#{login_or_email}' not found."
+      errors[:base] << "'#{login_or_email}' not found."
       return
     end
 
     if user_id == friend_id
-      errors.add_to_base 'You cannot befriend yourself.'
+      errors[:base] << 'You cannot befriend yourself.'
       return
     end
 
     if Friendship.first(:conditions=>['user_id = ? and friend_id = ?', user.id, friend.id])
-      errors.add_to_base "'#{login_or_email}' is already your friend."
+      errors[:base] << "'#{login_or_email}' is already your friend."
       return
     end
 

@@ -56,7 +56,7 @@ class UserNotifierTest < ActionMailer::TestCase
     assert_equal 1, mails.size
 
     mail_text = mails[0].to_s
-    assert_match Time.now.tomorrow.to_formatted_s(:event), mail_text
+    assert_match Date.tomorrow.to_formatted_s(:event), mail_text
   end
 
   private
@@ -74,9 +74,11 @@ class UserNotifierTest < ActionMailer::TestCase
     def check_email(mail, subject, events)
       assert_equal subject, mail.subject
       events.each do |event|
-        assert_match event.description, mail.body
-        assert_match event.event_date.to_formatted_s(:events), mail.body
-        assert_equal events.size, mail.body.scan(/\d{4}-\d{2}-\d{2}/).size
+        body = mail.body.to_s
+
+        assert_match event.description, body
+        assert_match event.event_date.to_formatted_s(:events), body
+        assert_equal events.size, body.scan(/\d{4}-\d{2}-\d{2}/).size
       end
     end
 

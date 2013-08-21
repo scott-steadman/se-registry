@@ -101,7 +101,7 @@ class EventsControllerTest < ActionController::TestCase
 
   test 'update requires login' do
     logout
-    get :udpate
+    get :update
     assert_redirected_to login_path
   end
 

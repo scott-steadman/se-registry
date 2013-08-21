@@ -12,7 +12,7 @@ class UserSessionsControllerTest < ActionController::TestCase
     logout
     post :create, :user_session=>{:login=>'user', :password=>'testme1'}
     assert_redirected_to home_url
-    assert_match 'successful', @response.flash[:notice]
+    assert_match 'successful', flash[:notice]
   end
 
   test 'create when logged in' do

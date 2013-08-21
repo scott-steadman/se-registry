@@ -56,10 +56,10 @@ Registry::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
 
-  match '/about'  => 'users#about',           :as => :about
-  match '/home'   => 'gifts#index',           :as => :home
-  match '/login'  => 'user_sessions#new',     :as => :login
-  match '/logout' => 'user_sessions#destroy', :as => :logout
+  match '/about'    => 'users#about',           :as => :about
+  match '/home'     => 'gifts#index',           :as => :home
+  match '/login'    => 'user_sessions#new',     :as => :login
+  match '/logout'   => 'user_sessions#destroy', :as => :logout
 
   resource :user_session
 
@@ -70,6 +70,7 @@ Registry::Application.routes.draw do
 
   resources :users do
     resources :events
+    resources :friends
 
     resources :gifts do
       member do

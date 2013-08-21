@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'acts_as_taggable'
+gem 'acts-as-taggable-on'
 gem 'authlogic'
+gem 'dynamic_form',     :git => 'git://github.com/rails/dynamic_form.git'
 gem 'jquery-rails'
 gem 'mysql'
 gem 'rails',            '3.2.14'
@@ -9,7 +10,7 @@ gem 'rake'
 gem 'will_paginate'
 
 group :test do
-  gem 'mocha',          :require => 'mocha/setup'
+  gem 'mocha',          :require => false
   gem 'se_gem',         :git => 'git@github.com:ss/se_gem.git'
   gem 'simplecov'
   gem 'turn',           :require => false

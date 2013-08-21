@@ -7,9 +7,8 @@ class Class
 
   def write_inheritable_attribute(name, value=nil)
     class_attribute name
-    self.send("#{name}=", value)
+    send("#{name}=", value)
   end
-
 
   def class_inheritable_reader(*names)
     class_attribute *names

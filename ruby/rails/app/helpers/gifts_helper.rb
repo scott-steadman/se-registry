@@ -2,15 +2,15 @@ module GiftsHelper
 
   def description_of(gift)
     if gift.url.blank?
-      h(gift.description)
+      gift.description
     else
-      link_to(h(gift.description), gift.url, :target=>'_new')
+      link_to(gift.description, gift.url, :target => '_new')
     end
   end
 
   def intent(gift)
     return if gift.givings.empty?
-    h(gift.givings.map {|user| user.display_name}.sort.join(', ') << ' Will')
+    gift.givings.map {|user| user.display_name}.sort.join(', ') << ' Will'
   end
 
   def tags_for(gift)

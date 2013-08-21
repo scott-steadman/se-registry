@@ -10,8 +10,6 @@
 #  multi       :boolean(1)
 #
 
-require 'taggable'
-
 class Gift < ActiveRecord::Base
 
   attr_accessible :description, :url, :multi, :price, :tag_names, :as => [:admin, :tester, :user]
@@ -19,7 +17,15 @@ class Gift < ActiveRecord::Base
 
   belongs_to :user
 
-  acts_as_taggable :join_class_name=>'GiftTag', :dependent=>:destroy
+  acts_as_taggable
+
+  alias :tag_names  :tag_list
+  alias :tag_names= :tag_list=
+
+  def tag(values)
+    values = values.to_s.split(/[\s,]+/) unless values.is_a?(Array)
+    self.tag_names = values
+  end
 
   has_and_belongs_to_many :givings,
     :class_name => 'User',

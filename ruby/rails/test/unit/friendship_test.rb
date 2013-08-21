@@ -8,7 +8,7 @@ class FriendshipTest < ActiveRecord::TestCase
 
   def test_create_requires_login_or_email
     model = Friendship.create
-    assert_equal "cannot be blank.", model.errors.on(:login_or_email)
+    assert_equal ['cannot be blank.'], model.errors[:login_or_email]
   end
 
   def test_create_requires_valid_user
@@ -24,8 +24,8 @@ class FriendshipTest < ActiveRecord::TestCase
   end
 
   def test_create_prevents_duplicates
-    user = create_user(:login=>'user')
-    friend = create_user(:login=>'friend')
+    user   = create_user(:login => 'user')
+    friend = create_user(:login => 'friend')
     user.befriend(friend)
 
     model = Friendship.create({:user => user, :login_or_email => 'friend'}, :as => :tester)
@@ -33,9 +33,10 @@ class FriendshipTest < ActiveRecord::TestCase
   end
 
   def test_destroy
-    user = create_user(:login=>'user')
-    friend = create_user(:login=>'friend')
+    user       = create_user(:login => 'user')
+    friend     = create_user(:login => 'friend')
     friendship = nil
+
     assert_difference 'Friendship.count' do
       friendship = Friendship.create({:user => user, :friend => friend}, :as => :tester)
     end

@@ -34,7 +34,7 @@ class EventTest < ActiveRecord::TestCase
   end
 
   def test_find_expired_events
-    create_occasion(:event_date=>Time.now + 1.day)
+    create_occasion(:event_date => Time.now + 1.day)
     expired = Event.find_expired_events(Time.now + 10.days)
     assert_equal 1, expired.size
     expired.each do |event|
@@ -43,7 +43,7 @@ class EventTest < ActiveRecord::TestCase
   end
 
   def test_expire_events
-    create_occasion(:event_date=>Time.now)
+    create_occasion(:event_date => Time.now)
     expected = Event.find_expired_events(Time.now + 10.days)
 
     count = 0

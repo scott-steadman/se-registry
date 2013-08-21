@@ -55,7 +55,7 @@ class GiftsHelperTest < ActionView::TestCase
     gift = create_gift(:user => recip)
     giver.givings << gift
     stubs(:current_user => giver, :page_user => recip, :protect_against_forgery? => false)
-    assert_match "won't", gift_actions(gift), 'wont link should be present'
+    assert_match wont_user_gift_path(recip, gift), gift_actions(gift), 'wont link should be present'
   end
 
   def test_gift_actions_edit_and_remove
@@ -65,8 +65,8 @@ class GiftsHelperTest < ActionView::TestCase
 
     result = gift_actions(gift)
 
-    assert_match 'edit', result, 'edit link should be present'
-    assert_match 'remove', result, 'remove link should be present'
+    assert_match edit_user_gift_path(recip, gift), result, 'edit link should be present'
+    assert_match user_gift_path(recip, gift), result, 'remove link should be present'
   end
 
 end
