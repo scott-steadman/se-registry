@@ -14,14 +14,14 @@ module GiftsHelper
   end
 
   def tags_for(gift)
-    gift.tag_names.map {|tag| tag_or_link(tag)}.join(' ')
+    gift.tag_names.map {|tag| tag_or_link(tag)}.join(' ').html_safe
   end
 
   def tag_or_link(tag)
     if tag != params[:tag]
-      link_to tag, url_for(:overwrite_params => {:tag => tag})
+      link_to(tag, url_for(:tag => tag))
     else
-      tag
+      h(tag)
     end
   end
 
@@ -41,7 +41,7 @@ module GiftsHelper
       links << link_to('remove', user_gift_path(page_user, gift), :confirm=>'Are you sure?', :method=>:delete)
     end
 
-    links.join('|')
+    links.join('|').html_safe
   end
 
   def admin_can_remove?
