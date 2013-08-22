@@ -32,7 +32,7 @@ module GiftsHelper
       links << link_to('will', will_user_gift_path(page_user, gift), :method=>:post)
     end
 
-    if gift.given_by?(current_user) or admin_can_remove?
+    if gift.given_by?(current_user) or admin_can_remove?(gift)
       links << link_to("won't", wont_user_gift_path(page_user, gift), :method=>:delete)
     end
 
@@ -44,7 +44,7 @@ module GiftsHelper
     links.join('|').html_safe
   end
 
-  def admin_can_remove?
+  def admin_can_remove?(gift)
     current_user.admin? and page_user != current_user and gift.given?
   end
 end

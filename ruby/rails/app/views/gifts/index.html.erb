@@ -12,7 +12,7 @@
   <tr>
     <th>
       Tags
-      <%= link_to '(see_all)', url_for(:overwrite_params => {:tag => nil}) if params[:tag] %>
+      <%= link_to '(see_all)', url_for(:tag => nil) if params[:tag] %>
     </th>
     <th><%= sortable_column_header('Description', 'description') %></th>
     <th>Multi</th>
