@@ -20,7 +20,9 @@ class Gift < ActiveRecord::Base
   acts_as_taggable
 
   alias :tag_names  :tag_list
-  alias :tag_names= :tag_list=
+  def tag_names=(string)
+    self.tag_list = string.split(/[,\s]+/)
+  end
 
   def tag(values)
     values = values.to_s.split(/[\s,]+/) unless values.is_a?(Array)

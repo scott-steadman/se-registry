@@ -42,6 +42,10 @@ class GiftTest < ActiveRecord::TestCase
     assert gift.givable_by?(create_user), 'multi gifts can be give by many givers'
   end
 
+  # Issue 95
+  test 'tag_names= splits tags' do
+    assert_equal ['one', 'two'], Gift.new({:tag_names => 'one, two'}, :as => :tester).tag_names
+  end
 
 private
 

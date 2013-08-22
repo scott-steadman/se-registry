@@ -45,8 +45,6 @@ class GiftsController < ApplicationController
     gift
     render :action=>:edit and return unless request.put?
 
-    # work-around bug in acts_as_taggable
-    gift.tags.clear
     if gift.update_attributes(params[:gift], :as => role)
       flash[:notice] = 'Gift updated!'
       respond_to do |format|

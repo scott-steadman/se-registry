@@ -229,6 +229,15 @@ class GiftsControllerTest < ActionController::TestCase
     assert_redirected_to user_gifts_path(other)
   end
 
+  # Issue 95
+  test 'no spaces in tags' do
+    login_as user = create_user
+    gift = create_gift(:user => user)
+    put :update, :id => gift.id, :gift => {:tag_names => 'one two'}
+    assert_equal ['one', 'two'], gift.reload.tag_names, 'spaces should not be allowed in tag names'
+  end
+
+
 private
 
   def gift_params(params={})
