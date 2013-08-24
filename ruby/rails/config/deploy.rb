@@ -27,6 +27,10 @@ namespace :deploy do
     set :latest_release, "#{current_release}/ruby/rails"
   end
 
+  after 'bundle:install', :roles => :app do
+    run "cd #{latest_release} ; rake assets:precompile"
+  end
+
   desc 'Restart the app server'
   task :restart, :roles => :app do
     sudo "chgrp -R apache #{current_release}", :pty => true
