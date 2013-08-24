@@ -1,8 +1,7 @@
 class UsersController < ApplicationController
 
   before_filter :require_no_user, :only => [:new, :create]
-  before_filter :require_user, :only => [:edit, :home, :index, :show, :update, :destroy]
-  before_filter :require_admin, :only => [:destroy]
+  before_filter :require_user,    :only => [:edit, :home, :index, :show, :update, :destroy]
 
   # GET /users
   # GET /users.xml
@@ -59,9 +58,20 @@ class UsersController < ApplicationController
   # DELETE /users/1.xml
   def destroy
     if request.delete?
-      User.destroy(params[:id])
+      if page_user.admin?
+        flash[:error] = 'You cannot delete an admin account'
+        redirect_back_or_default users_url
+        return
+      else
+        page_user.destroy
+      end
     end
-    redirect_back_or_default users_url
+
+    if closing_account?
+      redirect_to logout_url
+    else
+      redirect_back_or_default users_url
+    end
   end
 
   def home
@@ -72,6 +82,10 @@ private
 
   def order
     'login'
+  end
+
+  def closing_account?
+    current_user == page_user
   end
 
 end

@@ -25,8 +25,8 @@ class UsersControllerTest < ActionController::TestCase
   test 'create should allow signup' do
     assert_difference 'User.count', 1 do
       post :create, user_params
+      assert_redirected_to home_path
     end
-    assert_redirected_to home_path
   end
 
   test 'create requires login on signup' do
@@ -176,21 +176,45 @@ class UsersControllerTest < ActionController::TestCase
     end
   end
 
-  test 'destroy as non admin' do
-    login_as user = create_user('user')
-    assert_no_difference 'User.count' do
-      delete :destroy, :id=>user.id
+  test 'destroy other as non admin' do
+    user  = create_user('user')
+    other = create_user('other')
+    login_as user
+    assert_difference 'User.count', -1 do
+      delete :destroy, :id => other.id
+      assert_redirected_to logout_url
     end
-    assert_redirected_to logout_url
+
+    assert !User.exists?(user),  'user should be deleted'
+    assert  User.exists?(other), 'other should NOT be deleted'
   end
 
-  test 'destroy' do
-    login_as user = create_user(:login=>'user',:role=>'admin')
-    dd = create_user('deletable')
+  test 'close account' do
+    login_as user = create_user('user')
     assert_difference 'User.count', -1 do
-      delete :destroy, :id=>dd.id
+      delete :destroy
+      assert_redirected_to logout_url
     end
-    assert_redirected_to users_url
+  end
+
+  test 'destroy as admin' do
+    user  = create_user(:login=>'user',:role=>'admin')
+    other = create_user('deletable')
+    login_as user
+    assert_difference 'User.count', -1 do
+      delete :destroy, :id => other.id
+      assert_redirected_to users_url
+    end
+  end
+
+  test 'cannot destroy admin' do
+    user = create_user(:login => 'user',:role => 'admin')
+    login_as user
+    assert_no_difference 'User.count' do
+      delete :destroy, :id => user.id
+      assert_redirected_to users_url
+      assert_match 'cannot delete', flash[:error]
+    end
   end
 
   test 'home logged out' do

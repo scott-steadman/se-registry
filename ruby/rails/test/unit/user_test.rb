@@ -72,16 +72,43 @@ class UserTest < ActiveRecord::TestCase
     assert_equal 1, user.reload.friends.size
   end
 
-  test 'friend removed on destroy' do
+  test 'destroy removes gifts' do
+    user = create_user('user')
+    user.gifts.create!({:description => 'gift'}, :as => :tester)
+    assert_difference 'Gift.count', -1 do
+      user.destroy
+    end
+  end
+
+  test 'destroy removes events' do
+    user = create_user('user')
+    user.occasions.create!({:description => 'occasion', :event_date => Date.today}, :as => :tester)
+    user.reminders.create!({:description => 'reminder', :event_date => Date.today}, :as => :tester)
+    assert_difference 'Event.count', -2 do
+      user.destroy
+    end
+  end
+
+  test 'destroy removes givings' do
+    user   = create_user(:login=>'user')
+    friend = create_user(:login=>'friend')
+    gift   = friend.gifts.create!({:description => 'gift'}, :as => :tester)
+    user.befriend(friend)
+    user.give(gift)
+
+    assert_difference 'Giving.count', -1 do
+      user.destroy
+    end
+  end
+
+  test 'destroy removes friendships' do
     user = create_user(:login=>'user')
     friend = create_user(:login=>'friend')
     user.befriend(friend)
-    user.save!
 
-    assert_equal 1, user.friends.size
-    friend.destroy
-    user.reload
-    assert_equal 0, user.friends.size
+    assert_difference 'Friendship.count', -1 do
+      friend.destroy
+    end
   end
 
   test 'find_needs_reminding' do

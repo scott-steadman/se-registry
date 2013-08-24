@@ -68,7 +68,6 @@ class User < ActiveRecord::Base
                                     :message => 'cannot be an email'
   validates_uniqueness_of   :login, :case_sensitive => false
 
-
   before_destroy :remove_from_friends
 
   def display_name
@@ -99,6 +98,10 @@ class User < ActiveRecord::Base
 
   def befriend(friend)
     friends << friend
+  end
+
+  def last_login_at
+    super || created_at
   end
 
 private
