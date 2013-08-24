@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class GiftsHelperTest < ActionView::TestCase
+  include ERB::Util
 
   def test_description_of_no_url
     gift = Gift.new({:description => 'desc'}, :as => :tester)
