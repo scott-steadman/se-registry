@@ -1,7 +1,7 @@
 <tr>
   <td><%= h user.login %></td>
 <% if page_user.admin? -%>
-  <td><%= user.last_login_at.localtime || '&nbsp;'.html_safe %></td>
+  <td><%= user.last_login_at.localtime %></td>
   <td><%= user.role %></td>
   <td align='right'>
     <%= link_to 'befriend', user_friends_path(page_user, :friend_id=>user.id), :method=>:post %>
