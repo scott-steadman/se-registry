@@ -26,4 +26,13 @@ class UserNotifier < ActionMailer::Base
     end
   end
 
+  def self.send_test_emails(to)
+    user = User.find_by_email(to)
+    raise ArgumentError, "No user with Email: #{to}" unless user
+
+    puts "Sending emails to: #{user.login}..."
+    reminders(user).deliver
+    occasions(user).deliver
+  end
+
 end

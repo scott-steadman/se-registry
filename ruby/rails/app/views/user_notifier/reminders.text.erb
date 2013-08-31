@@ -1,18 +1,8 @@
-<p>
 This email is being sent to remind you of the following events:
-</p>
 
-<table>
 <% @user.reminders.each do |event| -%>
-  <tr>
-    <td><%= event.description %></td>
-    <td><%= event.event_date.to_formatted_s(:event) %></td>
-  </tr>
+  <%= event.description %>	<%= event.event_date.to_formatted_s(:event) %>
 <% end %>
-</table>
 
-<p>
---
 If you do not wish to receive these reminders, you can change your settings
 by going to: <%= edit_user_url(@user) %>
-</p>
