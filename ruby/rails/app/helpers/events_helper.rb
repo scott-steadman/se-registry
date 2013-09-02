@@ -11,7 +11,7 @@ module EventsHelper
         links << link_to('New Occasion', new_user_occasion_path(page_user))
         links << link_to('New Reminder', new_user_reminder_path(page_user))
     end
-    links.join('|')
+    links.join('|').html_safe
   end
 
   def event_actions(event, user=page_user)
@@ -29,7 +29,7 @@ module EventsHelper
     links = []
     links << link_to('Edit', edit_path)
     links << link_to('Delete', delete_path, :confirm=>'Are you sure?', :method=>:delete)
-    links.join('|')
+    links.join('|').html_safe
   end
 
   def user_event_path(user, event)

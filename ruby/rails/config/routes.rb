@@ -67,8 +67,8 @@ Registry::Application.routes.draw do
 
   resources :events
   resources :gifts
-  resources :occasions
-  resources :reminders
+  resources :occasions, :controller => :events
+  resources :reminders, :controller => :events
 
   resources :users do
     resources :events
@@ -81,8 +81,8 @@ Registry::Application.routes.draw do
       end
     end
 
-    resources :occasions
-    resources :reminders
+    resources :occasions, :controller => :events
+    resources :reminders, :controller => :events
   end
 
   root :to => 'gifts#index'
