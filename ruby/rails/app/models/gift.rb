@@ -12,7 +12,7 @@
 
 class Gift < ActiveRecord::Base
 
-  attr_accessible :description, :url, :multi, :price, :tag_names, :as => [:admin, :tester, :user]
+  attr_accessible :description, :url, :urls, :multi, :price, :tag_names, :as => [:admin, :tester, :user]
   attr_accessible :user, :as => [:tester]
 
   belongs_to :user
@@ -61,6 +61,16 @@ class Gift < ActiveRecord::Base
 
   def price=(value)
     super sanitize_price(value)
+  end
+
+  # Issue #84
+  def urls=(array)
+    self.url = array.join(' ')
+  end
+
+  # Issue #84
+  def urls
+    url.to_s.split(/[,\s]+/)
   end
 
 private

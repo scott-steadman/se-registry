@@ -47,6 +47,12 @@ class GiftTest < ActiveRecord::TestCase
     assert_equal ['one', 'two'], Gift.new({:tag_names => 'one, two'}, :as => :tester).tag_names
   end
 
+  # Issue #84
+  test 'urls' do
+    assert_equal ['one'],        Gift.new({:url => 'one'},           :as => :tester).urls
+    assert_equal ['one', 'two'], Gift.new({:urls => ['one', 'two']}, :as => :tester).urls
+  end
+
 private
 
   def recipient

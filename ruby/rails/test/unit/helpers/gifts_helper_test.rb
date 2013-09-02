@@ -3,28 +3,29 @@ require 'test_helper'
 class GiftsHelperTest < ActionView::TestCase
   include ERB::Util
 
-  def test_description_of_no_url
-    gift = Gift.new({:description => 'desc'}, :as => :tester)
-    assert_equal 'desc', description_of(gift)
+  # Issue #84
+  test 'links_for' do
+    links = 'http://one.com http://two.com'
+    gift = Gift.new({:description => 'desc', :url => links}, :as => :tester)
+
+    result = links_for(gift)
+    links.split(/\s+/).each do |link|
+      assert_match link, result, "#{link} missing"
+    end
   end
 
-  def test_description_of_with_url
-    gift = Gift.new({:description => 'desc', :url => 'http://www.foo.com'}, :as => :tester)
-    assert_match 'http://www.foo.com', description_of(gift)
-  end
-
-  def test_intent_no_givings
+  test 'intent no givings' do
     assert_nil intent(Gift.new)
   end
 
-  def test_intent_with_givings
+  test 'intent with givings' do
     recip = create_user('recip')
     gift = create_gift(:user => recip)
     create_user('giver').givings << gift
     assert_equal 'giver Will', intent(gift)
   end
 
-  def test_tags_for_no_tag_parameter
+  test 'tags_for no tag parameter' do
     gift = create_gift
     gift.tag_names << 'foo'
     gift.tag_names << 'bar'
@@ -34,7 +35,7 @@ class GiftsHelperTest < ActionView::TestCase
     end
   end
 
-  def test_tags_for_with_tag_parameter
+  test 'tags_for with tag parameter' do
     gift = create_gift
     gift.tag_names << 'foo'
     gift.tag_names << 'bar'
@@ -42,7 +43,7 @@ class GiftsHelperTest < ActionView::TestCase
     assert_equal 'foo <a href="url">bar</a>', tags_for(gift), 'foo should not be a link'
   end
 
-  def test_gift_actions_will
+  test 'gift_actions will' do
     giver = create_user('giver')
     recip = create_user('recip')
     gift = create_gift(:user => recip)
@@ -50,7 +51,7 @@ class GiftsHelperTest < ActionView::TestCase
     assert_match 'will', gift_actions(gift), 'will link should be present'
   end
 
-  def test_gift_actions_wont
+  test 'gift_actions wont' do
     giver = create_user('giver')
     recip = create_user('recip')
     gift = create_gift(:user => recip)
@@ -59,7 +60,7 @@ class GiftsHelperTest < ActionView::TestCase
     assert_match wont_user_gift_path(recip, gift), gift_actions(gift), 'wont link should be present'
   end
 
-  def test_gift_actions_edit_and_remove
+  test 'gift_actions edit and remove' do
     recip = create_user('recip')
     gift = create_gift(:user => recip)
     stubs(:current_user => recip, :page_user => recip, :protect_against_forgery? => false)
