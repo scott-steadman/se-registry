@@ -1,11 +1,10 @@
 module GiftsHelper
 
-  def description_of(gift)
-    if gift.url.blank?
-      gift.description
-    else
-      link_to(gift.description, gift.url, :target => '_new')
-    end
+  def links_for(gift)
+    ['(',
+      gift.urls.map {|url| link_to('link', url)}.join(', '),
+     ')'
+    ].join.html_safe
   end
 
   def intent(gift)
