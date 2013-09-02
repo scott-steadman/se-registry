@@ -49,10 +49,6 @@ private
     end
   end
 
-  def require_admin
-    redirect_to logout_url unless current_user.admin?
-  end
-
   def store_location
     session[:return_to] = request.url
   end
