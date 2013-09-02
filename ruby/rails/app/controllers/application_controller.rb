@@ -64,14 +64,14 @@ private
 
   def tabs
     @tabs ||= [
-      ['My Gifts', gifts_path],
-      ['My Friends', user_friends_path(current_user)],
-      ['My Occasions', occasions_path],
-      ['My Reminders', reminders_path],
-      ['My Settings', edit_user_path(current_user)],
-      ['Users', users_path],
-      ['About', about_path],
-      ['Logout', logout_path],
+      ['My Gifts',      gifts_path    ],
+      ['My Friends',    friends_path  ],
+      ['My Occasions',  occasions_path],
+      ['My Reminders',  reminders_path],
+      ['My Settings',   settings_path ],
+      ['Users',         users_path    ],
+      ['About',         about_path    ],
+      ['Logout',        logout_path   ],
     ]
   end
 

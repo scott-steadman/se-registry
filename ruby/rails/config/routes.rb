@@ -57,9 +57,11 @@ Registry::Application.routes.draw do
   # match ':controller(/:action(/:id))(.:format)'
 
   match '/about'    => 'users#about',           :as => :about
+  match '/friends'  => 'friends#index',         :as => :friends
   match '/home'     => 'gifts#index',           :as => :home
   match '/login'    => 'user_sessions#new',     :as => :login
   match '/logout'   => 'user_sessions#destroy', :as => :logout
+  match '/settings' => 'users#edit',            :as => :settings
 
   resource :user_session
 
