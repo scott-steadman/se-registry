@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserNotifierTest < ActionMailer::TestCase
 
-  def test_send_reminders
+  test 'send_reminders' do
     u1 = create_user('user1')
     r1 = u1.reminders.create({:description => 'Reminder 1', :event_date => Date.tomorrow}, :as => :tester)
     r2 = u1.reminders.create({:description => 'Reminder 2', :event_date => Date.tomorrow}, :as => :tester)
@@ -23,7 +23,7 @@ class UserNotifierTest < ActionMailer::TestCase
     check_reminder_email(mails[1], [r3])
   end
 
-  def test_send_occasions
+  test 'send_occasions' do
     u1 = create_user('user1')
     r1 = u1.occasions.create({:description => 'Occasion 1', :event_date => Date.tomorrow}, :as => :tester)
     r2 = u1.occasions.create({:description => 'Occasion 2', :event_date => Date.tomorrow}, :as => :tester)
@@ -44,7 +44,7 @@ class UserNotifierTest < ActionMailer::TestCase
   end
 
   # Ticket #8
-  def test_lead_frequency
+  test 'lead_frequency' do
     user = create_user(:login => 'scott', :lead_time => 10, :lead_frequency => 1)
     user.reminders.create({:description => 'test reminder', :event_date => Date.tomorrow}, :as => :tester)
 
@@ -59,27 +59,39 @@ class UserNotifierTest < ActionMailer::TestCase
     assert_match Date.tomorrow.to_formatted_s(:event), mail_text
   end
 
-  private
+  test 'send_test_emails' do
+    user = create_user(:login => 'scott', :email => 'scott@me.com',)
+    user.reminders.create({:description => 'test reminder', :event_date => Date.tomorrow}, :as => :tester)
+    user.occasions.create({:description => 'test occasion', :event_date => Date.tomorrow}, :as => :tester)
 
-    def check_reminder_email(mail, events)
-      subject = 'The E-Registry: ' + (events.size > 1 ? 'Reminders' : 'Reminder')
-      check_email(mail, subject, events)
-    end
+    UserNotifier.send_test_emails('scott@me.com')
 
-    def check_occasion_email(mail, events)
-      subject = 'The E-Registry: Occasions'
-      check_email(mail, subject, events)
-    end
+    assert_equal user.events.size, ActionMailer::Base.deliveries.size
+  end
 
-    def check_email(mail, subject, events)
-      assert_equal subject, mail.subject
-      events.each do |event|
-        body = mail.body.to_s
+private
+
+  def check_reminder_email(mail, events)
+    subject = 'The E-Registry: ' + (events.size > 1 ? 'Reminders' : 'Reminder')
+    check_email(mail, subject, events)
+  end
+
+  def check_occasion_email(mail, events)
+    subject = 'The E-Registry: Occasions'
+    check_email(mail, subject, events)
+  end
+
+  def check_email(mail, subject, events)
+    assert_equal subject, mail.subject
+    events.each do |event|
+      mail.parts.each do |part|
+        body = part.body.to_s
 
         assert_match event.description, body
         assert_match event.event_date.to_formatted_s(:events), body
         assert_equal events.size, body.scan(/\d{4}-\d{2}-\d{2}/).size
       end
     end
+  end
 
 end
