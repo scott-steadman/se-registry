@@ -12,7 +12,7 @@
 
 class Gift < ActiveRecord::Base
 
-  attr_accessible :description, :url, :urls, :multi, :price, :tag_names, :as => [:admin, :tester, :user]
+  attr_accessible :description, :hidden, :multi, :price, :tag_names, :url, :urls, :as => [:admin, :tester, :user]
   attr_accessible :user, :as => [:tester]
 
   belongs_to :user
@@ -56,7 +56,7 @@ class Gift < ActiveRecord::Base
   end
 
   def editable_by?(other)
-    other.admin? || user == other
+    other.admin? or user == other or (hidden? and given_by?(other))
   end
 
   def price=(value)

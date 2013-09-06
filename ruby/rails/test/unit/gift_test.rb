@@ -42,6 +42,33 @@ class GiftTest < ActiveRecord::TestCase
     assert gift.givable_by?(create_user), 'multi gifts can be give by many givers'
   end
 
+  test 'editable_by admin' do
+    user = create_user(:role => 'admin')
+    gift = create_gift
+    assert gift.editable_by?(user), 'admins should be able to edit any gift'
+  end
+
+  test 'editable_by other' do
+    user = create_user
+    gift = create_gift
+    assert !gift.editable_by?(user), 'others should NOT be able to edit any gift'
+  end
+
+  test 'editable_by self' do
+    user = create_user
+    gift = create_gift(:user => user)
+    assert gift.editable_by?(user), 'users should be able to edit their own gift'
+  end
+
+  # Issue 85
+  test 'editable_by other can edit hidden' do
+    user  = create_user('user')
+    gift  = create_gift(:user => user, :hidden => true)
+    other = create_user('other')
+    other.give(gift)
+    assert gift.editable_by?(other), 'others can edit hidden gifts they give'
+  end
+
   # Issue 95
   test 'tag_names= splits tags' do
     assert_equal ['one', 'two'], Gift.new({:tag_names => 'one, two'}, :as => :tester).tag_names

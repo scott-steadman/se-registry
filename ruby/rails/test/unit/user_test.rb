@@ -148,4 +148,14 @@ class UserTest < ActiveRecord::TestCase
     assert gift.given?
   end
 
+  # Issue 85
+  test 'hidden gifts' do
+    u = create_user
+    u.gifts.create!({:description => 'visible'},                 :as => :tester)
+    u.gifts.create!({:description => 'hidden', :hidden => true}, :as => :tester)
+
+    assert_equal 2, u.gifts.count,         'there should be 2 gifts'
+    assert_equal 1, u.visible_gifts.count, 'there should be 1 visible gift'
+  end
+
 end

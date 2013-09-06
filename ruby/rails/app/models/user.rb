@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
 
 
   has_many :gifts, :dependent => :destroy
+  has_many :visible_gifts, :class_name => 'Gift', :conditions => {:hidden => false}  # Issue 85
   has_many :events, :dependent => :destroy, :order => 'event_date'
   has_many :reminders, :class_name => 'Reminder', :order => 'event_date'
   has_many :occasions, :class_name => 'Occasion', :order => 'event_date'
