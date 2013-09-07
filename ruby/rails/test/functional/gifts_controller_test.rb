@@ -57,6 +57,16 @@ class GiftsControllerTest < ActionController::TestCase
     assert_not_nil assigns['gift']
   end
 
+  # Issue 85
+  test 'new gift for other' do
+    other = create_user('other')
+    login_as create_user
+    get :new, :user_id => other
+    assert_response :success
+    assert assigns['gift'].hidden?,                      'gifts created for others should be hidden'
+    assert assigns['gift'].tag_names.include?('secret'), 'gifts created for others should tagged secret'
+  end
+
   test 'create requires login' do
     get :create
     assert_redirected_to login_url
@@ -76,6 +86,18 @@ class GiftsControllerTest < ActionController::TestCase
       post :create, gift_params
     end
     assert_redirected_to user_gifts_path(user)
+  end
+
+  test 'create gift for other' do
+    other = create_user('other')
+    user  = create_user
+    login_as user
+    post :create, {:user_id => other}.merge!(gift_params(:hidden => true))
+    assert_redirected_to user_gifts_path(other)
+
+    gift = other.gifts.first
+    assert gift.hidden?,         'gifts created for others should be hidden'
+    assert gift.given_by?(user), 'gifts created for others should be given by creator'
   end
 
   test 'create with error' do
@@ -141,12 +163,12 @@ class GiftsControllerTest < ActionController::TestCase
     assert_redirected_to user_gifts_path(user)
   end
 
-
   test 'destroy' do
-    login_as user = create_user
-    gift = create_gift(:user=>user)
+    user = create_user
+    gift = create_gift(:user => user)
+    login_as user
     assert_difference 'Gift.count', -1 do
-      delete :destroy, :id=>gift.id
+      delete :destroy, :id => gift.id
     end
     assert_redirected_to user_gifts_path(user)
   end

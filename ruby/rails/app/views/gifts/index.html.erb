@@ -4,9 +4,7 @@
 <% end %>
 <h2>Notes:</h2>
 <pre><%= page_user.notes %></pre>
-<%= link_to 'New', new_user_gift_path(page_user) if page_user == current_user %> |
-<%= link_to 'View All', user_gifts_path(page_user, :per_page=>@gifts.total_entries) if @gifts.total_pages > 1 %> |
-<%= link_to 'Export', user_gifts_path(page_user, :format=>'csv') %>
+<%= gift_list_actions %>
 <%= render :partial=>'layouts/pagination', :object=>@gifts %>
 <table border='1' width='100%'>
   <tr>

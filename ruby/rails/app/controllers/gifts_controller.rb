@@ -16,14 +16,22 @@ class GiftsController < ApplicationController
 
   # GET /gifts/new
   def new
-    @gift = Gift.new
+    @gift = gifts.new.tap do |gift|
+      hidden = (page_user != current_user)
+      gift.hidden    = hidden
+      gift.tag_names = 'secret' if hidden
+    end
   end
 
   # POST /gifts
   # POST /gifts.xml
   def create
     @gift = gifts.new(params[:gift], :as => role)
-    render :action=>:new and return unless request.post?
+
+    render :action => :new and return unless request.post?
+
+    current_user.give(@gift) if gift.hidden?
+
     if @gift.save
       respond_to do |format|
         format.html { redirect_to user_gifts_path(page_user) }
@@ -59,7 +67,7 @@ class GiftsController < ApplicationController
   # DELETE /gifts/1
   # DELETE /gifts/1.xml
   def destroy
-    gifts.delete(gift) if request.delete?
+    gifts.destroy(gift) if request.delete?
     respond_to do |format|
       format.html { redirect_to user_gifts_path(page_user) }
       format.xml  { head :ok }
@@ -78,7 +86,7 @@ class GiftsController < ApplicationController
   # DELETE /gifts/:id/wont
   def wont
     if request.delete?
-      if current_user.admin? && page_user != current_user
+      if current_user.admin? and page_user != current_user
         gift.givings.clear
       else
         current_user.givings.delete(gift)
@@ -116,11 +124,19 @@ private
   end
 
   def page_user
-    @page_user ||= User.find_by_id(params[:user_id]) || current_user
+    @page_user ||= user_from_param || current_user
+  end
+
+  def user_from_param
+    User.find_by_id(params[:user_id]) if params[:user_id]
   end
 
   def gifts
-    page_user.gifts
+    if current_user == page_user
+      page_user.visible_gifts
+    else
+      page_user.gifts
+    end
   end
 
   def gift

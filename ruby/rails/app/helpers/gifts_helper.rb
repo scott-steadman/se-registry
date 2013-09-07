@@ -1,6 +1,8 @@
 module GiftsHelper
 
   def links_for(gift)
+    return if gift.urls.empty?
+
     ['(',
       gift.urls.map {|url| link_to('link', url, :target => '_new')}.join(', '),
      ')'
@@ -22,6 +24,16 @@ module GiftsHelper
     else
       h(tag)
     end
+  end
+
+  def gift_list_actions
+    actions  = []
+
+    actions << link_to('New', new_user_gift_path(page_user))
+    actions << link_to('View All', user_gifts_path(page_user, :per_page=>@gifts.total_entries)) if @gifts.total_pages > 1
+    actions << link_to('Export', user_gifts_path(page_user, :format=>'csv'))
+
+    actions.join(' | ').html_safe
   end
 
   def gift_actions(gift)
