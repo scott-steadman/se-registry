@@ -28,7 +28,7 @@ namespace :deploy do
   end
 
   after 'bundle:install', :roles => :app do
-    run "cd #{latest_release} ; rake assets:precompile"
+    run "cd #{latest_release} ; rake db:migrate assets:precompile"
   end
 
   desc 'Restart the app server'
