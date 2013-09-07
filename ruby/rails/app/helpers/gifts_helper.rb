@@ -2,7 +2,7 @@ module GiftsHelper
 
   def links_for(gift)
     ['(',
-      gift.urls.map {|url| link_to('link', url)}.join(', '),
+      gift.urls.map {|url| link_to('link', url, :target => '_new')}.join(', '),
      ')'
     ].join.html_safe
   end
