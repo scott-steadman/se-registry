@@ -1,8 +1,5 @@
 class ApplicationController < ActionController::Base
 
-  helper_method :current_user_session, :current_user, :page_user, :tabs,
-                :logged_in?
-
   # See ActionController::RequestForgeryProtection for details
   protect_from_forgery
 
@@ -16,16 +13,18 @@ private
     params[:per_page] || 20
   end
 
-  def current_user_session
-    return @current_user_session if defined?(@current_user_session)
-    @current_user_session = UserSession.find
+  helper_method :user_session
+  def user_session
+    @user_session ||= (UserSession.find || UserSession.new(params[:user_session]))
   end
 
+  helper_method :current_user
   def current_user
     return @current_user if defined?(@current_user)
-    @current_user = current_user_session && current_user_session.record
+    @current_user = user_session && user_session.record
   end
 
+  helper_method :page_user
   def page_user
     @page_user ||= if current_user.admin?
       User.find_by_id(params[:user_id] || params[:id]) || current_user
@@ -58,10 +57,12 @@ private
     session[:return_to] = nil
   end
 
+  helper_method :logged_in?
   def logged_in?
-    not current_user_session.nil?
+    not user_session.record.nil?
   end
 
+  helper_method :tabs
   def tabs
     @tabs ||= [
       ['My Gifts',      gifts_path    ],
