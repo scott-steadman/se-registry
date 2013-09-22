@@ -1,8 +1,5 @@
 class ApplicationController < ActionController::Base
 
-  # See ActionController::RequestForgeryProtection for details
-  protect_from_forgery
-
 private
 
   def page
