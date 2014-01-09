@@ -30,6 +30,8 @@
       color:#fff;
     }
     #resizerFrame {
+      position:relative;
+      top:40px;
       width:100%;
       max-width:100%;
       height:100%;
@@ -123,7 +125,6 @@
         }
         $('button[data-viewport-width]').removeClass('active');
         $(this).addClass('active');
-        // $('#resizerFrame').stop().animate({'max-width': newWidth, 'max-height': newHeight}, 200);
         $('#resizerFrame').css({'max-width': newWidth, 'max-height': newHeight});
         e.preventDefault();
         return false;
@@ -146,7 +147,6 @@
         newWidth = $(window).width();
         newHeight = $(window).height();
         $('button[data-viewport-width]').removeClass('active');
-        // $('#resizerFrame').stop().animate({'max-width': newWidth, 'max-height': newHeight}, 200);
         $('#resizerFrame').css({'max-width': newWidth, 'max-height': newHeight});
         $('#resizer').fadeOut(500, function() {
           document.location = document.getElementById("resizerFrame").contentWindow.location.href;
