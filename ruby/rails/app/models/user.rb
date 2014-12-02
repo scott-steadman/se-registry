@@ -105,6 +105,12 @@ class User < ActiveRecord::Base
     super || created_at
   end
 
+  def last_gift_updated_at
+    return nil if gifts.none?
+
+    gifts.last(:order => :updated_at).updated_at
+  end
+
 private
 
   def remove_from_friends

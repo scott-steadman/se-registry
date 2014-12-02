@@ -1,7 +1,9 @@
-<tr>
-  <td><%= h friend.login %></td>
-  <td align='right'>
-    <%= link_to 'gifts', user_gifts_path(friend) %>
-    <%= link_to 'remove', user_friend_path(page_user, friend), :confirm=>'Are you sure?', :method=>:delete %>
-  </td>
-</tr>
+<li>
+  <%= link_to friend.login, user_gifts_path(friend) %>
+  <span style='font-size:80%'>
+  (<%= link_to 'remove', user_friend_path(page_user, friend), :confirm=>'Are you sure?', :method=>:delete %>)
+<%- if friend.last_gift_updated_at -%>
+  Updated at: <%= friend.last_gift_updated_at.localtime.to_s(:db) %>
+<%- end -%>
+  </span>
+</li>

@@ -15,6 +15,7 @@ class FriendsControllerTest < ActionController::TestCase
   end
 
   test 'index with friend' do
+    @friend.gifts.create!({:description => 'description', :price => 1.00, :multi => true}, :as => :tester)
     get :index
     assert_response :success
     assert_equal %w[friend], assigns(:friends).map{|ii| ii.login}.sort
