@@ -6,8 +6,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.xml
   def index
-    conditions = current_user.admin? ? nil : ['id != ?', current_user.id]
-    @users = User.paginate :page=>page, :per_page=>per_page, :order=>order
+    @users = User.order(order).paginate :page => page, :per_page => per_page
   end
 
   # GET /users/new
@@ -18,7 +17,7 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.xml
   def create
-    @user = User.new(params[:user], :as => role)
+    @user = User.new(user_params)
     if request.post? && @user.save
       flash[:notice] = "Account registered!"
       redirect_back_or_default home_url
@@ -42,8 +41,8 @@ class UsersController < ApplicationController
   # PUT /users/1.xml
   def update
     @user = page_user
-    if request.put? && @user.update_attributes(params[:user], :as => role)
-      if params[:user] && current_user.admin?
+    if request.put? && @user.update_attributes(user_params)
+      if params[:user][:role] and current_user.admin?
         @user.role = params[:user][:role]
         @user.save
       end
@@ -86,6 +85,10 @@ private
 
   def closing_account?
     current_user == page_user
+  end
+
+  def user_params
+    params.require(:user).permit(:login, :email, :password, :password_confirmation)
   end
 
 end

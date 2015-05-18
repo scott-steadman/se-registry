@@ -12,9 +12,6 @@
 
 class Gift < ActiveRecord::Base
 
-  attr_accessible :description, :hidden, :multi, :price, :tag_names, :url, :urls, :as => [:admin, :tester, :user]
-  attr_accessible :user, :as => [:tester]
-
   belongs_to :user
 
   acts_as_taggable

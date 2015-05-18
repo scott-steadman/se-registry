@@ -6,12 +6,7 @@ class FriendsController < ApplicationController
   # GET /friends
   # GET /friends.xml
   def index
-    @friends = friends.paginate :page=>page, :per_page=>per_page, :order=>order
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml=>@friends }
-    end
+    @friends = friends.order(order).paginate :page => page, :per_page => per_page
   end
 
   # POST /friends
@@ -36,11 +31,8 @@ class FriendsController < ApplicationController
 
     page_user.befriend(friend)
 
-    respond_to do |format|
-      flash[:notice] = "#{you_or_user} now friends with #{friend.login}."
-      format.html { redirect_to user_friends_path(current_user) }
-      format.xml  { render :xml=>friend, :status=>:created, :location=>friend }
-    end
+    flash[:notice] = "#{you_or_user} now friends with #{friend.login}."
+    redirect_to user_friends_path(current_user)
   end
 
   # DELETE /friends/1
@@ -50,10 +42,7 @@ class FriendsController < ApplicationController
 
     friends.delete(friend)
 
-    respond_to do |format|
-      format.html { redirect_to user_friends_path(current_user) }
-      format.xml  { head :ok }
-    end
+    redirect_to user_friends_path(current_user)
   end
 
   # GET /friends/1/export

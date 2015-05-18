@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class GiftTest < ActiveRecord::TestCase
+class GiftTest < ActiveSupport::TestCase
 
   test 'description must not be nil' do
     gift = Gift.create
@@ -8,13 +8,13 @@ class GiftTest < ActiveRecord::TestCase
   end
 
   test 'description must not be blank' do
-    gift = Gift.create({:description => ''}, :as => :tester)
+    gift = Gift.create(:description => '')
     assert_match /is too short/, gift.errors[:description].first
   end
 
   test 'price sanitization' do
-    assert_equal 1, Gift.new({:description => 'description', :price => '$1 million dollars'}, :as => :tester).price
-    assert_equal 1, Gift.new({:description => 'description', :price => '1.50'}, :as => :tester).price
+    assert_equal 1, Gift.new(:description => 'description', :price => '$1 million dollars').price
+    assert_equal 1, Gift.new(:description => 'description', :price => '1.50').price
   end
 
   test 'should create gift' do
@@ -71,13 +71,13 @@ class GiftTest < ActiveRecord::TestCase
 
   # Issue 95
   test 'tag_names= splits tags' do
-    assert_equal ['one', 'two'], Gift.new({:tag_names => 'one, two'}, :as => :tester).tag_names
+    assert_equal ['one', 'two'], Gift.new(:tag_names => 'one, two').tag_names
   end
 
   # Issue #84
   test 'urls' do
-    assert_equal ['one'],        Gift.new({:url => 'one'},           :as => :tester).urls
-    assert_equal ['one', 'two'], Gift.new({:urls => ['one', 'two']}, :as => :tester).urls
+    assert_equal ['one'],        Gift.new(:url => 'one').urls
+    assert_equal ['one', 'two'], Gift.new(:urls => ['one', 'two']).urls
   end
 
 private

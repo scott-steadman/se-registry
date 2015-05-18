@@ -14,14 +14,14 @@ class UserNotifier < ActionMailer::Base
 
   def self.send_reminders(date=Time.now)
     User.find_needs_reminding(date).each do |user|
-      reminders(user).deliver
+      reminders(user).deliver_now
       yield user if block_given?
     end
   end
 
   def self.send_occasions(date=Time.now)
     User.find_has_occasions(date).each do |user|
-      occasions(user).deliver
+      occasions(user).deliver_now
       yield user if block_given?
     end
   end
@@ -30,9 +30,9 @@ class UserNotifier < ActionMailer::Base
     user = User.find_by_email(to)
     raise ArgumentError, "No user with Email: #{to}" unless user
 
-    puts "Sending emails to: #{user.login}..."
-    reminders(user).deliver
-    occasions(user).deliver
+    puts "Sending emails to: #{user.login}..." unless Rails.env.test?
+    reminders(user).deliver_now
+    occasions(user).deliver_now
   end
 
 end

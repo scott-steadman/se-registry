@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class UserTest < ActiveRecord::TestCase
+class UserTest < ActiveSupport::TestCase
 
   test 'user creation' do
     assert_difference 'User.count' do
@@ -61,7 +61,7 @@ class UserTest < ActiveRecord::TestCase
 
   test 'role mass update denied' do
     u = create_user
-    assert u.update_attributes({:role => 'foo'}, :as => :tester)
+    assert u.update_attributes({:role => 'foo'})
     assert 'user', u.role
   end
 
@@ -74,7 +74,7 @@ class UserTest < ActiveRecord::TestCase
 
   test 'destroy removes gifts' do
     user = create_user('user')
-    user.gifts.create!({:description => 'gift'}, :as => :tester)
+    user.gifts.create!({:description => 'gift'})
     assert_difference 'Gift.count', -1 do
       user.destroy
     end
@@ -82,8 +82,8 @@ class UserTest < ActiveRecord::TestCase
 
   test 'destroy removes events' do
     user = create_user('user')
-    user.occasions.create!({:description => 'occasion', :event_date => Date.today}, :as => :tester)
-    user.reminders.create!({:description => 'reminder', :event_date => Date.today}, :as => :tester)
+    user.occasions.create!({:description => 'occasion', :event_date => Date.today})
+    user.reminders.create!({:description => 'reminder', :event_date => Date.today})
     assert_difference 'Event.count', -2 do
       user.destroy
     end
@@ -92,7 +92,7 @@ class UserTest < ActiveRecord::TestCase
   test 'destroy removes givings' do
     user   = create_user(:login=>'user')
     friend = create_user(:login=>'friend')
-    gift   = friend.gifts.create!({:description => 'gift'}, :as => :tester)
+    gift   = friend.gifts.create!({:description => 'gift'})
     user.befriend(friend)
     user.give(gift)
 
@@ -113,8 +113,8 @@ class UserTest < ActiveRecord::TestCase
 
   test 'find_needs_reminding' do
     u = create_user
-    u.reminders.create!({:description => 'Reminder 1', :event_date => Date.tomorrow}, :as => :tester)
-    u.reminders.create!({:description => 'Reminder 2', :event_date => Date.tomorrow}, :as => :tester)
+    u.reminders.create!({:description => 'Reminder 1', :event_date => Date.tomorrow})
+    u.reminders.create!({:description => 'Reminder 2', :event_date => Date.tomorrow})
 
     users = User.find_needs_reminding
     assert_equal 1, users.size
@@ -129,8 +129,8 @@ class UserTest < ActiveRecord::TestCase
 
   test 'find_has_occasions' do
     u = create_user
-    u.occasions.create!({:description => 'Occasion 1', :event_date => Date.tomorrow}, :as => :tester)
-    u.occasions.create!({:description => 'Occasion 2', :event_date => Date.tomorrow}, :as => :tester)
+    u.occasions.create!({:description => 'Occasion 1', :event_date => Date.tomorrow})
+    u.occasions.create!({:description => 'Occasion 2', :event_date => Date.tomorrow})
     create_user('friend').befriend(u)
 
     users = User.find_has_occasions
@@ -151,8 +151,8 @@ class UserTest < ActiveRecord::TestCase
   # Issue 85
   test 'hidden gifts' do
     u = create_user
-    u.gifts.create!({:description => 'visible'},                 :as => :tester)
-    u.gifts.create!({:description => 'hidden', :hidden => true}, :as => :tester)
+    u.gifts.create!({:description => 'visible'})
+    u.gifts.create!({:description => 'hidden', :hidden => true})
 
     assert_equal 2, u.gifts.count,         'there should be 2 gifts'
     assert_equal 1, u.visible_gifts.count, 'there should be 1 visible gift'

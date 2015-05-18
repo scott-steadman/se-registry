@@ -1,17 +1,10 @@
-ENV["RAILS_ENV"] = "test"
+ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'authlogic/test_case'
 require 'mocha/setup'
 
 class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
-  #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
-  fixtures :all
-
-  # Add more helper methods to be used by all tests here...
 
   def create_user(attrs={})
     attrs = {:login => attrs} if attrs.is_a?(String)
@@ -22,7 +15,7 @@ class ActiveSupport::TestCase
     attrs[:lead_time]             = 10                              unless attrs.has_key?(:lead_time)
     attrs[:email]                 = "#{attrs[:login]}@example.com"  unless attrs.has_key?(:email)
 
-    User.create!(attrs, :as => :tester)
+    User.create!(attrs)
   end
 
   def create_event(attrs={})
@@ -34,7 +27,7 @@ class ActiveSupport::TestCase
     attrs[:event_date]  = 10.days.from_now      unless attrs.has_key?(:event_date)
     attrs[:recur]       = true                  unless attrs.has_key?(:recur)
 
-    attrs.delete(:class).create!(attrs, :as => :tester)
+    attrs.delete(:class).create!(attrs)
   end
 
   def create_occasion(attrs={})
@@ -63,12 +56,12 @@ class ActiveSupport::TestCase
     attrs[:url]         = 'url'               unless attrs.has_key?(:url)
     attrs[:price]       = 1.00                unless attrs.has_key?(:price)
 
-    Gift.create!(attrs, :as => :tester)
+    Gift.create!(attrs)
   end
 
   def login_as(user)
     user = user.login if user.respond_to?(:login)
-    UserSession.create(User.first(:conditions => {:login => user}) || create_user(user))
+    UserSession.create(User.where(:login => user).first || create_user(user))
   end
 
   def logout

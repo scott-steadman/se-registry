@@ -36,17 +36,11 @@ class User < ActiveRecord::Base
     config.transition_from_crypto_providers = OldCrypto
   end
 
-  attr_accessible :login, :password, :password_confirmation, :email,
-                  :postal_code, :notes, :lead_time, :lead_frequency, :as => [:admin, :tester, :user]
-
-  attr_accessible :role, :as => [:admin, :tester]
-
-
-  has_many :gifts, :dependent => :destroy
-  has_many :visible_gifts, :class_name => 'Gift', :conditions => {:hidden => false}  # Issue 85
-  has_many :events, :dependent => :destroy, :order => 'event_date'
-  has_many :reminders, :class_name => 'Reminder', :order => 'event_date'
-  has_many :occasions, :class_name => 'Occasion', :order => 'event_date'
+  has_many :gifts,                                          :dependent => :destroy
+  has_many :visible_gifts, -> { where(:hidden => false) },  :class_name => 'Gift'  # Issue 85
+  has_many :events,        -> { order 'event_date' },       :dependent => :destroy
+  has_many :reminders,     -> { order 'event_date' },       :class_name => 'Reminder'
+  has_many :occasions,     -> { order 'event_date' },       :class_name => 'Occasion'
 
   has_and_belongs_to_many :givings,
     :class_name => 'Gift',
@@ -80,17 +74,15 @@ class User < ActiveRecord::Base
   end
 
   def self.find_needs_reminding(date=Time.now)
-    all(
-      :include => :reminders,
-      :conditions => ['datediff(events.event_date, ?) <= users.lead_time and datediff(events.event_date, ?) mod users.lead_frequency = 0', date, date]
-    )
+    includes(:reminders).
+      references(:reminders).
+        where(['datediff(events.event_date, ?) <= users.lead_time and datediff(events.event_date, ?) mod users.lead_frequency = 0', date, date])
   end
 
   def self.find_has_occasions(date=Time.now)
-    all(
-      :include => {:friends => :occasions},
-      :conditions => ['datediff(events.event_date, ?) <= users.lead_time and datediff(events.event_date, ?) mod users.lead_frequency = 0', date, date]
-    )
+    includes(:friends => :occasions).
+      references(:friends => :occasions).
+        where(['datediff(events.event_date, ?) <= users.lead_time and datediff(events.event_date, ?) mod users.lead_frequency = 0', date, date])
   end
 
   def give(gift)
@@ -108,7 +100,11 @@ class User < ActiveRecord::Base
   def last_gift_updated_at
     return nil if gifts.none?
 
-    gifts.last(:order => :updated_at).updated_at
+    gifts.order(:updated_at).last.updated_at
+  end
+
+  def self.find_by_login_or_email(value)
+    where(['login = :value OR email = :value', {:value => value}]).first
   end
 
 private

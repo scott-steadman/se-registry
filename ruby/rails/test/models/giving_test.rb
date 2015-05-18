@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class GivingTest < ActiveRecord::TestCase
+class GivingTest < ActiveSupport::TestCase
 
   def test_delete_giver_deletes_givings
     giver = create_user('giver')

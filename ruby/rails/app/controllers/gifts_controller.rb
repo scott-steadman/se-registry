@@ -6,10 +6,10 @@ class GiftsController < ApplicationController
   # GET /gifts
   # GET /gifts.xml
   def index
-    @gifts = gifts.paginate :conditions=>conditions, :joins=>joins, :page=>page, :per_page=>per_page, :order=>order
+    @gifts = gifts.joins(joins).where(conditions).order(order).paginate :page => page, :per_page => per_page
+
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml=>@gifts }
       format.csv  { export }
     end
   end
@@ -26,20 +26,19 @@ class GiftsController < ApplicationController
   # POST /gifts
   # POST /gifts.xml
   def create
-    @gift = gifts.new(params[:gift], :as => role)
+    @gift = gifts.new(gift_params)
 
     render :action => :new and return unless request.post?
 
+    @gift.save!
+
     current_user.give(@gift) if gift.hidden?
 
-    if @gift.save
-      respond_to do |format|
-        format.html { redirect_to user_gifts_path(page_user) }
-        format.xml  { render :xml=>@gift, :status=>:created, :location=>@gift }
-      end
-    else
-      render :action=>:new
-    end
+    redirect_to user_gifts_path(page_user)
+  rescue StandardError => ex
+    @gift = Gift.new
+    @gift.errors[:base] = ex.message
+    render :action=>:new
   end
 
   # GET /gifts/1/edit
@@ -53,12 +52,9 @@ class GiftsController < ApplicationController
     gift
     render :action=>:edit and return unless request.put?
 
-    if gift.update_attributes(params[:gift], :as => role)
+    if gift.update_attributes(gift_params)
       flash[:notice] = 'Gift updated!'
-      respond_to do |format|
-        format.html { redirect_to user_gifts_path(page_user) }
-        format.xml  { render :xml=>gift, :status=>:created, :location=>gift }
-      end
+      redirect_to user_gifts_path(page_user)
     else
       render :action => :edit
     end
@@ -68,19 +64,13 @@ class GiftsController < ApplicationController
   # DELETE /gifts/1.xml
   def destroy
     gifts.destroy(gift) if request.delete?
-    respond_to do |format|
-      format.html { redirect_to user_gifts_path(page_user) }
-      format.xml  { head :ok }
-    end
+    redirect_to user_gifts_path(page_user)
   end
 
   # POST /gifts/:id/will
   def will
     current_user.give(gift) if request.post?
-    respond_to do |format|
-      format.html { redirect_to user_gifts_path(page_user) }
-      format.xml  { head :ok }
-    end
+    redirect_to user_gifts_path(page_user)
   end
 
   # DELETE /gifts/:id/wont
@@ -92,13 +82,14 @@ class GiftsController < ApplicationController
         current_user.givings.delete(gift)
       end
     end
-    respond_to do |format|
-      format.html { redirect_to user_gifts_path(page_user) }
-      format.xml  { head :ok }
-    end
+    redirect_to user_gifts_path(page_user)
   end
 
 private
+
+  def gift_params
+    params.require(:gift).permit(:description, :hidden, :multi, :price, :tag_names, :url, :urls)
+  end
 
   def conditions
     conditions, values = tag_conditions

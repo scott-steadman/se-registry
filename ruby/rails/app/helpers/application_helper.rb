@@ -9,4 +9,9 @@ module ApplicationHelper
     link_to title, url_for(:order => "#{column} #{dir}")
   end
 
+  def link_to_function(text, function, html_options={})
+    function += ';return false;' unless function =~ /return false/
+    link_to(text, '#', html_options.merge(:onClick => function))
+  end
+
 end

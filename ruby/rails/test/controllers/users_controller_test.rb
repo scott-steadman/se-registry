@@ -96,7 +96,7 @@ class UsersControllerTest < ActionController::TestCase
     login_as 'user'
     get :edit
     assert_response :success
-    assert_select "form>div>input"
+    assert_select "form>input"
   end
 
   test 'edit other as admin' do
@@ -185,8 +185,8 @@ class UsersControllerTest < ActionController::TestCase
       assert_redirected_to logout_url
     end
 
-    assert !User.exists?(user),  'user should be deleted'
-    assert  User.exists?(other), 'other should NOT be deleted'
+    assert !User.exists?(user.id),  'user should be deleted'
+    assert  User.exists?(other.id), 'other should NOT be deleted'
   end
 
   test 'close account' do

@@ -13,9 +13,6 @@
 class Event < ActiveRecord::Base
   self.inheritance_column = 'event_type'
 
-  attr_accessible :description, :event_date, :recur, :as => [:admin, :tester, :user]
-  attr_accessible :user, :as => :tester
-
   validates_presence_of :description, :event_date
 
   belongs_to :user
@@ -36,7 +33,7 @@ class Event < ActiveRecord::Base
   end
 
   def self.find_expired_events(date=Time.now)
-    all(:conditions=>["event_date <= ?", date])
+    where(["event_date <= ?", date])
   end
 
   def self.expire_events(date=Time.now)

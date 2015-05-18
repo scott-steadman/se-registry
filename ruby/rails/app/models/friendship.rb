@@ -10,8 +10,6 @@ class Friendship < ActiveRecord::Base
 
   self.table_name = 'friends'
 
-  attr_accessible :friend, :login_or_email, :user, :as => :tester
-
   belongs_to :user,   :class_name=>'User', :foreign_key=>'user_id'
   belongs_to :friend, :class_name=>'User', :foreign_key=>'friend_id'
 
@@ -41,7 +39,7 @@ private
   validate :friendship, :on => :create
   def friendship
 
-    unless self.friend = User.first(:conditions=>['login = ? or email = ?', login_or_email, login_or_email])
+    unless self.friend = User.find_by_login_or_email(login_or_email)
       errors[:base] << "'#{login_or_email}' not found."
       return
     end
@@ -51,7 +49,7 @@ private
       return
     end
 
-    if Friendship.first(:conditions=>['user_id = ? and friend_id = ?', user.id, friend.id])
+    if Friendship.where(['user_id = ? and friend_id = ?', user.id, friend.id]).any?
       errors[:base] << "'#{login_or_email}' is already your friend."
       return
     end
