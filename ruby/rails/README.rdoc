@@ -25,10 +25,6 @@ application up and running.
 * Run the test suite
     rake test
 
-* Deployment
-   cap production deploy
-
-
 == Common Tasks:
 
 * Run the development server
@@ -48,5 +44,4 @@ application up and running.
     rake annotate
 
 * Deploy to production
-    bundle exec cap production deploy
-
+    bundle exec cap production deploy (--dry-run)

@@ -20,6 +20,7 @@ group :development do
 
   gem 'capistrano-rails'
   gem 'capistrano-passenger'
+  gem 'highline'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
