@@ -143,7 +143,7 @@ class UsersControllerTest < ActionController::TestCase
   test 'update as admin' do
     login_as create_user(:login=>'user', :role=>'admin')
     other = create_user('other')
-    put :update, :id=>other.id, :user=>{:role=>'admin foo'}
+    patch :update, :id=>other.id, :user=>{:role=>'admin foo'}
     assert_redirected_to home_url
     assert_equal other, assigns['user']
     assert_equal 'admin foo', other.reload.role
@@ -152,7 +152,7 @@ class UsersControllerTest < ActionController::TestCase
   test 'update' do
     user = create_user('user')
     login_as 'user'
-    put :update, :user=>{:email=>'new@example.com'}
+    patch :update, :user=>{:email=>'new@example.com'}
     assert_redirected_to home_url
     assert_equal 'new@example.com', user.reload.email
   end
@@ -160,14 +160,14 @@ class UsersControllerTest < ActionController::TestCase
   test 'update password' do
     user = create_user('user')
     login_as 'user'
-    put :update, :user => {:password => 'foobar', :password_confirmation => 'foobar'}
+    patch :update, :user => {:password => 'foobar', :password_confirmation => 'foobar'}
     assert_redirected_to home_url
     assert user.reload.valid_password?('foobar'), 'password should change'
   end
 
   test 'update failure' do
     login_as 'user'
-    put :update, :user=>{:password=>'a', :password_confirmation=>'b'}
+    patch :update, :user=>{:password=>'a', :password_confirmation=>'b'}
     assert_response :success
     assert_select "div[id=errorExplanation]"
   end
