@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   # POST /users.xml
   def create
     @user = User.new(user_params)
-    if request.post? && @user.save
+    if request.post? and @user.save
       flash[:notice] = "Account registered!"
       redirect_back_or_default home_url
     else
@@ -41,7 +41,7 @@ class UsersController < ApplicationController
   # PUT /users/1.xml
   def update
     @user = page_user
-    if request.put? && @user.update_attributes(user_params)
+    if request.put? and @user.update_attributes(user_params)
       if params[:user][:role] and current_user.admin?
         @user.role = params[:user][:role]
         @user.save

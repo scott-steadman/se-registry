@@ -1,15 +1,15 @@
 GIT
+  remote: git@github.com:ss/se_gem.git
+  revision: c3ae48d1c20fbed01b9e3d3ad7783b0f4a3637c2
+  specs:
+    se_gem (1.0.1)
+
+GIT
   remote: git://github.com/rails/dynamic_form.git
   revision: ebb03213ef8268e24c60e5e162b811d199777227
   specs:
     dynamic_form (1.0.0)
       rails (>= 3.0.0)
-
-GIT
-  remote: git@github.com:ss/se_gem.git
-  revision: c3ae48d1c20fbed01b9e3d3ad7783b0f4a3637c2
-  specs:
-    se_gem (1.0.1)
 
 GEM
   remote: https://rubygems.org/

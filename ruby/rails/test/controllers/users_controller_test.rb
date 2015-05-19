@@ -135,7 +135,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'update as other prevents role assignment' do
     login_as user = create_user('user')
-    get :update, :id=>user, :params=>{:role=>'admin'}
+    get :update, :id=>user.id, :user=>{:role=>'admin'}
     assert_response :success
     assert_equal 'user', user.reload.role
   end
@@ -155,6 +155,14 @@ class UsersControllerTest < ActionController::TestCase
     put :update, :user=>{:email=>'new@example.com'}
     assert_redirected_to home_url
     assert_equal 'new@example.com', user.reload.email
+  end
+
+  test 'update password' do
+    user = create_user('user')
+    login_as 'user'
+    put :update, :user => {:password => 'foobar', :password_confirmation => 'foobar'}
+    assert_redirected_to home_url
+    assert user.reload.valid_password?('foobar'), 'password should change'
   end
 
   test 'update failure' do
