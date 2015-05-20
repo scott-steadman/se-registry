@@ -5,8 +5,8 @@ application up and running.
 
 ==Setup:
 
-* Install Ruby 2.2.2
-    CONFIGURE_OPTS=--enable-shared rbenv install 2.2.2
+* Install Ruby 2.0.0-p353
+    CONFIGURE_OPTS=--enable-shared rbenv install 2.0.0-p353
 
 * Install bundler
     gem install bundler
