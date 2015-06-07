@@ -49,7 +49,7 @@ module GiftsHelper
 
     if gift.editable_by?(current_user)
       links << link_to('edit', edit_user_gift_path(page_user, gift))
-      links << link_to('remove', user_gift_path(page_user, gift), :confirm=>'Are you sure?', :method=>:delete)
+      links << link_to('remove', user_gift_path(page_user, gift), :data => {:confirm=>'Are you sure?'}, :method=>:delete)
     end
 
     links.join('|').html_safe
