@@ -28,7 +28,7 @@ application up and running.
 == Common Tasks:
 
 * Run the development server
-    script/server
+    bundle exec rails server
 
 * Create a controller and test
     bundle exec rails generate controller <name>
