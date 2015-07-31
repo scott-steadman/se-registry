@@ -77,12 +77,4 @@ private
     ]
   end
 
-  def role
-    if current_user
-      current_user.role.to_sym
-    else
-      :user
-    end
-  end
-
 end
