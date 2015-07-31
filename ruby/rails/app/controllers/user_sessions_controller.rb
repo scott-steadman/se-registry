@@ -15,9 +15,23 @@ class UserSessionsController < ApplicationController
 
   # Logout
   def destroy
-    user_session.destroy
+    logout!
     flash[:notice] = "Logout successful!"
     redirect_to login_url
+  end
+
+  # Issue 110
+  def clear_cookies
+    session.clear
+    logout!
+    flash[:notice] = 'Your cookies have been cleared. Please try to log in again.'
+    redirect_to login_url
+  end
+
+private
+
+  def logout!
+    user_session.destroy
   end
 
 end

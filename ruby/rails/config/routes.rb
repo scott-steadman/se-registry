@@ -56,12 +56,13 @@ Rails.application.routes.draw do
 
   root 'gifts#index'
 
-  get '/about'    => 'users#about',           :as => :about
-  get '/friends'  => 'friends#index',         :as => :friends
-  get '/home'     => 'gifts#index',           :as => :home
-  get '/login'    => 'user_sessions#new',     :as => :login
-  get '/logout'   => 'user_sessions#destroy', :as => :logout
-  get '/settings' => 'users#edit',            :as => :settings
+  get '/about'          => 'users#about',               :as => :about
+  get '/clear_cookies'  => 'user_sessions#clear_cookies'                # Issue 110
+  get '/friends'        => 'friends#index',             :as => :friends
+  get '/home'           => 'gifts#index',               :as => :home
+  get '/login'          => 'user_sessions#new',         :as => :login
+  get '/logout'         => 'user_sessions#destroy',     :as => :logout
+  get '/settings'       => 'users#edit',                :as => :settings
 
   resource :user_session
 

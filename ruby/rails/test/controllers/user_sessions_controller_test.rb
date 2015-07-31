@@ -39,4 +39,22 @@ class UserSessionsControllerTest < ActionController::TestCase
     assert_redirected_to login_url
   end
 
+  # Issue 110
+  test 'clear_cookies when logged out' do
+    cookies[:foo] = 'bar'
+    get :clear_cookies
+    assert_redirected_to login_url
+    assert_match 'cookies have been cleared', flash[:notice]
+    assert response.cookies.empty?, 'cookies should be cleared'
+  end
+
+  # Issue 110
+  test 'clear_cookies when logged in' do
+    login_as 'user'
+    cookies[:foo] = 'bar'
+    get :clear_cookies
+    assert_redirected_to login_url
+    assert_match 'cookies have been cleared', flash[:notice]
+  end
+
 end
