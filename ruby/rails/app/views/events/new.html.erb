@@ -1,6 +1,6 @@
 <h1>Create <%= event_type %></h1>
 
-<%= form_for(@event, :url => index_path) do |f| %>
+<%= form_for(@event, :as => :event, :url => index_path) do |f| %>
   <%= f.error_messages %>
   <%= render :partial=>'form', :object=>f %>
   <p><%= f.submit 'Create' %></p>
