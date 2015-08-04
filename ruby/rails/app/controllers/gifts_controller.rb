@@ -43,14 +43,15 @@ class GiftsController < ApplicationController
 
   # GET /gifts/1/edit
   def edit
-    @gift = gift
   end
 
   # PUT /gifts/1
   # PUT /gifts/1.xml
   def update
-    gift
-    render :action=>:edit and return unless request.put?
+    unless request.patch?
+      render :action => :edit
+      return
+    end
 
     if gift.update_attributes(gift_params)
       flash[:notice] = 'Gift updated!'
@@ -130,6 +131,7 @@ private
     end
   end
 
+  helper_method :gift
   def gift
     @gift ||= gifts.find(gift_id)
   end

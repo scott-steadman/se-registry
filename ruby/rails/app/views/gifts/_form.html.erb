@@ -1,8 +1,8 @@
-<%= form.label :tags %> <%= text_field_tag 'gift[tag_names]', @gift.tag_names.join(' ') %><br/>
+<%= form.label :tags %> <%= text_field_tag 'gift[tag_names]', gift.tag_names.join(' ') %><br/>
 <%= form.label :description %> <%= form.text_field :description %><br/>
 <%= form.label :url, 'URLs' %> <%= form.text_field :url %><br/>
 <%= form.label :price %> <%= form.text_field :price %><br/>
 <%= form.label :multi %> <%= form.check_box :multi %><br/>
-<% if current_user != @gift.user %>
+<% if current_user != gift.user %>
 <%= form.label :hidden %> <%= form.check_box :hidden %><br/>
 <% end %>

@@ -136,7 +136,7 @@ class GiftsControllerTest < ActionController::TestCase
   test 'update' do
     login_as user = create_user
     gift = create_gift(:user=>user)
-    put :update, :id=>gift.id, :gift=>{:url=>'new url'}
+    patch :update, :id => gift.id, :gift => {:url => 'new url'}
     assert_redirected_to user_gifts_path(user)
     assert_equal 'new url', gift.reload.url
   end
@@ -144,7 +144,7 @@ class GiftsControllerTest < ActionController::TestCase
   test 'update fails with bad data' do
     login_as user = create_user
     gift = create_gift(:user => user)
-    put :update, :id => gift.id, :gift => {:description => ''}
+    patch :update, :id => gift.id, :gift => {:description => ''}
     assert_response :success
     assert_template :edit
   end
@@ -255,10 +255,9 @@ class GiftsControllerTest < ActionController::TestCase
   test 'no spaces in tags' do
     login_as user = create_user
     gift = create_gift(:user => user)
-    put :update, :id => gift.id, :gift => {:tag_names => 'one two'}
+    patch :update, :id => gift.id, :gift => {:tag_names => 'one two'}
     assert_equal ['one', 'two'], gift.reload.tag_names, 'spaces should not be allowed in tag names'
   end
-
 
 private
 
