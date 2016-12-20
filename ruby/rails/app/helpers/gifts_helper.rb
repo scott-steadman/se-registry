@@ -44,7 +44,7 @@ module GiftsHelper
     end
 
     if gift.given_by?(current_user) or admin_can_remove?(gift)
-      links << link_to("won't", wont_user_gift_path(page_user, gift), :method=>:delete)
+      links << link_to("won't", wont_user_gift_path(page_user, gift), :data => {:confirm => 'Are you sure?'}, :method=>:delete)
     end
 
     if gift.editable_by?(current_user)
