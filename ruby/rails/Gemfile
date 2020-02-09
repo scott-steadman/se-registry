@@ -20,6 +20,7 @@ group :development do
 
   gem 'capistrano-rails'
   gem 'capistrano-passenger'
+  gem 'capistrano-deploy_into_docker'
   gem 'highline'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
