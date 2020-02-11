@@ -12,28 +12,13 @@
 # And be sure to use new-style password hashing:
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 development:
-  adapter: mysql
-  host: mysql
-  database: reg_dev
-  username: dev
-  password: <%= ENV['MYSQL_PASSWORD'] %>
-  encoding: utf8
+  url: <%= ENV['DATABASE_URL'] || 'mysql://dev@mysql/reg_dev?encoding=utf8' %>
 
 # Warning: The database defined as 'test' will be erased and
 # re-generated from your development database when you run 'rake'.
 # Do not set this db to the same as development or production.
 test:
-  adapter: mysql
-  host: mysql
-  database: reg_test
-  username: test
-  password: <%= ENV['MYSQL_PASSWORD'] %>
-  encoding: utf8
+  url: <%= ENV['DATABASE_URL'] || 'mysql://test@mysql/reg_test?encoding=utf8' %>
 
 production:
-  adapter: mysql
-  host: mysql
-  database: reg_prod
-  username: prod
-  password: <%= ENV['MYSQL_PASSWORD'] %>
-  encoding: utf8
+  url: <%= ENV['DATABASE_URL'] %>
