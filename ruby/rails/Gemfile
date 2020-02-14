@@ -7,7 +7,7 @@ gem 'dynamic_form',             :git => 'git://github.com/rails/dynamic_form.git
 gem 'jbuilder',     '~> 2.0'
 gem 'jquery-rails'
 gem 'mysql2'
-gem 'rails',        '~> 4.2.0'
+gem 'rails',        '~> 5.0.0'
 gem 'sass-rails',   '~> 5.0'
 gem 'therubyracer',             :platforms => :ruby
 gem 'turbolinks'
