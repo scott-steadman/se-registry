@@ -160,9 +160,9 @@ class UsersControllerTest < ActionController::TestCase
   test 'update password' do
     user = create_user('user')
     login_as 'user'
-    patch :update, :user => {:password => 'foobar', :password_confirmation => 'foobar'}
+    patch :update, :user => {:password => 'foo bar baz', :password_confirmation => 'foo bar baz'}
     assert_redirected_to home_url
-    assert user.reload.valid_password?('foobar'), 'password should change'
+    assert user.reload.valid_password?('foo bar baz'), 'password should change'
   end
 
   test 'update failure' do
@@ -243,8 +243,8 @@ private
     { :user => {
         :login                 => 'quire',
         :email                 => 'quire@example.com',
-        :password              => 'quire',
-        :password_confirmation => 'quire'
+        :password              => 'my password',
+        :password_confirmation => 'my password'
       }.merge!(options)
     }
   end

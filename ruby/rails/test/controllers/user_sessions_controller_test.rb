@@ -8,21 +8,21 @@ class UserSessionsControllerTest < ActionController::TestCase
   end
 
   test 'create when logged out' do
-    create_user(:login=>'user', :password=>'testme1', :password_confirmation=>'testme1')
+    create_user(:login=>'user', :password=>'my password', :password_confirmation=>'my password')
     logout
-    post :create, :user_session=>{:login=>'user', :password=>'testme1'}
+    post :create, :user_session=>{:login=>'user', :password=>'my password'}
     assert_redirected_to home_url
     assert_match 'successful', flash[:notice]
   end
 
   test 'create when logged in' do
     login_as('user')
-    post :create, :user_session=>{:login=>'user', :password=>'testme1'}
+    post :create, :user_session=>{:login=>'user', :password=>'my password'}
     assert_redirected_to home_url
   end
 
   test 'create with failed save' do
-    create_user(:login=>'user', :password=>'testme1', :password_confirmation=>'testme1')
+    create_user(:login=>'user', :password=>'my password', :password_confirmation=>'my password')
     logout
     post :create, :user_session=>{:login=>'user', :password=>'foo'}
     assert_template 'new'

@@ -10,8 +10,8 @@ class ActiveSupport::TestCase
     attrs = {:login => attrs} if attrs.is_a?(String)
 
     attrs[:login]                 = 'quire'                         unless attrs.has_key?(:login)
-    attrs[:password]              = 'quire'                         unless attrs.has_key?(:password)
-    attrs[:password_confirmation] = 'quire'                         unless attrs.has_key?(:password_confirmation)
+    attrs[:password]              = 'my password'                   unless attrs.has_key?(:password)
+    attrs[:password_confirmation] = 'my password'                   unless attrs.has_key?(:password_confirmation)
     attrs[:lead_time]             = 10                              unless attrs.has_key?(:lead_time)
     attrs[:email]                 = "#{attrs[:login]}@example.com"  unless attrs.has_key?(:email)
 
@@ -75,8 +75,8 @@ class ActiveSupport::TestCase
 end
 
 class Object
-  def tap_pp
-    tap {|ii| pp ii.class, ii}
+  def tap_pp(*args)
+    tap {|ii| pp *args, ii}
   end
 end
 

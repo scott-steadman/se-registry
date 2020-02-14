@@ -16,7 +16,11 @@ private
 
   helper_method :user_session
   def user_session
-    @user_session ||= (UserSession.find || UserSession.new(params[:user_session]))
+    @user_session ||= (UserSession.find || UserSession.new(user_session_params))
+  end
+
+  def user_session_params
+    params.require(:user_session).permit(:login, :password).to_h rescue {}
   end
 
   helper_method :current_user
