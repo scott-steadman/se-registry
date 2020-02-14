@@ -1,7 +1,7 @@
 class FriendsController < ApplicationController
   include ActionView::Helpers::NumberHelper
 
-  before_filter :require_user
+  before_action :require_user
 
   # GET /friends
   # GET /friends.xml

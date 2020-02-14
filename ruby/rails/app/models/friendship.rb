@@ -26,7 +26,7 @@ class Friendship < ActiveRecord::Base
 
   # overridden because there is no id on this model
   def destroy
-    Friendship.delete_all(['user_id=? and friend_id=?', user_id, friend_id])
+    Friendship.where(['user_id=? and friend_id=?', user_id, friend_id]).delete_all
   end
 
 private

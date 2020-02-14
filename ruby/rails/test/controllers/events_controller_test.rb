@@ -22,14 +22,14 @@ class EventsControllerTest < ActionController::TestCase
   end
 
   test 'index with occasions' do
-    @request.stubs(:path).returns('/occasions/')
+    ActionController::TestRequest.any_instance.stubs(:path => '/occasions/')
     get :index
     assert_response :success
     assert_equal %w[Occasion], assigns(:events).map{|ii| ii.event_type}.sort
   end
 
   test 'index with reminders' do
-    @request.stubs(:path).returns('/reminders/')
+    ActionController::TestRequest.any_instance.stubs(:path => '/reminders/')
     get :index
     assert_response :success
     assert_equal %w[Reminder], assigns(:events).map{|ii| ii.event_type}.sort
@@ -37,12 +37,12 @@ class EventsControllerTest < ActionController::TestCase
 
   test 'show requires login' do
     logout
-    get :show
+    get :show, :params => {:id => @event}
     assert_redirected_to login_path
   end
 
   test 'show' do
-    get :show, :id => @event
+    get :show, :params => {:id => @event}
     assert_response :success
     assert_equal @event, assigns(:event)
   end
@@ -67,14 +67,14 @@ class EventsControllerTest < ActionController::TestCase
 
   test 'create fails on GET' do
     assert_no_difference 'Event.count' do
-      get :create, :event => {:event_date => Date.today}
+      get :create, :params => {:event => {:event_date => Date.today}}
     end
     assert_redirected_to user_events_path(@user)
   end
 
   test 'create' do
     assert_difference 'Event.count', 1 do
-      post :create, :event => {:event_date => Date.today, :description => 'Today'}
+      post :create, :params => {:event => {:event_date => Date.today, :description => 'Today'}}
     end
     assert_redirected_to user_events_path(@user)
   end
@@ -89,36 +89,36 @@ class EventsControllerTest < ActionController::TestCase
 
   test 'edit requires login' do
     logout
-    get :edit
+    get :edit, :params => {:id => 42}
     assert_redirected_to login_path
   end
 
   test 'edit' do
-    get :edit, :id => @event
+    get :edit, :params => {:id => @event}
     assert_response :success
     assert_equal @event, assigns(:event)
   end
 
   test 'update requires login' do
     logout
-    get :update
+    get :update, :params => {:id => 42}
     assert_redirected_to login_path
   end
 
   test 'update fails on GET' do
-    get :update, :id => @event, :event => {:description => 'foo'}
+    get :update, :params => {:id => @event, :event => {:description => 'foo'}}
     assert_redirected_to user_events_path(@user)
     assert_equal 'Event', Event.find(@event.id).description
   end
 
   test 'update' do
-    put :update, :id => @event, :event => {:description => 'foo'}
+    put :update, :params => {:id => @event, :event => {:description => 'foo'}}
     assert_redirected_to user_events_path(@user)
     assert_equal 'foo', Event.find(@event.id).description
   end
 
   test 'update fails' do
-    put :update, :id => @event, :event => {:description => nil}
+    put :update, :params => {:id => @event, :event => {:description => nil}}
     assert_response :success
     assert_match escape("can't be blank"), @response.body
   end
@@ -126,20 +126,20 @@ class EventsControllerTest < ActionController::TestCase
 
   test 'destroy requires login' do
     logout
-    get :destroy
+    get :destroy, :params => {:id => 42}
     assert_redirected_to login_path
   end
 
   test 'destroy fails on GET' do
     assert_no_difference 'Event.count' do
-      get :destroy, :id => @event
+      get :destroy, :params => {:id => @event}
     end
     assert_redirected_to user_events_path(@user)
   end
 
   test 'destroy' do
     assert_difference 'Event.count', -1 do
-      delete :destroy, :id => @event
+      delete :destroy, :params => {:id => @event}
     end
     assert_redirected_to user_events_path(@user)
   end

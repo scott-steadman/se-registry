@@ -6,7 +6,7 @@ class GiftsHelperTest < ActionView::TestCase
   # Issue #84
   test 'links_for' do
     links = 'http://one.com http://two.com'
-    gift = Gift.new({:description => 'desc', :url => links}, :as => :tester)
+    gift  = Gift.new(:description => 'desc', :url => links)
 
     result = links_for(gift)
     links.split(/\s+/).each do |link|

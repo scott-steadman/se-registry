@@ -1,58 +1,5 @@
 Rails.application.routes.draw do
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
-
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
-
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   root 'gifts#index'
 
@@ -67,11 +14,29 @@ Rails.application.routes.draw do
   resource :user_session
 
   resources :events
+
+  resources :friends do
+    collection do
+      get :export
+    end
+  end
+
   resources :gifts
   resources :occasions, :controller => :events
   resources :reminders, :controller => :events
 
+  # allow users to upadte themselves
+  patch '/users(/:id)(.:format)', :to => 'users#update'
+
+  # allow users to close their own accounts
+  delete '/users(/:id)(.:format)', :to => 'users#destroy'
+
   resources :users do
+
+    collection do
+      get :home # bounce uers to their home page
+    end
+
     resources :events
     resources :friends
 
@@ -85,7 +50,5 @@ Rails.application.routes.draw do
     resources :occasions, :controller => :events
     resources :reminders, :controller => :events
   end
-
-  get '/:controller(/:action(/:id))(.:format)'
 
 end

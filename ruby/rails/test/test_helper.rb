@@ -2,7 +2,8 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'authlogic/test_case'
-require 'mocha/setup'
+require 'minitest/unit'
+require 'mocha/minitest'
 
 class ActiveSupport::TestCase
 

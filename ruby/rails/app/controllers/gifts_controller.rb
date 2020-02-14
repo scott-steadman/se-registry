@@ -1,7 +1,7 @@
 class GiftsController < ApplicationController
   include ActionView::Helpers::NumberHelper
 
-  before_filter :require_user
+  before_action :require_user
 
   # GET /gifts
   # GET /gifts.xml
@@ -37,8 +37,8 @@ class GiftsController < ApplicationController
     redirect_to user_gifts_path(page_user)
   rescue StandardError => ex
     @gift = Gift.new
-    @gift.errors[:base] = ex.message
-    render :action=>:new
+    @gift.errors.add(:base, ex.message)
+    render :action => :new
   end
 
   # GET /gifts/1/edit

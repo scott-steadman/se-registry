@@ -31,10 +31,10 @@ class FriendsControllerTest < ActionController::TestCase
   test 'create' do
     another_friend = create_user('another_friend')
     assert_difference 'Friendship.count' do
-      post :create, :id => another_friend.to_param
+      post :create, :params => {:id => another_friend.to_param}
     end
     assert_redirected_to user_friends_path(@user)
-    assert_equal 2, @user.friends(true).size
+    assert_equal 2, @user.friends.reload.size
   end
 
   test 'create requires post' do
@@ -46,7 +46,7 @@ class FriendsControllerTest < ActionController::TestCase
 
   test 'cannot friend self' do
     assert_no_difference 'Friendship.count' do
-      post :create, :id => @user.to_param
+      post :create, :params => {:id => @user.to_param}
       assert_redirected_to users_path
     end
     assert_match 'yourself', flash[:notice]
@@ -54,7 +54,7 @@ class FriendsControllerTest < ActionController::TestCase
 
   test 'cannot add friend again' do
     assert_no_difference 'Friendship.count' do
-      post :create, :id => @friend.to_param
+      post :create, :params => {:id => @friend.to_param}
       assert_redirected_to users_path
     end
     assert_match 'already friends with', flash[:notice]
@@ -62,20 +62,20 @@ class FriendsControllerTest < ActionController::TestCase
 
   test 'destroy requires login' do
     logout
-    get :destroy
+    get :destroy, :params => {:id => @friend.to_param}
     assert_redirected_to login_url
   end
 
   test 'destroy fails on GET' do
     assert_no_difference 'Friendship.count' do
-      get :destroy, :id => @friend.to_param
+      get :destroy, :params => {:id => @friend.to_param}
     end
     assert_redirected_to user_friends_path(@user)
   end
 
   test 'destroy' do
     assert_difference 'Friendship.count', -1 do
-      delete :destroy, :id => @friend.to_param
+      delete :destroy, :params => {:id => @friend.to_param}
     end
     assert_redirected_to user_friends_path(@user)
   end

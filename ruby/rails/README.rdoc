@@ -5,25 +5,25 @@ application up and running.
 
 ==Setup:
 
-* Install Ruby 2.0.0-p353
-    CONFIGURE_OPTS=--enable-shared rbenv install 2.0.0-p353
+* Install Ruby 2.5.3
+    rbenv install 2.5.3
 
 * Install bundler
-    gem install bundler
+    gem install bundler -version '1.17.3'
 
 * Checkout code
     git clone git@github.com:ss/se-registry.git
 
 * Install bundled gems
-    cd se-registry
+    cd se-registry/ruby/rails
     bundle install --path vendor/bundle
 
 * Create the database
     <edit config/database.yml>
-    rake db:create db:migrate
+    bundle exec rake db:create db:migrate
 
 * Run the test suite
-    rake test
+    bundle exec rake test
 
 == Common Tasks:
 
@@ -37,11 +37,11 @@ application up and running.
     bundle exec rails generate model <name> --no-fixture
 
 * Check code coverage
-    rake test:coverage
+    bundle exec rake test:coverage
   Output will be in public/coverage
 
 * Annotate model classes
-    rake annotate
+    bundle exec rake annotate
 
 * Deploy to production
     bundle exec cap production deploy (--dry-run)

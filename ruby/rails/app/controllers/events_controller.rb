@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
 
-  before_filter :require_user
+  before_action :require_user
 
   helper_method :event_type, :index_path
 
@@ -39,7 +39,7 @@ class EventsController < ApplicationController
 
   rescue StandardError => ex
     @event = events.new
-    @event.errors[:base] = ex.message
+    @event.errors.add(:base, ex.message)
     render :action=>:new
   end
 

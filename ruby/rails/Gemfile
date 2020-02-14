@@ -29,6 +29,7 @@ end
 
 group :test do
   gem 'mocha',          :require => false
+  gem 'rails-controller-testing'
   gem 'se_gem',         :git => 'git@github.com:ss/se_gem.git'
   gem 'simplecov'
   gem 'turn',           :require => false

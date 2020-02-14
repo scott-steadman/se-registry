@@ -110,7 +110,7 @@ class User < ActiveRecord::Base
 private
 
   def remove_from_friends
-    Friendship.delete_all(:friend_id=>id)
+    Friendship.where(:friend_id=>id).delete_all
   end
 
 end
