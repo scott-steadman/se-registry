@@ -1,0 +1,12 @@
+/srv/gifts.stdmn.com/current/log/*log {
+    create 0644 nobody scott.steadman
+    daily
+    rotate 5
+    missingok
+    notifempty
+    compress
+    sharedscripts
+    postrotate
+        docker restart gifts >/dev/null || true
+    endscript
+}

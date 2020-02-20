@@ -3,6 +3,8 @@
 # enable debugging
 set -x
 
+cp -n registry.logrotate /etc/logrotate.d/registry
+
 docker run -it -d \
 	--restart=unless-stopped \
   --health-cmd='wget -q -O /dev/null  http://localhost:8000/ || exit 1' \
