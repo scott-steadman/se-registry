@@ -77,5 +77,10 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  config.action_mailer.smtp_settings = {
+                                        :address              => 'middle-earth',
+                                        :enable_starttls_auto => false,
+                                       }
+
   routes.default_url_options[:host] = 'gifts.stdmn.com'
 end
