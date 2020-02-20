@@ -2,7 +2,7 @@ FROM centos/ruby-22-centos7
 
 LABEL maintainer="Scott Steadman <docker-gifts@stdmn.com>"
 
-#EXPOSE 8000
+EXPOSE 8000
 
 #HEALTHCHECK CMD wget -q -O /dev/null  http://localhost:8000/ || exit 1
 
