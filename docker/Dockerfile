@@ -10,5 +10,5 @@ RUN mkdir -p /app/gifts/current
 
 WORKDIR /app/gifts/current
 
-#CMD [ "bin/server", "-b", "0.0.0.0", "-p", "8000" ]
+#CMD [ "bin/server", "--pid", "/tmp/gifts.pid", "--binding", "0.0.0.0", "--port", "8000" ]
 CMD [ "/bin/bash" ]
