@@ -11,4 +11,4 @@ docker run -it -d \
 	-v "/srv/gifts.stdmn.com:/app/gifts" \
 	--name gifts \
 	gifts \
-  bundle exec rails server -b 0.0.0.0 -p 8000
+  bundle exec rails server --pid=/tmp/gifts.pid --binding=0.0.0.0 --port=8000
