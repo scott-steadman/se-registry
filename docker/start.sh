@@ -5,6 +5,7 @@ set -x
 
 docker run -it -d \
 	--restart=unless-stopped \
+  --health-cmd='wget -q -O /dev/null  http://localhost:8000/ || exit 1' \
   --env-file .env \
 	-u "nobody:nobody" \
 	-p 8000:8000 \
