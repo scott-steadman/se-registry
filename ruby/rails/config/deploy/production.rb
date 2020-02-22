@@ -1,19 +1,19 @@
-role :app, "gifts.stdmn.com"
-role :web, "gifts.stdmn.com"
-role :db,  "gifts.stdmn.com", :primary => true
+require 'capistrano/deploy_into_docker'
 
-set :pty, true
-set :ssh_options, {
-  user: 'scott.steadman',
-}
+server docker: {container: 'gifts'}, user: 'nobody', roles: %w[app]
+
+set :default_env,     {
+                        path:            "/opt/rh/rh-ruby22/root/usr/bin:$PATH",
+                        ld_library_path: "/opt/rh/rh-nodejs8/root/usr/lib64:/opt/rh/rh-ruby22/root/usr/lib64",
+                        rails_env:       "production",
+                      }
+set :deploy_to,       '/app/gifts'
+set :migration_role,  :app
+set :rails_env,       'production'
+set :sshkit_backend,  SSHKit::Backend::Docker
 
 namespace :deploy do
 
-  before :restart, :ignored do
-    on roles(:web) do
-      sudo "chgrp -R apache #{fetch(:release_path)}"
-    end
-  end
+  before :restart, :'assets:precompile'
 
-  after :restart, :'passenger:restart'
 end
