@@ -2,9 +2,9 @@
 #
 # Table name: tags
 #
-#  id   :integer(4)      not null, primary key
-#  name :string(32)
-#
+#  id             :integer          not null, primary key
+#  name           :string(255)
+#  taggings_count :integer          default("0")
 #
 class Tag < ActiveRecord::Base
   delimiter = ' '

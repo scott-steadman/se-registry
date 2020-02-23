@@ -41,7 +41,7 @@ application up and running.
   Output will be in public/coverage
 
 * Annotate model classes
-    bundle exec rake annotate
+    bundle exec annotate --models --exclude
 
 * Deploy to production
     bundle exec cap production deploy (--dry-run)

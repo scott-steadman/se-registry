@@ -2,12 +2,14 @@
 #
 # Table name: events
 #
-#  id          :integer(4)      not null, primary key
-#  user_id     :integer(4)      not null
-#  description :string(64)      default(""), not null
-#  event_type  :string(32)      default("occasion")
-#  event_date  :date            not null
-#  recur       :boolean(1)
+#  id          :integer          not null, primary key
+#  user_id     :integer          not null
+#  description :string(64)       not null
+#  event_type  :string(64)
+#  event_date  :date             not null
+#  recur       :boolean          default("0")
+#  created_at  :datetime
+#  updated_at  :datetime
 #
 
 class Reminder < Event

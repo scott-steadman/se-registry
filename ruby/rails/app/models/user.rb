@@ -2,18 +2,18 @@
 #
 # Table name: users
 #
-#  id                :integer(4)      not null, primary key
+#  id                :integer          not null, primary key
 #  login             :string(255)
 #  email             :string(255)
-#  crypted_password  :string(255)     default(""), not null
-#  password_salt     :string(255)     default(""), not null
+#  crypted_password  :string(255)      not null
+#  password_salt     :string(255)      default(""), not null
 #  created_at        :datetime
 #  updated_at        :datetime
 #  persistence_token :string(255)
-#  role              :string(32)      default("user"), not null
+#  role              :string(32)       default("user"), not null
 #  postal_code       :string(16)
-#  lead_time         :integer(4)
-#  lead_frequency    :integer(4)      default(1), not null
+#  lead_time         :integer
+#  lead_frequency    :integer          default("1"), not null
 #  notes             :string(255)
 #  current_login_at  :datetime
 #  last_login_at     :datetime

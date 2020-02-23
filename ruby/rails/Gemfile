@@ -15,6 +15,7 @@ gem 'uglifier'
 gem 'will_paginate'
 
 group :development do
+  gem 'annotate'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
