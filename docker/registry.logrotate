@@ -1,4 +1,4 @@
-/srv/gifts.stdmn.com/current/log/*log {
+/srv/gifts.stdmn.com/shared/log/*log {
     create 0644 nobody scott.steadman
     su nobody scott.steadman
     daily
@@ -8,6 +8,6 @@
     compress
     sharedscripts
     postrotate
-        docker restart gifts >/dev/null || true
+        docker restart gifts-ruby-2.5 >/dev/null || true
     endscript
 }

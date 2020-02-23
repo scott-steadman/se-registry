@@ -5,12 +5,14 @@ set -x
 
 cp -n registry.logrotate /etc/logrotate.d/registry
 
-docker run -it -d \
+docker run -itd \
 	--restart=unless-stopped \
   --health-cmd='wget -q -O /dev/null  http://localhost:8000/ || exit 1' \
   --env-file .env \
-	-u "nobody:nobody" \
+  --workdir /app/gifts \
+  -u "99:1000" \
 	-v "/srv/gifts.stdmn.com:/app/gifts" \
-	--name gifts \
-	gifts \
-  bundle exec rails server --pid=/tmp/gifts.pid --binding=0.0.0.0 --port=8000
+  --name gifts-ruby-2.5 \
+  ss-ruby-2.5 \
+  current/bin/rails server --pid=/tmp/gifts.pid --binding=0.0.0.0 --port=8000
+#  irb

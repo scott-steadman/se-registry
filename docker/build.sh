@@ -3,8 +3,6 @@
 # turn on debugging
 set -x
 
-#docker pull centos/ruby-22-centos7
+docker rmi ss-ruby-2.5
 
-docker rmi gifts
-
-docker build -t gifts -f Dockerfile .   | tee log/build.log 2>&1
+docker build -t ss-ruby-2.5 -f Dockerfile .   | tee log/build.log 2>&1
