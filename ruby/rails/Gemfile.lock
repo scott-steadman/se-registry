@@ -73,8 +73,6 @@ GEM
       capistrano (~> 3.1)
     capistrano-deploy_into_docker (0.2.1)
       sshkit-backend-docker (>= 0.1.2)
-    capistrano-passenger (0.2.0)
-      capistrano (~> 3.0)
     capistrano-rails (1.4.0)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
@@ -224,7 +222,6 @@ DEPENDENCIES
   authlogic
   byebug
   capistrano-deploy_into_docker
-  capistrano-passenger
   capistrano-rails
   coffee-rails (~> 4.1.0)
   dynamic_form!

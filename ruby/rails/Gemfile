@@ -19,7 +19,6 @@ group :development do
   gem 'byebug'
 
   gem 'capistrano-rails'
-  gem 'capistrano-passenger'
   gem 'capistrano-deploy_into_docker'
   gem 'highline'
 
