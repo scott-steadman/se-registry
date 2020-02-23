@@ -3,13 +3,13 @@ source 'https://rubygems.org'
 gem 'acts-as-taggable-on'
 gem 'authlogic'
 gem 'coffee-rails'
-gem 'dynamic_form',             :git => 'git://github.com/rails/dynamic_form.git'
+gem 'dynamic_form', :git => 'git://github.com/rails/dynamic_form.git'
 gem 'jbuilder'
 gem 'jquery-rails'
 gem 'mysql2'
-gem 'rails',        '~> 5.1.0'
+gem 'rails',        '~> 5.2.0'
 gem 'sass-rails'
-gem 'therubyracer',             :platforms => :ruby
+gem 'therubyracer', :platforms => :ruby
 gem 'turbolinks'
 gem 'uglifier'
 gem 'will_paginate'
@@ -32,5 +32,4 @@ group :test do
   gem 'rails-controller-testing'
   gem 'se_gem',         :git => 'git@github.com:ss/se_gem.git'
   gem 'simplecov'
-  gem 'turn',           :require => false
 end

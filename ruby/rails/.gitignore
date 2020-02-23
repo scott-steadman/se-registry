@@ -9,3 +9,4 @@ log
 public/coverage
 tmp
 vendor/bundle
+*.swp
