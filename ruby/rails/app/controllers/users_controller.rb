@@ -40,7 +40,7 @@ class UsersController < ApplicationController
   # PATCH /users/1
   def update
     @user = page_user
-    if request.patch? and @user.update_attributes(user_params)
+    if request.patch? and @user.update(user_params)
       if params[:user][:role] and current_user.admin?
         @user.role = params[:user][:role]
         @user.save

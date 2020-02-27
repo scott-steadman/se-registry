@@ -53,7 +53,7 @@ class GiftsController < ApplicationController
       return
     end
 
-    if gift.update_attributes(gift_params)
+    if gift.update(gift_params)
       flash[:notice] = 'Gift updated!'
       redirect_to user_gifts_path(page_user)
     else

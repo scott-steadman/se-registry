@@ -61,7 +61,7 @@ class UserTest < ActiveSupport::TestCase
 
   test 'role mass update denied' do
     u = create_user
-    assert u.update_attributes({:role => 'foo'})
+    assert u.update({:role => 'foo'})
     assert 'user', u.role
   end
 
