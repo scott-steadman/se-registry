@@ -1,15 +1,15 @@
-class CreateGifts < ActiveRecord::Migration
-  def self.up
+class CreateGifts < ActiveRecord::Migration[6.0]
+
+  def change
     create_table :gifts do |t|
-      t.column :user_id,      :integer, :null=>false
-      t.column :description,  :string,  :limit=>256, :null=>false
-      t.column :url,          :string,  :limit=>256, :null=>true
-      t.column :price,        :decimal, :null=>true
+      t.belongs_to  :user ,        :foreign_key => true
+      t.string      :description,  :null => false
+      t.string      :url,          :null => true
+      t.boolean     :multi,        :default => false
+      t.boolean     :hidden,       :default => false
+      t.float       :price,        :precision => 10, :scale => 2, :null => true
+      t.timestamps                 :null => true
     end
-    add_index :gifts, [:user_id]
   end
 
-  def self.down
-    drop_table :gifts
-  end
 end

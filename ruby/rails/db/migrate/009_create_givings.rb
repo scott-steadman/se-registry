@@ -1,18 +1,13 @@
-class CreateGivings < ActiveRecord::Migration
-  def self.up
+class CreateGivings < ActiveRecord::Migration[6.0]
+
+  def change
     create_table :givings, :id => false do |t|
-      t.column :user_id,  :integer, :null => false
-      t.column :gift_id,  :integer, :null => false
-      t.column :intent,   :string,  :limit => 4, :default => 'will', :null => false # will,may
+      t.belongs_to :user,   :foreign_key => true
+      t.belongs_to :gift,   :foreign_key => true
+      t.string     :intent, :null => false,  :default => 'will' # will,may
+
+      t.index [:user_id, :gift_id], :unique => true
     end
-
-    add_index :givings, [:user_id, :gift_id], :unique => true
-
-    add_column :gifts, :multi, :boolean, :default => false
   end
 
-  def self.down
-    drop_table :givings
-    remove_column :gifts, :multi
-  end
 end

@@ -1,20 +1,21 @@
-class AddTagSupport < ActiveRecord::Migration
-  def self.up
+class AddTagSupport < ActiveRecord::Migration[6.0]
+
+  def change
     create_table :tags do |t|
-      t.column :name,   :string,  :limit=>32
+      t.string  :name,            :null => false
+      t.integer :taggings_count,  :default => 0
+
+      t.index  :name, :unique => true
     end
-    add_index :tags, [:name]
 
     create_table :taggings do |t|
-      t.column :tag_id, :integer, :allow_null=>false
-      t.column :taggable_id, :integer, :allow_null=>false
-      t.column :taggable_type, :string, :allow_null=>false
+      t.belongs_to :tag,      :foreign_key => true
+      t.references :taggable, :polymorphic => true
+      t.references :tagger,   :polymorphic => true, :index => false
+      t.string     :context
+
+      t.index     [:taggable_id, :taggable_type, :context]
     end
-    add_index :taggings, [:tag_id, :taggable_id, :taggable_type]
   end
 
-  def self.down
-    drop_table :taggings
-    drop_table :tags
-  end
 end

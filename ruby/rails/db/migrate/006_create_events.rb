@@ -1,20 +1,18 @@
-class CreateEvents < ActiveRecord::Migration
-  def self.up
+class CreateEvents < ActiveRecord::Migration[6.0]
+
+  def change
     create_table :events do |t|
-      t.column :user_id, :integer, :null=>false
-      t.column :description, :string, :limit=>64, :null=>false
-      t.column :event_type, :string, :limit=>32, :default=>"occasion" # ['occasion', 'reminder']
-      t.column :event_date, :date, :null=>false
-      t.column :recur, :boolean, :default=>false
+      t.belongs_to  :user,        :foreign_key => true
+      t.string      :description, :null => false
+      t.string      :event_type,  :default => "Event" # ['Event', 'Occasion', 'Reminder']
+      t.date        :event_date,  :null => false
+      t.boolean     :recur,       :default => false
     end
 
-    add_column  :users, :lead_time, :integer, :null=>true, :default=>10
-    add_column  :users, :lead_frequency, :integer, :null=>false, :default=>10
+    change_table :users do |t|
+      t.integer  :lead_time,      :default => 10
+      t.integer  :lead_frequency, :default => 10
+    end
   end
 
-  def self.down
-    drop_table :events
-    remove_column :users, :lead_time
-    remove_column :users, :lead_frequency
-  end
 end
