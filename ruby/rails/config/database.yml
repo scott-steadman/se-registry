@@ -11,14 +11,24 @@
 #
 # And be sure to use new-style password hashing:
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
+default: &default
+  adapter: postgresql
+  host: localhost
+  user: postgres
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  encoding: utf8
+  pool: 5
+
 development:
-  url: <%= ENV['DATABASE_URL'] || 'mysql2://dev@mysql/reg_dev?encoding=utf8' %>
+  <<: *default
+  database: registry_development
 
 # Warning: The database defined as 'test' will be erased and
 # re-generated from your development database when you run 'rake'.
 # Do not set this db to the same as development or production.
 test:
-  url: <%= ENV['DATABASE_URL'] || 'mysql2://test@mysql/reg_test?encoding=utf8' %>
+  <<: *default
+  database: registry_test
 
 production:
   url: <%= ENV['DATABASE_URL'] %>
