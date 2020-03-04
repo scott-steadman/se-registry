@@ -108,15 +108,17 @@ class User < ActiveRecord::Base
   end
 
   def self.find_needs_reminding(date=Time.now)
-    includes(:reminders).
-      references(:reminders).
-        where(['datediff(events.event_date, ?) <= users.lead_time and datediff(events.event_date, ?) mod users.lead_frequency = 0', date, date])
+    includes(:reminders)
+    .references(:reminders)
+    .where(['(events.event_date - ?) <= users.lead_time', date])
+    .where(['((events.event_date - ?) % users.lead_frequency) = 0', date])
   end
 
   def self.find_has_occasions(date=Time.now)
-    includes(:friends => :occasions).
-      references(:friends => :occasions).
-        where(['datediff(events.event_date, ?) <= users.lead_time and datediff(events.event_date, ?) mod users.lead_frequency = 0', date, date])
+    includes(:friends => :occasions)
+    .references(:friends => :occasions)
+    .where(['(events.event_date - ?) <= users.lead_time', date])
+    .where(['((events.event_date - ?) % users.lead_frequency) = 0', date])
   end
 
   def give(gift)
