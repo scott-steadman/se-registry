@@ -16,28 +16,30 @@ application up and running.
 
 * Install bundled gems
     cd se-registry/ruby/rails
+    yum install https://download.postgresql.org/pub/repos/yum/reporpms/EL-6-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+    yum install postgresql12-devel
+    bundle config build.pg --with-pg-config=/usr/pgsql-12/bin/pg_config
     bundle install --path vendor/bundle
 
-* Create the database
-    <edit config/database.yml>
-    bundle exec rake db:create db:migrate
+* Create the development database
+    POSTGRES_PASSWORD=changem3 rails db:create db:migrate
 
 * Run the test suite
-    bundle exec rake test
+    POSTGRES_PASSWORD=changem3 rails test
 
 == Common Tasks:
 
 * Run the development server
-    bundle exec rails server -b 0.0.0.0
+    rails server -b 0.0.0.0
 
 * Create a controller and test
-    bundle exec rails generate controller <name>
+    rails generate controller <name>
 
 * Create a model, migration, and test
-    bundle exec rails generate model <name> --no-fixture
+    rails generate model <name> --no-fixture
 
 * Check code coverage
-    bundle exec rake test:coverage
+    rails test:coverage
   Output will be in public/coverage
 
 * Annotate model classes
