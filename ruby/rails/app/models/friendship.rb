@@ -2,10 +2,8 @@
 #
 # Table name: friends
 #
-#  user_id    :integer          not null
-#  friend_id  :integer          not null
-#  created_at :datetime
-#  updated_at :datetime
+#  user_id   :bigint
+#  friend_id :bigint
 #
 
 class Friendship < ActiveRecord::Base

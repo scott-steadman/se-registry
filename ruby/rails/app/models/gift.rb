@@ -2,15 +2,15 @@
 #
 # Table name: gifts
 #
-#  id          :integer          not null, primary key
-#  user_id     :integer          not null
-#  description :string(256)      not null
-#  url         :string(256)
-#  price       :decimal(10, )
-#  multi       :boolean          default("0")
-#  hidden      :boolean          default("0")
-#  created_at  :datetime
-#  updated_at  :datetime
+#  id          :bigint           not null, primary key
+#  user_id     :bigint
+#  description :string           not null
+#  url         :string
+#  multi       :boolean          default("false")
+#  hidden      :boolean          default("false")
+#  price       :float
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #
 
 class Gift < ActiveRecord::Base

@@ -2,14 +2,13 @@
 #
 # Table name: taggings
 #
-#  id            :integer          not null, primary key
-#  tag_id        :integer
-#  taggable_id   :integer
-#  taggable_type :string(255)
-#  tagger_id     :integer
-#  tagger_type   :string(255)
-#  context       :string(128)
-#  created_at    :datetime
+#  id            :bigint           not null, primary key
+#  tag_id        :bigint
+#  taggable_type :string
+#  taggable_id   :bigint
+#  tagger_type   :string
+#  tagger_id     :bigint
+#  context       :string
 #
 class Tagging < ActiveRecord::Base
 end

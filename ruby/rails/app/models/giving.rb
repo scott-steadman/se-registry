@@ -2,11 +2,9 @@
 #
 # Table name: givings
 #
-#  user_id    :integer          not null
-#  gift_id    :integer          not null
-#  intent     :string(4)        default("will"), not null
-#  created_at :datetime
-#  updated_at :datetime
+#  user_id :bigint
+#  gift_id :bigint
+#  intent  :string           default("will"), not null
 #
 
 class Giving < ActiveRecord::Base

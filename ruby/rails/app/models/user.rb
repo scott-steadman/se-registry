@@ -2,21 +2,20 @@
 #
 # Table name: users
 #
-#  id                :integer          not null, primary key
-#  login             :string(255)
-#  email             :string(255)
-#  crypted_password  :string(255)      not null
-#  password_salt     :string(255)      default(""), not null
-#  created_at        :datetime
-#  updated_at        :datetime
-#  persistence_token :string(255)
-#  role              :string(32)       default("user"), not null
-#  postal_code       :string(16)
-#  lead_time         :integer
-#  lead_frequency    :integer          default("1"), not null
-#  notes             :string(255)
+#  id                :bigint           not null, primary key
+#  login             :string           not null
+#  role              :string           default("user"), not null
+#  notes             :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  email             :string
+#  crypted_password  :string           not null
+#  password_salt     :string           not null
+#  persistence_token :string
 #  current_login_at  :datetime
 #  last_login_at     :datetime
+#  lead_time         :integer          default("10"), not null
+#  lead_frequency    :integer          default("10"), not null
 #
 
 class User < ActiveRecord::Base
