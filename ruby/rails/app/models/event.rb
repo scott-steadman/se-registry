@@ -17,8 +17,6 @@ class Event < ActiveRecord::Base
 
   belongs_to :user
 
-  before_save :ensure_type
-
   def deleted?
     return @deleted
   end
@@ -42,12 +40,6 @@ class Event < ActiveRecord::Base
       event.save!
       yield event if block_given?
     end
-  end
-
-private
-
-  def ensure_type
-    self.event_type ||= self.class.name
   end
 
 end
