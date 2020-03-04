@@ -3,10 +3,10 @@ require 'test_helper'
 class EventsControllerTest < ActionController::TestCase
 
   def setup
-    @user = create_user('user')
+    @user     = create_user('user')
     @occasion = create_occasion(:user => @user, :description => 'Occasion')
     @reminder = create_reminder(:user => @user, :description => 'Reminder')
-    @event = create_event(:user => @user, :description => 'Event')
+    @event    = create_event(:user => @user, :description => 'Event')
   end
 
   test 'index requires login' do
