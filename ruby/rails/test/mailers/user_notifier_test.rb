@@ -3,11 +3,11 @@ require 'test_helper'
 class UserNotifierTest < ActionMailer::TestCase
 
   test 'send_reminders' do
-    u1 = create_user('user1')
+    u1 = create_user(:login => 'user1', :lead_frequency => 1)
     r1 = u1.reminders.create(:description => 'Reminder 1', :event_date => Date.tomorrow)
     r2 = u1.reminders.create(:description => 'Reminder 2', :event_date => Date.tomorrow)
 
-    u2 = create_user('user2')
+    u2 = create_user(:login => 'user2', :lead_frequency => 1)
     r3 = u2.reminders.create(:event_date => Date.tomorrow, :description => 'Tomorrow')
 
     count = 0
@@ -28,7 +28,7 @@ class UserNotifierTest < ActionMailer::TestCase
     r1 = u1.occasions.create(:description => 'Occasion 1', :event_date => Date.tomorrow)
     r2 = u1.occasions.create(:description => 'Occasion 2', :event_date => Date.tomorrow)
 
-    u2 = create_user('user2')
+    u2 = create_user(:login => 'user2', :lead_frequency => 1)
     u2.befriend(u1)
 
     count = 0
@@ -45,7 +45,7 @@ class UserNotifierTest < ActionMailer::TestCase
 
   # Ticket #8
   test 'lead_frequency' do
-    user = create_user(:login => 'scott', :lead_time => 10, :lead_frequency => 1)
+    user = create_user(:login => 'scott', :lead_frequency => 1)
     user.reminders.create(:description => 'test reminder', :event_date => Date.tomorrow)
 
     UserNotifier.send_reminders do |uu|
