@@ -136,7 +136,7 @@ class User < ActiveRecord::Base
   def last_gift_updated_at
     return nil if gifts.none?
 
-    gifts.order(:updated_at).last.updated_at
+    gifts.map(&:updated_at).compact.max
   end
 
   def self.find_by_login_or_email(value)

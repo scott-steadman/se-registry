@@ -6,7 +6,7 @@ class FriendsController < ApplicationController
   # GET /friends
   # GET /friends.xml
   def index
-    @friends = friends.order(order).paginate :page => page, :per_page => per_page
+    @friends = friends.includes(:gifts).order(order).paginate :page => page, :per_page => per_page
   end
 
   # POST /friends
