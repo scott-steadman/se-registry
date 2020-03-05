@@ -15,7 +15,7 @@ module GiftsHelper
   end
 
   def tags_for(gift)
-    gift.tag_names.map {|tag| tag_or_link(tag)}.join(' ').html_safe
+    gift.tags.map {|tag| tag_or_link(tag.name)}.join(' ').html_safe
   end
 
   def tag_or_link(tag)

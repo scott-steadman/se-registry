@@ -6,7 +6,7 @@ class GiftsController < ApplicationController
   # GET /gifts
   # GET /gifts.xml
   def index
-    @gifts = gifts.joins(joins).where(conditions).order(order).paginate :page => page, :per_page => per_page
+    @gifts = gifts.includes(:tags).joins(joins).where(conditions).order(order).paginate :page => page, :per_page => per_page
 
     respond_to do |format|
       format.html # index.html.erb

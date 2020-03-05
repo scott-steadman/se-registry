@@ -27,8 +27,7 @@ class GiftsHelperTest < ActionView::TestCase
 
   test 'tags_for no tag parameter' do
     gift = create_gift
-    gift.tag_names << 'foo'
-    gift.tag_names << 'bar'
+    gift.update(:tag_names => 'foo bar')
     stubs(:params => {}, :url_for => 'url')
     gift.tag_names.each do |tag|
       assert_match %r{<a href="url">#{tag}</a>}, tags_for(gift)
@@ -37,8 +36,7 @@ class GiftsHelperTest < ActionView::TestCase
 
   test 'tags_for with tag parameter' do
     gift = create_gift
-    gift.tag_names << 'foo'
-    gift.tag_names << 'bar'
+    gift.update(:tag_names => 'foo bar')
     stubs(:params => {:tag => 'foo'}, :url_for => 'url')
     assert_equal 'foo <a href="url">bar</a>', tags_for(gift), 'foo should not be a link'
   end
