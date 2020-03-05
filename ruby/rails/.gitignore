@@ -10,3 +10,4 @@ public/coverage
 tmp
 vendor/bundle
 *.swp
+.byebug_history
