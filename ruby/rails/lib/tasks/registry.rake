@@ -26,4 +26,53 @@ namespace :registry do
     end
   end
 
+  desc 'migrate data'
+  task :copy_db => :environment do
+    ActiveRecord::Base.partial_writes = false
+
+    {
+      User        => {},
+      Event       => {},
+      Gift        => {},
+      Friendship  => {:unique_by => [:user_id, :friend_id]},
+      Tag         => {},
+      Tagging     => {},
+    }.each do |klass, opts|
+      models       = nil
+      column_names = nil
+
+      with_dest do
+        column_names = klass.column_names.tap{|ii| pp [:cn, klass.name, ii]}
+      end
+
+      with_source do
+        models = klass.all.select(column_names).to_a
+        puts "#{models.count} #{klass.name}s to migrate"
+      end
+
+      with_dest do
+        models.each do |model|
+          attrs = model.attributes.except('tag_list')
+          print klass.upsert(attrs, opts) ? '+' : '-'
+        end
+      end
+
+      puts "\nDone."
+    end
+  end
+
+private
+
+  def with_source(&block)
+    ActiveRecord::Base.connected_to(:database => {:url => ENV['SOURCE_DB_URL']}) do
+      yield
+    end
+  end
+
+  def with_dest(&block)
+    ActiveRecord::Base.connected_to(:database => {:url => ENV['DEST_DB_URL']}) do
+      yield
+    end
+  end
+
 end
