@@ -31,10 +31,13 @@ private
 
   helper_method :page_user
   def page_user
-    @page_user ||= if current_user.admin?
-      User.find_by_id(params[:user_id] || params[:id]) || current_user
-    else
-      current_user
+    @page_user ||= begin
+      user_id = params[:user_id] || params[:id]
+      if current_user.admin? and user_id
+        User.find_by_id(user_id) || current_user
+      else
+        current_user
+      end
     end
   end
 
