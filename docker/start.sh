@@ -16,3 +16,6 @@ docker run -itd \
   ss:ruby-2.5 \
   bin/rails server --pid=/tmp/gifts.pid --binding=0.0.0.0 --port=8000
 #  irb
+#  /bin/bash
+
+docker logs -f gifts-ruby-2.5
