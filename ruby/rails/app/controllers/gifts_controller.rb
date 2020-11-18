@@ -7,7 +7,7 @@ class GiftsController < ApplicationController
   # GET /gifts.xml
   def index
     @gifts = gifts
-              .includes(:tags, :user, :givings => :user)
+              .includes(:tags, :user, :givings)
               .joins(joins)
               .where(conditions)
               .order(order)
