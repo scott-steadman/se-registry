@@ -15,9 +15,9 @@ default: &default
   adapter: postgresql
   host: localhost
   user: postgres
-  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  password: <%= Rails.application.credentials.database_password %>
   encoding: utf8
-  pool: 5
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS') {5} %>
 
 development:
   <<: *default
@@ -31,4 +31,4 @@ test:
   database: registry_test
 
 production:
-  url: <%= ENV['DATABASE_URL'] %>
+  url: <%= Rails.application.credentials.database_url %>
