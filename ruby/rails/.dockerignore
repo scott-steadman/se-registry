@@ -1,0 +1,15 @@
+**/.gitignore
+**/.keep
+**/*.swp
+.*
+bin/*.sh
+Capfile
+config/deploy
+config/deploy.rb
+Dockerfile
+log
+public/coverage
+README.*
+test
+tmp
+vendor

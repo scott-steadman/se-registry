@@ -47,3 +47,20 @@ application up and running.
 
 * Deploy to production
     bundle exec cap production deploy (--dry-run)
+
+* Create docker image
+    bin/docker-build.sh
+
+* Inspect docker image
+    bin/docker-inspect.sh
+
+    This will run a bash shell in the container.
+    Enabling you to look around.
+
+* Start docker image
+    bin/docker-run.sh <RAILS_ENV>
+
+    This will start the image with RAILS_ENV=development
+
+* Deploy docker image
+    bin/docker-deploy.sh
