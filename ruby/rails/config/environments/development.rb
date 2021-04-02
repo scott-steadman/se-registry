@@ -63,4 +63,5 @@ Rails.application.configure do
   end
 
   config.hosts << ENV['HOSTNAME'].split('.').first
+  config.hosts << ENV['HOSTNAME']
 end
