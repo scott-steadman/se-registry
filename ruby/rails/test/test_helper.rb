@@ -10,13 +10,21 @@ class ActiveSupport::TestCase
   def create_user(attrs={})
     attrs = {:login => attrs} if attrs.is_a?(String)
 
-    attrs[:login]                 = 'quire'                         unless attrs.has_key?(:login)
-    attrs[:password]              = 'my password'                   unless attrs.has_key?(:password)
-    attrs[:password_confirmation] = 'my password'                   unless attrs.has_key?(:password_confirmation)
-    attrs[:lead_time]             = 10                              unless attrs.has_key?(:lead_time)
-    attrs[:email]                 = "#{attrs[:login]}@example.com"  unless attrs.has_key?(:email)
+    attrs[:login]     = 'quire'                         unless attrs.has_key?(:login)
+    attrs[:lead_time] = 10                              unless attrs.has_key?(:lead_time)
+    attrs[:email]     = "#{attrs[:login]}@example.com"  unless attrs.has_key?(:email)
 
-    User.create!(attrs)
+    klass = User
+
+    if attrs.has_key?(:password)
+      attrs[:password_confirmation] = attrs[:password] unless attrs.has_key?(:password_confirmation)
+      klass = User::ForAuthentication
+    else
+      attrs[:crypted_password] = 'dummy'
+      attrs[:password_salt] = 'dummy'
+    end
+
+    klass.create!(attrs)
   end
 
   def create_event(attrs={})
@@ -61,12 +69,28 @@ class ActiveSupport::TestCase
   end
 
   def login_as(user)
-    user = user.login if user.respond_to?(:login)
-    UserSession.create(User.where(:login => user).first || create_user(user))
+    user = {:login => user} if user.is_a?(String)
+
+    if user.is_a?(Hash)
+      user =  User::ForAuthentication.where(user).first ||
+              create_user(user.merge(:password => 'my password', :password_confirmation => 'my password'))
+    end
+
+    user = user.becomes(User::ForAuthentication)
+
+    UserSession.create(user)
   end
 
   def logout
-    UserSession.find.destroy
+    UserSession.find&.destroy
+  end
+
+  def user
+    @user ||= create_user(:login => 'user', :password => 'my password')
+  end
+
+  def admin
+    @admin ||= create_user(:login => 'admin', :password => 'my password', :role => 'admin')
   end
 
   def escape(string)

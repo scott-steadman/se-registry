@@ -3,66 +3,78 @@ require 'test_helper'
 class GiftsControllerTest < ActionController::TestCase
 
   test 'index requires login' do
+    logout
     get :index
     assert_redirected_to login_url
   end
 
   test 'index' do
-    login_as user = create_user
     create_gift(:user => user)
     create_gift(:user => user)
+
+    login_as user
     get :index
     assert_response :success
+
     assert_equal 2, assigns['gifts'].size
   end
 
   test 'index with per_page param' do
-    login_as user = create_user
     create_gift(:user => user)
     create_gift(:user => user)
+
+    login_as user
     get :index, :params => {:per_page => 1}
     assert_response :success
+
     assert_equal 1, assigns['gifts'].size
   end
 
   test 'index with tag param' do
-    login_as user = create_user
     create_gift(:user => user, :tag_names => 'foo')
     create_gift(:user => user, :tag_names => 'bar')
+
+    login_as user
     get :index, :params => {:tag => 'foo'}
     assert_response :success
+
     assert_equal 1, assigns['gifts'].size
   end
 
   test 'index with csv format' do
-    user = create_user('user')
     gift = create_gift(:user => user, :description => 'one', :price => 1.00, :multi => false)
     giver = create_user('giver')
     giver.give(gift)
+
     login_as user
     get :index, :params => {:format => 'csv'}
     assert_response :success
+
     assert_equal 2, @response.body.split(/\r\n/m).size, 'header, gift lines should be returned'
   end
 
   test 'new requires login' do
+    logout
     get :new
     assert_redirected_to login_url
   end
 
   test 'new' do
-    login_as create_user
+    login_as user
     get :new
     assert_response :success
+
     assert_not_nil assigns['gift']
   end
 
   # Issue 85
   test 'new gift for other' do
     other = create_user('other')
-    login_as create_user
+
+    login_as user
     get :new, :params => {:user_id => other}
     assert_response :success
+
     assert assigns['gift'].hidden?,                      'gifts created for others should be hidden'
     assert assigns['gift'].tag_names.include?('secret'), 'gifts created for others should tagged secret'
   end
@@ -73,189 +85,211 @@ class GiftsControllerTest < ActionController::TestCase
   end
 
   test 'create fails on GET' do
-    login_as user = create_user
     assert_no_difference 'Gift.count' do
+      login_as user
       get :create, :params => gift_params
+      assert_response :success
+      assert_template :new
     end
-    assert_template :new
   end
 
   test 'create' do
-    login_as user = create_user
     assert_difference 'Gift.count', 1 do
+      login_as user
       post :create, :params => gift_params
+      assert_redirected_to user_gifts_path(user)
     end
-    assert_redirected_to user_gifts_path(user)
   end
 
   test 'create gift for other' do
     other = create_user('other')
-    user  = create_user
+
     login_as user
     post :create, :params => {:user_id => other}.merge!(gift_params(:hidden => true))
     assert_redirected_to user_gifts_path(other)
 
     gift = other.gifts.first
-    assert gift.hidden?,         'gifts created for others should be hidden'
+    assert gift.hidden?,          'gifts created for others should be hidden'
     assert gift.given_by?(user), 'gifts created for others should be given by creator'
   end
 
   test 'create with error' do
-    login_as user = create_user
+    login_as user
     post :create
+    assert_response :ok
     assert_template :new
+
     assert_select "form>div[class='errorExplanation']"
   end
 
   test 'edit requires login' do
+    logout
     get :edit, :params => {:id => 42}
     assert_redirected_to login_url
   end
 
   test 'edit' do
-    login_as user = create_user
     gift = create_gift(:user => user)
+
+    login_as user
     get :edit, :params => {:id => gift.id}
     assert_response :success
+
     assert_not_nil assigns['gift']
   end
 
   test 'update requires login' do
+    logout
     get :update, :params => {:id => 42}
     assert_redirected_to login_url
   end
 
   test 'update fails on GET' do
-    login_as user = create_user
     gift = create_gift(:user => user)
+
+    login_as user
     get :update, :params => {:id => gift.id, :gift => gift.attributes}
     assert_response :success
     assert_template :edit
   end
 
   test 'update' do
-    login_as user = create_user
     gift = create_gift(:user => user)
+
+    login_as user
     patch :update, :params => {:id => gift.id, :gift => {:url => 'new url'}}
     assert_redirected_to user_gifts_path(user)
+
     assert_equal 'new url', gift.reload.url
   end
 
   test 'update fails with bad data' do
-    login_as user = create_user
     gift = create_gift(:user => user)
+
+    login_as user
     patch :update, :params => {:id => gift.id, :gift => {:description => ''}}
     assert_response :success
     assert_template :edit
   end
 
   test 'destroy requires login' do
+    logout
     delete :destroy, :params => {:id => 42}
     assert_redirected_to login_url
   end
 
   test 'destroy fails on GET' do
-    login_as user = create_user
     gift = create_gift(:user => user)
+
     assert_no_difference 'Gift.count' do
+      login_as user
       get :destroy, :params => {:id => gift.id}
+      assert_redirected_to user_gifts_path(user)
     end
-    assert_redirected_to user_gifts_path(user)
   end
 
   test 'destroy' do
-    user = create_user
     gift = create_gift(:user => user)
-    login_as user
+
     assert_difference 'Gift.count', -1 do
+      login_as user
       delete :destroy, :params => {:id => gift.id}
+      assert_redirected_to user_gifts_path(user)
     end
-    assert_redirected_to user_gifts_path(user)
   end
 
   test 'will requires login' do
+    logout
     get :will, :params => {:user_id => 42, :id => 42}
     assert_redirected_to login_url
   end
 
   test 'will fails on GET' do
-    login_as user = create_user
     user.befriend(friend = create_user('friend'))
     gift = create_gift(:user => friend)
+
     assert_no_difference 'Giving.count' do
+      login_as user
       get :will, :params => {:user_id => friend.id, :id => gift.id}
+      assert_redirected_to user_gifts_path(friend)
     end
-    assert_redirected_to user_gifts_path(friend)
   end
 
   test 'will' do
-    login_as user = create_user
     user.befriend(friend = create_user('friend'))
     gift = create_gift(:user => friend)
+
     assert_difference 'Giving.count', 1 do
+      login_as user
       post :will, :params => {:user_id => friend.id, :id => gift.id}
+      assert_redirected_to user_gifts_path(friend)
     end
-    assert_redirected_to user_gifts_path(friend)
   end
 
   test 'wont requires login' do
+    logout
     delete :wont, :params => {:user_id => 42, :id => 42}
     assert_redirected_to login_url
   end
 
   test 'wont fails on GET' do
-    login_as user = create_user
     user.befriend(friend = create_user('friend'))
     gift = create_gift(:user => friend)
     user.give(gift)
+
     assert_no_difference 'Giving.count' do
+      login_as user
       get :wont, :params => {:user_id => friend.id, :id => gift.id}
+      assert_redirected_to user_gifts_path(friend)
     end
-    assert_redirected_to user_gifts_path(friend)
   end
 
   test 'wont' do
-    login_as user = create_user
     user.befriend(friend = create_user('friend'))
     gift = create_gift(:user => friend)
     user.give(gift)
+
     assert_difference 'Giving.count', -1 do
+      login_as user
       delete :wont, :params => {:user_id => friend.id, :id => gift.id}
+      assert_redirected_to user_gifts_path(friend)
     end
-    assert_redirected_to user_gifts_path(friend)
   end
 
   test 'admin can remove others givings' do
-    login_as create_user(:role => 'admin')
     other = create_user('other')
     other.befriend(friend = create_user('friend'))
     gift = create_gift(:user => other)
     friend.give(gift)
 
     assert_difference 'Giving.count', -1 do
+      login_as admin
       delete :wont, :params => {:user_id => other.id, :id => gift.id}
+      assert_redirected_to user_gifts_path(other)
     end
-    assert_redirected_to user_gifts_path(other)
   end
 
   test 'non-admin cannot remove others givings' do
-    login_as create_user
     other = create_user('other')
     other.befriend(friend = create_user('friend'))
     gift = create_gift(:user => other)
     friend.give(gift)
 
     assert_no_difference 'Giving.count' do
+      login_as user
       delete :wont, :params => {:user_id => other.id, :id => gift.id}
+      assert_redirected_to user_gifts_path(other)
     end
-    assert_redirected_to user_gifts_path(other)
   end
 
   # Issue 95
   test 'no spaces in tags' do
-    login_as user = create_user
     gift = create_gift(:user => user)
+
+    login_as user
     patch :update, :params => {:id => gift.id, :gift => {:tag_names => 'one two'}}
+    assert_redirected_to user_gifts_path(user)
+
     assert_equal ['one', 'two'], gift.reload.tag_names, 'spaces should not be allowed in tag names'
   end
 

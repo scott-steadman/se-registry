@@ -11,13 +11,14 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    @user = User.new
+    @user = User::ForAuthentication.new
   end
 
   # POST /users
   # POST /users.xml
   def create
-    @user = User.new(user_params)
+    @user = User::ForAuthentication.new(user_params)
+
     if request.post? and @user.save
       flash[:notice] = "Account registered!"
       redirect_back_or_default home_url
@@ -39,7 +40,7 @@ class UsersController < ApplicationController
 
   # PATCH /users/1
   def update
-    @user = page_user
+    @user = page_user.becomes(User::ForAuthentication)
     if request.patch? and @user.update(user_params)
       if params[:user][:role] and current_user.admin?
         @user.role = params[:user][:role]
@@ -48,6 +49,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Account updated!"
       redirect_back_or_default home_url
     else
+      @user = @user.becomes(User)
       render :action => :edit
     end
   end

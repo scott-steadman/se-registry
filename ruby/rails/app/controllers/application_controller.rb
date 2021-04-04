@@ -26,13 +26,14 @@ private
   helper_method :current_user
   def current_user
     return @current_user if defined?(@current_user)
-    @current_user = user_session && user_session.record
+    @current_user = user_session && user_session.record&.becomes(User)
   end
 
   helper_method :page_user
   def page_user
     @page_user ||= begin
       user_id = params[:user_id] || params[:id]
+
       if current_user.admin? and user_id
         User.find_by_id(user_id) || current_user
       else
