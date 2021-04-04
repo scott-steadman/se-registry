@@ -30,6 +30,16 @@ class UserSessionsControllerTest < ActionController::TestCase
     assert_template 'new'
   end
 
+  test 'create transitions from old crypto' do
+    old_salt     = 'salt'
+    old_password = User::ForAuthentication::OldCrypto.encrypt('my password', old_salt)
+    User.create!(:login => 'user', :crypted_password => old_password, :password_salt => old_salt)
+
+    logout
+    post :create, :params => {:user_session => {:login => 'user', :password => 'my password'}}
+    assert_redirected_to home_url
+  end
+
   test 'destroy when logged out' do
     logout
     get :destroy
