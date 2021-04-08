@@ -5,12 +5,6 @@ GIT
     dynamic_form (1.0.0)
       rails (>= 3.0.0)
 
-GIT
-  remote: https://github.com/scott-steadman/se_gem.git
-  revision: c3ae48d1c20fbed01b9e3d3ad7783b0f4a3637c2
-  specs:
-    se_gem (1.0.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -264,7 +258,6 @@ DEPENDENCIES
   rails (~> 6.0.0)
   rails-controller-testing
   sass-rails
-  se_gem!
   simplecov
   therubyracer
   turbolinks
