@@ -3,9 +3,9 @@ require 'test_helper'
 class EventsControllerTest < ActionController::TestCase
 
   def setup
-    @occasion = create_occasion(:user => user, :description => 'Occasion')
-    @reminder = create_reminder(:user => user, :description => 'Reminder')
-    @event    = create_event(:user => user, :description => 'Event')
+    @occasion = create_occasion(:user => user, :description => 'Occasion Description')
+    @reminder = create_reminder(:user => user, :description => 'Reminder Description')
+    @event    = create_event(:user => user, :description => 'Event Description')
   end
 
   test 'index requires login' do
@@ -14,12 +14,14 @@ class EventsControllerTest < ActionController::TestCase
     assert_redirected_to login_path
   end
 
-  test 'index with no path' do
+  test 'index with no path shows all events' do
     login_as user
     get :index
     assert_response :success
 
-    assert_equal %w[Event Occasion Reminder], assigns(:events).map{|ii| ii.event_type}.sort
+    [@event, @occasion, @reminder].each do |event|
+      assert_select "td", event.description, 'event should be rendered'
+    end
   end
 
   test 'index with occasions' do
@@ -28,7 +30,14 @@ class EventsControllerTest < ActionController::TestCase
     login_as user
     get :index
     assert_response :success
-    assert_equal %w[Occasion], assigns(:events).map{|ii| ii.event_type}.sort
+
+    [@occasion].each do |event|
+      assert_select "td", event.description, 'event should be rendered'
+    end
+
+    [@event, @reminder].each do |event|
+      assert_select "td", {:count => 0, :text => event.description}, 'event should NOT be rendered'
+    end
   end
 
   test 'index with reminders' do
@@ -37,7 +46,14 @@ class EventsControllerTest < ActionController::TestCase
     login_as user
     get :index
     assert_response :success
-    assert_equal %w[Reminder], assigns(:events).map{|ii| ii.event_type}.sort
+
+    [@reminder].each do |event|
+      assert_select "td", event.description, 'event should be rendered'
+    end
+
+    [@event, @occasion].each do |event|
+      assert_select "td", {:count => 0, :text => event.description}, 'event should NOT be rendered'
+    end
   end
 
   test 'show requires login' do
@@ -51,7 +67,7 @@ class EventsControllerTest < ActionController::TestCase
     get :show, :params => {:id => @event}
     assert_response :success
 
-    assert_equal @event, assigns(:event)
+    assert_select "a[href='#{edit_event_path(@event)}']", "Edit", 'edit link should be rendered'
   end
 
   test 'new requires login' do
@@ -64,8 +80,6 @@ class EventsControllerTest < ActionController::TestCase
     login_as user
     get :new
     assert_response :success
-
-    assert_not_nil assigns['event']
   end
 
   test 'create requires login' do
@@ -95,7 +109,8 @@ class EventsControllerTest < ActionController::TestCase
       login_as user
       post :create
       assert_response :success
-      assert_match escape('value is empty'), @response.body
+
+      assert_select "div[id=errorExplanation]", /value is empty/, 'error message should be rendered'
     end
   end
 
@@ -110,7 +125,7 @@ class EventsControllerTest < ActionController::TestCase
     get :edit, :params => {:id => @event}
     assert_response :success
 
-    assert_equal @event, assigns(:event)
+    assert_select "form[action='#{user_event_path(user, @event)}'][method=post]", 1, "edit form should be rendered"
   end
 
   test 'update requires login' do
@@ -124,7 +139,7 @@ class EventsControllerTest < ActionController::TestCase
     get :update, :params => {:id => @event, :event => {:description => 'foo'}}
     assert_redirected_to user_events_path(user)
 
-    assert_equal 'Event', Event.find(@event.id).description
+    assert_not_equal 'foo', @event.reload.description, 'event should NOT be updated'
   end
 
   test 'update' do
@@ -132,7 +147,7 @@ class EventsControllerTest < ActionController::TestCase
     put :update, :params => {:id => @event, :event => {:description => 'foo'}}
     assert_redirected_to user_events_path(user)
 
-    assert_equal 'foo', Event.find(@event.id).description
+    assert_equal 'foo', @event.reload.description, 'event should be updated'
   end
 
   test 'update fails' do
@@ -140,7 +155,7 @@ class EventsControllerTest < ActionController::TestCase
     put :update, :params => {:id => @event, :event => {:description => nil}}
     assert_response :success
 
-    assert_match escape("can't be blank"), @response.body
+    assert_select 'div[id=errorExplanation]', /Description can't be blank/, 'error message should be rendered'
   end
 
   test 'destroy requires login' do

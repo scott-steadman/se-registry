@@ -4,7 +4,7 @@ class UserSessionsControllerTest < ActionController::TestCase
 
   test 'new' do
     get :new
-    assert_not_nil assigns['user_session']
+    assert_response :success
   end
 
   test 'create when logged out redirects to home' do
@@ -27,7 +27,7 @@ class UserSessionsControllerTest < ActionController::TestCase
     post :create, :params => {:user_session => {:login => 'user', :password => 'foo'}}
     assert_response :success
 
-    assert_template 'new'
+    assert_select "form[action='#{user_session_path}']"
   end
 
   test 'create transitions from old crypto' do

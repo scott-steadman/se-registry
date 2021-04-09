@@ -86,11 +86,11 @@ class ActiveSupport::TestCase
   end
 
   def user
-    @user ||= create_user(:login => 'user', :password => 'my password')
+    @user ||= create_user(:login => 'test_user', :password => 'my password')
   end
 
   def admin
-    @admin ||= create_user(:login => 'admin', :password => 'my password', :role => 'admin')
+    @admin ||= create_user(:login => 'test_admin', :password => 'my password', :role => 'admin')
   end
 
   def escape(string)

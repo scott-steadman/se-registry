@@ -16,29 +16,33 @@ class GiftsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
 
-    assert_equal 2, assigns['gifts'].size
+    user.gifts.each do |gift|
+      assert_select "a[href='#{edit_user_gift_path(user, gift)}']", 'edit', 'edit link should be rendered'
+    end
   end
 
   test 'index with per_page param' do
-    create_gift(:user => user)
-    create_gift(:user => user)
+    included = create_gift(:user => user)
+    excluded = create_gift(:user => user)
 
     login_as user
     get :index, :params => {:per_page => 1}
     assert_response :success
 
-    assert_equal 1, assigns['gifts'].size
+    assert_select "a[href='#{edit_user_gift_path(user, included)}']", 'edit', 'edit link should be rendered'
+    assert_select "a[href='#{edit_user_gift_path(user, excluded)}']", 0,      'edit link should NOT be rendered'
   end
 
   test 'index with tag param' do
-    create_gift(:user => user, :tag_names => 'foo')
-    create_gift(:user => user, :tag_names => 'bar')
+    included = create_gift(:user => user, :tag_names => 'foo')
+    excluded = create_gift(:user => user, :tag_names => 'bar')
 
     login_as user
     get :index, :params => {:tag => 'foo'}
     assert_response :success
 
-    assert_equal 1, assigns['gifts'].size
+    assert_select "a[href='#{edit_user_gift_path(user, included)}']", 'edit', 'edit link should be rendered'
+    assert_select "a[href='#{edit_user_gift_path(user, excluded)}']", 0,      'edit link should NOT be rendered'
   end
 
   test 'index with csv format' do
@@ -63,8 +67,6 @@ class GiftsControllerTest < ActionController::TestCase
     login_as user
     get :new
     assert_response :success
-
-    assert_not_nil assigns['gift']
   end
 
   # Issue 85
@@ -75,8 +77,8 @@ class GiftsControllerTest < ActionController::TestCase
     get :new, :params => {:user_id => other}
     assert_response :success
 
-    assert assigns['gift'].hidden?,                      'gifts created for others should be hidden'
-    assert assigns['gift'].tag_names.include?('secret'), 'gifts created for others should tagged secret'
+    assert_select "input[name='gift[hidden]'][type=checkbox][value=1]", 1, 'gifts created for others should be hidden'
+    assert_select "input[name='gift[tag_names]'][value=secret]",        1, 'gifts created for others should tagged secret'
   end
 
   test 'create requires login' do
@@ -89,8 +91,9 @@ class GiftsControllerTest < ActionController::TestCase
       login_as user
       get :create, :params => gift_params
       assert_response :success
-      assert_template :new
     end
+
+    assert_select "form[action='#{user_gifts_path(user)}'][method=post]"
   end
 
   test 'create' do
@@ -109,16 +112,16 @@ class GiftsControllerTest < ActionController::TestCase
     assert_redirected_to user_gifts_path(other)
 
     gift = other.gifts.first
-    assert gift.hidden?,          'gifts created for others should be hidden'
+    assert gift.hidden?,         'gifts created for others should be hidden'
     assert gift.given_by?(user), 'gifts created for others should be given by creator'
   end
 
   test 'create with error' do
     login_as user
     post :create
-    assert_response :ok
-    assert_template :new
+    assert_response :success
 
+    assert_select "form[action='#{user_gifts_path(user)}'][method=post]"
     assert_select "form>div[class='errorExplanation']"
   end
 
@@ -135,7 +138,7 @@ class GiftsControllerTest < ActionController::TestCase
     get :edit, :params => {:id => gift.id}
     assert_response :success
 
-    assert_not_nil assigns['gift']
+    assert_select "form[action='#{user_gift_path(user, gift)}'][method=post]"
   end
 
   test 'update requires login' do
@@ -150,7 +153,8 @@ class GiftsControllerTest < ActionController::TestCase
     login_as user
     get :update, :params => {:id => gift.id, :gift => gift.attributes}
     assert_response :success
-    assert_template :edit
+
+    assert_select "form[action='#{user_gift_path(user, gift)}'][method=post]"
   end
 
   test 'update' do
@@ -169,7 +173,8 @@ class GiftsControllerTest < ActionController::TestCase
     login_as user
     patch :update, :params => {:id => gift.id, :gift => {:description => ''}}
     assert_response :success
-    assert_template :edit
+
+    assert_select "form[action='#{user_gift_path(user, gift)}'][method=post]"
   end
 
   test 'destroy requires login' do

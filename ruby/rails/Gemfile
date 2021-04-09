@@ -31,6 +31,5 @@ end
 
 group :test do
   gem 'mocha',          :require => false
-  gem 'rails-controller-testing'
   gem 'simplecov'
 end

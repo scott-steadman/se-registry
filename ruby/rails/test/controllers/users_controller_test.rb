@@ -13,7 +13,7 @@ class UsersControllerTest < ActionController::TestCase
     get :index
     assert_response :success
 
-    assert_equal 1, assigns['users'].size
+    assert_select 'td',  user.login, 'user should be rendered'
   end
 
   test 'new' do
@@ -21,8 +21,6 @@ class UsersControllerTest < ActionController::TestCase
       get :new
       assert_response :success
     end
-
-    assert_not_nil assigns['user']
   end
 
   test 'create should allow signup' do
@@ -38,7 +36,7 @@ class UsersControllerTest < ActionController::TestCase
       assert_response :success
     end
 
-    assert assigns(:user).errors[:login]
+    assert_select "div[id=errorExplanation]", /Login is too short/, 'error message should be rendered'
   end
 
   test 'create requires password on signup' do
@@ -47,7 +45,7 @@ class UsersControllerTest < ActionController::TestCase
       assert_response :success
     end
 
-    assert assigns(:user).errors[:password]
+    assert_select "div[id=errorExplanation]", /Password is too short/, 'error message should be rendered'
   end
 
   test 'create requires password confirmation on signup' do
@@ -56,7 +54,7 @@ class UsersControllerTest < ActionController::TestCase
       assert_response :success
     end
 
-    assert assigns(:user).errors[:password_confirmation]
+    assert_select "div[id=errorExplanation]", /Password confirmation is too short/, 'error message should be rendered'
   end
 
   test 'create requires email on signup' do
@@ -65,7 +63,7 @@ class UsersControllerTest < ActionController::TestCase
       assert_response :success
     end
 
-    assert assigns(:user).errors[:email]
+    assert_select "div[id=errorExplanation]", /Email is too short/, 'error message should be rendered'
   end
 
   test 'show requires login' do
@@ -81,7 +79,7 @@ class UsersControllerTest < ActionController::TestCase
     get :show, :params => {:id => other.id}
     assert_response :success
 
-    assert_equal 'other', assigns['user'].login
+    assert_select "p", /#{other.login}/, 'other user should be rendered'
   end
 
   test 'show other as non admin' do
@@ -91,7 +89,8 @@ class UsersControllerTest < ActionController::TestCase
     get :show, :params => {:id => other.id}
     assert_response :success
 
-    assert_equal 'user', assigns['user'].login
+    assert_select "p", /#{user.login}/, 'user should be rendered'
+    assert_select "p", {:count => 0, :text => /#{other.login}/}, 'other user should NOT be rendered'
   end
 
   test 'edit requires login' do
@@ -105,7 +104,7 @@ class UsersControllerTest < ActionController::TestCase
     get :edit
     assert_response :success
 
-    assert_select "form>input"
+    assert_select "form[id=edit_user_#{user.id}][action='#{user_path(user)}'][method=post]", 1, 'edit form should be rendered'
   end
 
   test 'edit other as admin' do
@@ -115,7 +114,7 @@ class UsersControllerTest < ActionController::TestCase
     get :edit, :params => {:id => other.id}
     assert_response :success
 
-    assert_equal other, assigns['user']
+    assert_select "form[id=edit_user_#{other.id}][action='#{user_path(other)}'][method=post]", 1, 'edit form should be rendered'
   end
 
   test 'edit other as user' do
@@ -125,7 +124,8 @@ class UsersControllerTest < ActionController::TestCase
     get :edit, :params => {:id => other.id}
     assert_response :success
 
-    assert_equal user, assigns['user']
+    assert_select "form[id=edit_user_#{user.id}][action='#{user_path(user)}'][method=post]",   1, 'edit form should be rendered'
+    assert_select "form[id=edit_user_#{other.id}][action='#{user_path(other)}'][method=post]", 0, 'edit form should NOT be rendered'
   end
 
   test 'update requires login' do
@@ -139,7 +139,7 @@ class UsersControllerTest < ActionController::TestCase
     get :update, :params => {:id => user.id}
     assert_response :success
 
-    assert_template :edit
+    assert_select "form[action='#{user_path(user)}']"
   end
 
   test 'update as other non admin' do
@@ -147,7 +147,7 @@ class UsersControllerTest < ActionController::TestCase
     get :update, :params => {:id => create_user('other').id}
     assert_response :success
 
-    assert_select "input[id='user_login'][value='user']"
+    assert_select "input[id='user_login'][value='#{user.login}']"
   end
 
   test 'update as user prevents role assignment' do
@@ -165,7 +165,6 @@ class UsersControllerTest < ActionController::TestCase
     patch :update, :params => {:id => other.id, :user => {:role => 'admin foo'}}
     assert_redirected_to home_url
 
-    assert_equal other, assigns['user']
     assert_equal 'admin foo', other.reload.role
   end
 

@@ -20,7 +20,7 @@ class FriendsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
 
-    assert_equal %w[friend], assigns(:friends).map{|ii| ii.login}.sort
+    assert_select "a[href='#{user_gifts_path(@friend)}']", @friend.login
   end
 
   test 'index without friend' do
@@ -28,7 +28,7 @@ class FriendsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
 
-    assert_equal 0, assigns(:friends).size
+    assert_no_match 'stranger', @response.body
   end
 
   test 'create' do
@@ -81,9 +81,8 @@ class FriendsControllerTest < ActionController::TestCase
     assert_no_difference 'Friendship.count' do
       login_as user
       get :destroy, :params => {:id => @friend.to_param}
+      assert_redirected_to user_friends_path(@user)
     end
-
-    assert_redirected_to user_friends_path(@user)
   end
 
   test 'destroy' do
