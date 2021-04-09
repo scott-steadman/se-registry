@@ -13,8 +13,5 @@ def start_server
   exec "bundle", "exec", "rails", "server", "--pid", pid_file , "--binding", listen, "--port", port
 end
 
-if ENV['RAILS_ENV'] == 'development'
-  run_migration
-end
-
+run_migration
 start_server
