@@ -15,7 +15,7 @@ class Friendship < ActiveRecord::Base
 
   attr_accessor :login_or_email
 
-  # pseudo id since this class is primaliry used in the context of a user
+  # pseudo id since this class is primaily used in the context of a user
   def id
     friend_id
   end
