@@ -36,11 +36,11 @@ class User < ActiveRecord::Base
     :uniq                     => true
 
   has_and_belongs_to_many :friends,
-    :class_name => 'User',
-    :join_table => 'friends',
-    :association_foreign_key => 'friend_id',
-    :autosave => true,
-    :uniq => true
+    :class_name               => 'User',
+    :join_table               => 'friends',
+    :association_foreign_key  => 'friend_id',
+    :autosave                 => true,
+    :uniq                     => true
 
   validates_format_of :login, :with => /\A[^@]+\z/,
                               :message => 'cannot be an email'
@@ -53,20 +53,6 @@ class User < ActiveRecord::Base
 
   def admin?
     role =~ /admin/
-  end
-
-  def self.find_needs_reminding(date=Time.now)
-    includes(:reminders)
-    .references(:reminders)
-    .where(['(events.event_date - ?) <= users.lead_time', date])
-    .where(['((events.event_date - ?) % users.lead_frequency) = 0', date])
-  end
-
-  def self.find_has_occasions(date=Time.now)
-    includes(:friends => :occasions)
-    .references(:friends => :occasions)
-    .where(['(events.event_date - ?) <= users.lead_time', date])
-    .where(['((events.event_date - ?) % users.lead_frequency) = 0', date])
   end
 
   def give(gift)

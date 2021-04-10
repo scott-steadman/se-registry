@@ -13,14 +13,14 @@ class UserNotifier < ActionMailer::Base
   end
 
   def self.send_reminders(date=Time.now)
-    User.find_needs_reminding(date).each do |user|
+    User::ForNotifying.find_needs_reminding(date).each do |user|
       reminders(user).deliver_now
       yield user if block_given?
     end
   end
 
   def self.send_occasions(date=Time.now)
-    User.find_has_occasions(date).each do |user|
+    User::ForNotifying.find_has_occasions(date).each do |user|
       occasions(user).deliver_now
       yield user if block_given?
     end

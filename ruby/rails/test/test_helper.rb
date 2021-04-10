@@ -14,7 +14,7 @@ class ActiveSupport::TestCase
     attrs[:lead_time] = 10                              unless attrs.has_key?(:lead_time)
     attrs[:email]     = "#{attrs[:login]}@example.com"  unless attrs.has_key?(:email)
 
-    klass = User
+    klass = attrs.delete(:class) || User
 
     if attrs.has_key?(:password)
       attrs[:password_confirmation] = attrs[:password] unless attrs.has_key?(:password_confirmation)
