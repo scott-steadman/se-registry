@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Event::ForExpirationTest < ActiveSupport::TestCase
 
-  def test_find_expired_events
+  test 'find expired events' do
     create_occasion(:event_date => Time.now + 1.day)
     expired = Event::ForExpiration.find_expired_events(Time.now + 10.days)
     assert_equal 1, expired.size
@@ -11,7 +11,7 @@ class Event::ForExpirationTest < ActiveSupport::TestCase
     end
   end
 
-  def test_expire_events
+  test 'expire events' do
     create_occasion(:event_date => Time.now)
     expected = Event::ForExpiration.find_expired_events(Time.now + 10.days).count
 

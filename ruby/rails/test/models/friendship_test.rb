@@ -2,28 +2,28 @@ require 'test_helper'
 
 class FriendshipTest < ActiveSupport::TestCase
 
-  def test_login_or_email_defaults_to_empty_string
+  test 'login or email defaults to empty string' do
     assert_equal '', Friendship.new().login_or_email
   end
 
-  def test_create_requires_login_or_email
+  test 'create requires login or email' do
     model = Friendship.create
     assert_equal ['cannot be blank.'], model.errors[:login_or_email]
   end
 
-  def test_create_requires_valid_user
+  test 'create requires valid_user' do
     user  = create_user(:login => 'user')
     model = Friendship.create(:user => user, :login_or_email => 'foo')
     assert_equal ["'foo' not found."], model.errors[:base]
   end
 
-  def test_create_requires_other
+  test 'create requires other' do
     user  = create_user(:login => 'user')
     model = Friendship.create(:user => user, :login_or_email => 'user')
     assert_equal ['You cannot befriend yourself.'], model.errors[:base]
   end
 
-  def test_create_prevents_duplicates
+  test 'create prevents duplicates' do
     user   = create_user(:login => 'user')
     friend = create_user(:login => 'friend')
     user.befriend(friend)
@@ -32,7 +32,7 @@ class FriendshipTest < ActiveSupport::TestCase
     assert_equal ["'friend' is already your friend."], model.errors[:base]
   end
 
-  def test_destroy
+  test 'destroy' do
     user       = create_user(:login => 'user')
     friend     = create_user(:login => 'friend')
     friendship = nil
