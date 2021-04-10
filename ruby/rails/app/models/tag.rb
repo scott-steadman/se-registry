@@ -4,7 +4,7 @@
 #
 #  id             :bigint           not null, primary key
 #  name           :string           not null
-#  taggings_count :integer          default("0")
+#  taggings_count :integer          default(0)
 #
 class Tag < ActiveRecord::Base
   delimiter = ' '

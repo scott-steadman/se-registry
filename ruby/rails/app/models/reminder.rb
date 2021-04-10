@@ -7,7 +7,7 @@
 #  description :string           not null
 #  event_type  :string           default("Event")
 #  event_date  :date             not null
-#  recur       :boolean          default("false")
+#  recur       :boolean          default(FALSE)
 #
 
 class Reminder < Event

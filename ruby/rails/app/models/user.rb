@@ -14,8 +14,8 @@
 #  persistence_token :string
 #  current_login_at  :datetime
 #  last_login_at     :datetime
-#  lead_time         :integer          default("10"), not null
-#  lead_frequency    :integer          default("10"), not null
+#  lead_time         :integer          default(10)
+#  lead_frequency    :integer          default(10)
 #
 
 class User < ActiveRecord::Base

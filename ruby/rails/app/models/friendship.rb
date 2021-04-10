@@ -2,8 +2,8 @@
 #
 # Table name: friends
 #
-#  user_id   :bigint
-#  friend_id :bigint
+#  user_id   :bigint           not null
+#  friend_id :bigint           not null
 #
 
 class Friendship < ActiveRecord::Base

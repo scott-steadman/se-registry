@@ -6,11 +6,11 @@
 #  user_id     :bigint
 #  description :string           not null
 #  url         :string
-#  multi       :boolean          default("false")
-#  hidden      :boolean          default("false")
+#  multi       :boolean          default(FALSE)
+#  hidden      :boolean          default(FALSE)
 #  price       :float
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  created_at  :datetime
+#  updated_at  :datetime
 #
 
 class Gift < ActiveRecord::Base
