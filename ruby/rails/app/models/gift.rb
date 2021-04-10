@@ -15,6 +15,8 @@
 
 class Gift < ActiveRecord::Base
 
+  inheritance_column = :_type_disabled
+
   belongs_to :user
 
   acts_as_taggable
@@ -29,34 +31,12 @@ class Gift < ActiveRecord::Base
     self.tag_names = values
   end
 
-  has_and_belongs_to_many :givings,
-    :class_name => 'User',
-    :join_table => 'givings',
-    :association_foreign_key => 'user_id',
-    :autosave => true,
-    :uniq => true
-
   validates_length_of       :description, :within => 1..256,  :allow_nil => false
   validates_length_of       :url,         :within => 0..255,  :allow_nil => true
   validates_numericality_of :price,                           :allow_nil => true
 
-  def given?
-    not givings.empty?
-  end
-
-  def givable_by?(other)
-    return false if user == other
-    return true  if givings.empty?
-    return false if given_by?(other)
-    multi
-  end
-
-  def given_by?(other)
-    givings.include?(other)
-  end
-
   def editable_by?(other)
-    other.admin? or user == other or (hidden? and given_by?(other))
+    other.admin? or user == other
   end
 
   def price=(value)
@@ -79,4 +59,4 @@ private
     value.is_a?(String) ? value.gsub(/[^\d.]/, '') : value
   end
 
-end
+end # class Gift

@@ -10,6 +10,7 @@ module GiftsHelper
   end
 
   def intent(gift)
+    gift = gift.becomes(Gift::ForGiving)
     return if gift.givings.empty?
     gift.givings.map {|user| user.display_name}.sort.join(', ') << ' Will'
   end

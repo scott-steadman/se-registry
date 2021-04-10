@@ -21,7 +21,7 @@ class GiftsController < ApplicationController
 
   # GET /gifts/new
   def new
-    @gift = gifts.new.tap do |gift|
+    @gift = gifts.new.becomes(Gift).tap do |gift|
       hidden = (page_user != current_user)
       gift.hidden    = hidden
       gift.tag_names = 'secret' if hidden

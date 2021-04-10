@@ -19,54 +19,22 @@ class GiftTest < ActiveSupport::TestCase
 
   test 'should create gift' do
     assert_difference 'Gift.count' do
-      gift = create_gift
       assert !gift.new_record?, "#{gift.errors.full_messages.to_sentence}"
     end
   end
 
-  test 'given' do
-    assert ! gift.given?
-    giver.give(gift)
-    assert gift.reload.given?
-  end
-
-  test 'givable_by' do
-    gift(:multi => true)
-
-    assert ! gift.givable_by?(recipient), 'cannot give self a gift'
-    assert gift.givable_by?(giver), 'gifts should be givable if not already given'
-
-    giver.give(gift)
-    assert ! gift.reload.givable_by?(giver), 'giver cannot give same gift more than once'
-
-    assert gift.givable_by?(create_user), 'multi gifts can be give by many givers'
-  end
-
   test 'editable_by admin' do
-    user = create_user(:role => 'admin')
-    gift = create_gift
-    assert gift.editable_by?(user), 'admins should be able to edit any gift'
+    assert gift.editable_by?(admin), 'admins should be able to edit any gift'
   end
 
   test 'editable_by other' do
-    user = create_user
-    gift = create_gift
-    assert !gift.editable_by?(user), 'others should NOT be able to edit any gift'
-  end
-
-  test 'editable_by self' do
-    user = create_user
-    gift = create_gift(:user => user)
-    assert gift.editable_by?(user), 'users should be able to edit their own gift'
-  end
-
-  # Issue 85
-  test 'editable_by other can edit hidden' do
-    user  = create_user('user')
-    gift  = create_gift(:user => user, :hidden => true)
     other = create_user('other')
-    other.give(gift)
-    assert gift.editable_by?(other), 'others can edit hidden gifts they give'
+    assert !gift.editable_by?(other), 'others should NOT be able to edit any gift'
+  end
+
+  test 'editable_by creator' do
+    gift = create_gift(:user => user)
+    assert gift.editable_by?(user), 'creators should be able to edit their own gift'
   end
 
   # Issue 95
@@ -78,6 +46,14 @@ class GiftTest < ActiveSupport::TestCase
   test 'urls' do
     assert_equal ['one'],        Gift.new(:url => 'one').urls
     assert_equal ['one', 'two'], Gift.new(:urls => ['one', 'two']).urls
+  end
+
+  test 'gift deletion deletes taggings' do
+    gift.tag 'foo bar baz'
+    gift.save!
+    assert_difference 'Tagging.count', -3 do
+      gift.destroy
+    end
   end
 
 private

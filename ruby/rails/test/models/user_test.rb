@@ -94,7 +94,7 @@ class UserTest < ActiveSupport::TestCase
 
   test 'give' do
     giver = create_user
-    gift  = create_gift
+    gift  = create_gift(:class => Gift::ForGiving)
     giver.give(gift)
     assert gift.given?
   end

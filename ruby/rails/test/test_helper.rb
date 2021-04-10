@@ -65,7 +65,9 @@ class ActiveSupport::TestCase
     attrs[:url]         = 'url'               unless attrs.has_key?(:url)
     attrs[:price]       = 1.00                unless attrs.has_key?(:price)
 
-    Gift.create!(attrs)
+    # Issue 28
+    klass = attrs.delete(:class) || Gift
+    klass.create!(attrs)
   end
 
   def login_as(user)

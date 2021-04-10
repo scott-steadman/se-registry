@@ -22,18 +22,18 @@ class User < ActiveRecord::Base
 
   inheritance_column = :_type_disabled
 
-  has_many :gifts,                                          :dependent => :destroy
-  has_many :visible_gifts, -> { where(:hidden => false) },  :class_name => 'Gift'  # Issue 85
+  has_many :gifts,                                          :class_name => 'Gift::ForGiving', :dependent => :destroy
+  has_many :visible_gifts, -> { where(:hidden => false) },  :class_name => 'Gift::ForGiving'  # Issue 85
   has_many :events,        -> { order 'event_date' },       :dependent => :destroy
   has_many :reminders,     -> { order 'event_date' },       :class_name => 'Reminder'
   has_many :occasions,     -> { order 'event_date' },       :class_name => 'Occasion'
 
   has_and_belongs_to_many :givings,
-    :class_name => 'Gift',
-    :join_table => 'givings',
-    :association_foreign_key => 'gift_id',
-    :autosave => true,
-    :uniq => true
+    :class_name               => 'Gift::ForGiving',
+    :join_table               => 'givings',
+    :association_foreign_key  => 'gift_id',
+    :autosave                 => true,
+    :uniq                     => true
 
   has_and_belongs_to_many :friends,
     :class_name => 'User',
@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
   end
 
   def give(gift)
-    givings << gift
+    givings << gift.becomes(Gift::ForGiving)
   end
 
   def befriend(friend)
