@@ -31,6 +31,7 @@ class User::ForAuthentication < User
   end
 
   acts_as_authentic do |config|
+    config.crypto_provider = ::Authlogic::CryptoProviders::SCrypt
     config.transition_from_crypto_providers = OldCrypto
   end
 

@@ -9,6 +9,7 @@ gem 'pg'
 gem 'puma'
 gem 'rails',        '~> 6.0.0'
 gem 'sass-rails'
+gem 'scrypt',       '~> 3.0'
 gem 'therubyracer', :platforms => :ruby
 gem 'turbolinks'
 gem 'uglifier'
