@@ -42,14 +42,13 @@ class UsersController < ApplicationController
   def update
     @user = page_user.becomes(User::ForAuthentication)
     if request.patch? and @user.update(user_params)
-      if params[:user][:role] and current_user.admin?
-        @user.role = params[:user][:role]
+      if params[:user_for_authentication][:role] and current_user.admin?
+        @user.role = params[:user_for_authentication][:role]
         @user.save
       end
       flash[:notice] = "Account updated!"
       redirect_back_or_default home_url
     else
-      @user = @user.becomes(User)
       render :action => :edit
     end
   end
@@ -90,7 +89,7 @@ private
 
   def user_params
     permitted = [:login, :email, :lead_time, :load_frequency, :notes, :password, :password_confirmation]
-    params.require(:user).permit(permitted)
+    params.require(:user_for_authentication).permit(permitted)
   end
 
 end

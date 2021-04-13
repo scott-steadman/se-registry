@@ -4,10 +4,31 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-.bundle
-log
-public/coverage
-tmp
-vendor/bundle
-*.swp
+# Ignore bundler config.
+/.bundle
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+
+# Ignore uploaded files in development.
+/storage/*
+
+/public/assets
 .byebug_history
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
+#
+# App-specific entries
+#
+
+# Ignore coverage output
+/public/coverage
+
+# Ignore vim .swp files
+*.swp
+
+# Ignore gem install directory
+/vendor/bundle

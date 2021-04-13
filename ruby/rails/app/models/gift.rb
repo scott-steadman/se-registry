@@ -13,7 +13,7 @@
 #  updated_at  :datetime
 #
 
-class Gift < ActiveRecord::Base
+class Gift < ApplicationRecord
 
   inheritance_column = :_type_disabled
 

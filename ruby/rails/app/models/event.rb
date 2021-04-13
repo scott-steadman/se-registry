@@ -10,7 +10,7 @@
 #  recur       :boolean          default(FALSE)
 #
 
-class Event < ActiveRecord::Base
+class Event < ApplicationRecord
   self.inheritance_column = 'event_type'
 
   validates_presence_of :description, :event_date

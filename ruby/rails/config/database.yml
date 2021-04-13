@@ -1,30 +1,22 @@
-# MySQL (default setup).  Versions 4.1 and 5.0 are recommended.
+# PostgreSQL. Versions 9.3 and up are supported.
 #
-# Install the MySQL driver:
-#   gem install mysql
-# On MacOS X:
-#   gem install mysql -- --include=/usr/local/lib
-# On Windows:
-#   gem install mysql
-#       Choose the win32 build.
-#       Install MySQL and put its /bin directory on your path.
+# Configure Using Gemfile
+# gem 'pg'
 #
-# And be sure to use new-style password hashing:
-#   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 default: &default
   adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: localhost
   user: postgres
   password: <%= Rails.application.credentials.database_password %>
-  encoding: utf8
-  pool: <%= ENV.fetch('RAILS_MAX_THREADS') {5} %>
 
 development:
   <<: *default
   database: registry_development
 
-# Warning: The database defined as 'test' will be erased and
-# re-generated from your development database when you run 'rake'.
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default

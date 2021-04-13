@@ -1,4 +1,4 @@
-class UserNotifier < ActionMailer::Base
+class UserNotifier < ApplicationMailer
 
   default :from => EMAIL_SENDER
 

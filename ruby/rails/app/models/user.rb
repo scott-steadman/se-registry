@@ -18,7 +18,7 @@
 #  lead_frequency    :integer          default(10)
 #
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
 
   inheritance_column = :_type_disabled
 

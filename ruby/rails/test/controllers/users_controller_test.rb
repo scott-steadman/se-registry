@@ -147,12 +147,12 @@ class UsersControllerTest < ActionController::TestCase
     get :update, :params => {:id => create_user('other').id}
     assert_response :success
 
-    assert_select "input[id='user_login'][value='#{user.login}']"
+    assert_select "input[id='user_for_authentication_login'][value='#{user.login}']"
   end
 
   test 'update as user prevents role assignment' do
     login_as user
-    get :update, :params => {:id => user.id, :user => {:role => 'admin'}}
+    get :update, :params => {:id => user.id, :user_for_authentication => {:role => 'admin'}}
     assert_response :success
 
     assert_equal 'user', user.reload.role
@@ -162,7 +162,7 @@ class UsersControllerTest < ActionController::TestCase
     other = create_user('other')
 
     login_as admin
-    patch :update, :params => {:id => other.id, :user => {:role => 'admin foo'}}
+    patch :update, :params => {:id => other.id, :user_for_authentication => {:role => 'admin foo'}}
     assert_redirected_to home_url
 
     assert_equal 'admin foo', other.reload.role
@@ -170,7 +170,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'update' do
     login_as user
-    patch :update, :params => {:user => {:email => 'new@example.com'}}
+    patch :update, :params => {:user_for_authentication => {:email => 'new@example.com'}}
     assert_redirected_to home_url
 
     assert_equal 'new@example.com', user.reload.email
@@ -178,7 +178,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'update password' do
     login_as user
-    patch :update, :params => {:user => {:password => 'foo bar baz', :password_confirmation => 'foo bar baz'}}
+    patch :update, :params => {:user_for_authentication => {:password => 'foo bar baz', :password_confirmation => 'foo bar baz'}}
     assert_redirected_to home_url
 
     assert user.reload.valid_password?('foo bar baz'), 'password should change'
@@ -186,7 +186,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'update failure' do
     login_as user
-    patch :update, :params => {:user => {:password => 'a', :password_confirmation => 'b'}}
+    patch :update, :params => {:user_for_authentication => {:password => 'a', :password_confirmation => 'b'}}
     assert_response :success
 
     assert_select "div[id=errorExplanation]"
@@ -263,7 +263,7 @@ class UsersControllerTest < ActionController::TestCase
 private
 
   def user_params(options={})
-    { :user => {
+    { :user_for_authentication => {
         :login                 => 'quire',
         :email                 => 'quire@example.com',
         :password              => 'my password',

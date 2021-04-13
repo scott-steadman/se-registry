@@ -10,5 +10,5 @@
 #  tagger_id     :bigint
 #  context       :string
 #
-class Tagging < ActiveRecord::Base
+class Tagging < ApplicationRecord
 end

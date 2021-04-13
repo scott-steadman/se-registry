@@ -1,66 +1,64 @@
-= README
+# README
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
-==Setup:
+## Setup:
 
-* Install Ruby 2.5.3
-    rbenv install 2.5.3
+### Install Ruby 2.5.9
+    rbenv install 2.5.9
 
-* Install bundler
-    gem install bundler -version '1.17.3'
+### Checkout code
+    git clone git@github.com:scott-steadman/se-registry.git
 
-* Checkout code
-    git clone git@github.com:ss/se-registry.git
-
-* Install bundled gems
+### Install bundled gems
     cd se-registry/ruby/rails
     yum install https://download.postgresql.org/pub/repos/yum/reporpms/EL-6-x86_64/pgdg-redhat-repo-latest.noarch.rpm
     yum install postgresql12-devel
     bundle config build.pg --with-pg-config=/usr/pgsql-12/bin/pg_config
     bundle install --path vendor/bundle
 
-* Create the development database
+### Create the development database
     POSTGRES_PASSWORD=changem3 rails db:create db:migrate
 
-* Run the test suite
+### Run the test suite
     POSTGRES_PASSWORD=changem3 rails test
 
-== Common Tasks:
+## Common Tasks:
 
-* Run the development server
+### Run the development server
     rails server -b 0.0.0.0
 
-* Create a controller and test
+### Create a controller and test
     rails generate controller <name>
 
-* Create a model, migration, and test
+### Create a model, migration, and test
     rails generate model <name> --no-fixture
 
-* Check code coverage
+### Check code coverage
     rails test:coverage
   Output will be in public/coverage
 
-* Annotate model classes
+### Annotate model classes
     bundle exec annotate --models --exclude
 
-* Deploy to production
+### Deploy to production
     bundle exec cap production deploy (--dry-run)
 
-* Create docker image
+### Create docker image
     bin/docker-build.sh
 
-* Inspect docker image
+### Inspect docker image
     bin/docker-inspect.sh
 
     This will run a bash shell in the container.
     Enabling you to look around.
 
-* Start docker image
+### Start docker image
     bin/docker-run.sh <RAILS_ENV>
 
     This will start the image with RAILS_ENV=development
 
-* Deploy docker image
+### Deploy docker image
     bin/docker-deploy.sh
+

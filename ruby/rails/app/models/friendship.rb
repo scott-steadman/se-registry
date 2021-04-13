@@ -6,7 +6,7 @@
 #  friend_id :bigint           not null
 #
 
-class Friendship < ActiveRecord::Base
+class Friendship < ApplicationRecord
 
   self.table_name = 'friends'
 
@@ -40,17 +40,17 @@ private
   def friendship
 
     unless self.friend = User.find_by_login_or_email(login_or_email)
-      errors[:base] << "'#{login_or_email}' not found."
+      errors.add(:base, "'#{login_or_email}' not found.")
       return
     end
 
     if user_id == friend_id
-      errors[:base] << 'You cannot befriend yourself.'
+      errors.add(:base, 'You cannot befriend yourself.')
       return
     end
 
     if Friendship.where(['user_id = ? and friend_id = ?', user.id, friend.id]).any?
-      errors[:base] << "'#{login_or_email}' is already your friend."
+      errors.add(:base, "'#{login_or_email}' is already your friend.")
       return
     end
 
