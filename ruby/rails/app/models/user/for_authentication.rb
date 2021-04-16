@@ -16,6 +16,7 @@
 #  last_login_at     :datetime
 #  lead_time         :integer          default(10)
 #  lead_frequency    :integer          default(10)
+#  ui_version        :integer
 #
 class User::ForAuthentication < User
 
