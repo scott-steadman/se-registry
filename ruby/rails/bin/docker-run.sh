@@ -3,9 +3,11 @@
 # turn on debugging
 #set -x
 
+PROJECT=registry
 RAILS_ENV=${1:-development}
 
-DOCKER_IMAGE=se-registry
-DOCKER_ARGS="--net=host"
-
-docker run -e RAILS_ENV=${RAILS_ENV} -e HOSTNAME=${HOSTNAME} ${DOCKER_ARGS} -it ${DOCKER_IMAGE}
+docker run \
+  --net host \
+  --env RAILS_ENV=${RAILS_ENV} \
+  --env HOSTNAME=${HOSTNAME} \
+   -it ${PROJECT}:latest

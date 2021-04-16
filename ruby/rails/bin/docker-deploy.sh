@@ -3,13 +3,15 @@
 # turn on debugging
 #set -x
 
-DOCKER_IMAGE=se-registry
-DOCKER_NAME=prod-registry
-DOCKER_ARGS="--restart=unless-stopped"
+PROJECT=registry
+DOCKER_NAME=prod-${PROJECT}
 
 docker stop ${DOCKER_NAME}
 docker rm   ${DOCKER_NAME}
 
-docker run ${DOCKER_ARGS} -itd --name ${DOCKER_NAME} ${DOCKER_IMAGE}
+docker run \
+  --restart unless-stopped \
+  --name ${DOCKER_NAME} \
+  -itd ${PROJECT}:latest
 
 docker logs -f ${DOCKER_NAME} 
