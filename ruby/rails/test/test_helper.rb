@@ -93,8 +93,8 @@ class ActiveSupport::TestCase
     UserSession.find&.destroy
   end
 
-  def user
-    @user ||= create_user(:login => 'test_user', :password => 'my password')
+  def user(params={})
+    @user ||= create_user({:login => 'test_user', :password => 'my password'}.merge(params))
   end
 
   def admin

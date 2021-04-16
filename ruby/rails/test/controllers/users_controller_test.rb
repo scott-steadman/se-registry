@@ -263,6 +263,24 @@ class UsersControllerTest < ActionController::TestCase
     assert_match '/users/home', session[:return_to]
   end
 
+  # Issue 11
+  test 'user with null ui_version renders default view' do
+    login_as user
+    get :home
+    assert_response :success
+
+    assert_select 'div[id=doc3]', {:message => 'a/v/layouts/application.html.erb should be rendered'}
+  end
+
+  # Issue 11
+  test 'user with ui_version renders versioned view' do
+    login_as user(:ui_version => 2)
+    get :home
+    assert_response :success
+
+    assert_select 'header', {:message => 'a/v/v2/layouts/application.html.erb should be rendered'}
+  end
+
 private
 
   def user_params(options={})

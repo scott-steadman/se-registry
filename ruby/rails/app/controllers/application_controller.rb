@@ -4,6 +4,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  # Issue 11
+  before_action :add_ui_version_to_view_path
+
 private
 
   def page
@@ -83,6 +86,16 @@ private
       ['About',         about_path    ],
       ['Logout',        logout_path   ],
     ]
+  end
+
+  # Issue 11
+  def add_ui_version_to_view_path
+    ui_version   = params[:ui_version]
+    ui_version ||= current_user&.ui_version
+
+    if ui_version
+      prepend_view_path "app/views/v#{ui_version}"
+    end
   end
 
 end

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title><%= @page_title || 'The Internet Gift Registry' %></title>
+
+    <meta charset='utf-8'/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+
+    <%= csrf_meta_tags -%>
+    <%= csp_meta_tag -%>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'vendor', 'data-turbolinks-track': 'reload' %>
+
+    <%= yield :head -%>
+  </head>
+  <body>
+    <header class='header'>
+      <nav class='header__nav'>
+        <div class='header__nav-links'>
+          <% menu_items.each do |item| -%>
+            <%= link_to_unless_current *item, {:class => 'header__nav-link'} %>
+          <% end -%>
+        </div>
+      </nav>
+
+      <%= yield :header -%>
+    </header>
+
+    <main>
+      <%= yield -%>
+    </main>
+
+    <footer class='footer'>
+      <nav class='footer__nav'>
+        <div class='footer__nav-links'>
+          <a class='footer__nav-link' href='mailto:registry@stdmn.com?subject=Suggestion'>Suggestion</a>
+          <a class='footer__nav-link' href='mailto:registry@stdmn.com?subject=Contact'>Contact Me</a>
+        </div>
+        <em class='footer__copyright'>Copyright &copy; 1998 - <%= Time.now.year %>, Steadman Enterprises, Inc.</em>
+      </nav>
+
+      <%= yield :footer -%>
+    </footer>
+  </body>
+</html>
