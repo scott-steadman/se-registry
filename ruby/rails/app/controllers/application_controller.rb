@@ -74,9 +74,9 @@ private
     not user_session.record.nil?
   end
 
-  helper_method :tabs
-  def tabs
-    @tabs ||= [
+  helper_method :menu_items
+  def menu_items
+    @menu_items ||= [
       ['My Gifts',      gifts_path    ],
       ['My Friends',    friends_path  ],
       ['My Occasions',  occasions_path],
