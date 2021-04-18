@@ -12,10 +12,7 @@ class FriendsController < ApplicationController
   # POST /friends
   # POST /friends.xml
   def create
-    unless request.post?
-      redirect_to user_friends_path(page_user)
-      return
-    end
+    redirect_to user_friends_path(page_user) and return unless request.post?
 
     if current_user == friend
       flash[:notice] = "You can't befriend yourself."
@@ -65,7 +62,6 @@ class FriendsController < ApplicationController
     end
     send_data(data, {:filename => 'gifts.csv', :type => 'text/csv', :disposition => 'inline'})
   end
-
 
 private
 
