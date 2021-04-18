@@ -53,6 +53,12 @@ class Gift < ApplicationRecord
     url.to_s.split(/[,\s]+/)
   end
 
+  # Issue 28
+  # Prevent rails helpers from generating method names like: user_gift_for_giving_path
+  def self.model_name
+    ActiveModel::Name.new(Gift)
+  end
+
 private
 
   def sanitize_price(value)
