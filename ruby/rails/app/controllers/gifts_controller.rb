@@ -50,13 +50,10 @@ class GiftsController < ApplicationController
   def edit
   end
 
-  # PUT /gifts/1
-  # PUT /gifts/1.xml
+  # PATCH /gifts/1
+  # PATCH /gifts/1.xml
   def update
-    unless request.patch?
-      render :action => :edit
-      return
-    end
+    render :action => :edit and return unless request.patch?
 
     if gift.update(gift_params)
       flash[:notice] = 'Gift updated!'
