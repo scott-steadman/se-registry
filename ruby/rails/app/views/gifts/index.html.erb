@@ -2,23 +2,35 @@
 <% if current_user != page_user %>
 <h1><%= possessivize(page_user.display_name) %> Gifts</h1>
 <% end %>
+
 <h2>Notes:</h2>
 <pre><%= page_user.notes %></pre>
-<%= gift_list_actions %>
-<%= render :partial=>'layouts/pagination', :object=>@gifts %>
+
+<table width='100%'>
+  <td>
+    <%= link_to 'New',      new_user_gift_path(page_user) %> |
+    <%= link_to 'View All', user_gifts_path(page_user, :per_page=>@gifts.total_entries) if @gifts.total_pages > 1 %> |
+    <%= link_to 'Export',   user_gifts_path(page_user, :format=>'csv') %>
+  </td>
+  <td align='right'><%= will_paginate @gifts %></td>
+</table>
+
 <table border='1' width='100%'>
   <tr>
-    <th>
-      Tags
-      <%= link_to '(see_all)', url_for(:tag => nil) if params[:tag] %>
-    </th>
-    <th><%= sortable_column_header('Description', 'description') %></th>
-    <th>Multi</th>
-    <th><%= sortable_column_header('Price', 'price') %></th>
+    <th align='center'>Tags <%= link_to '(see_all)', url_for(:tag => nil) if params[:tag] %></th>
+
+    <th align='center'><%= sortable_column_header('Description', 'description') %></th>
+
+    <th align='center'>Multi</th>
+
+    <th align='center'><%= sortable_column_header('Price', 'price') %></th>
+
 <% if page_user != current_user %>
-    <th>Intent</th>
+    <th align='center'>Intent</th>
 <% end %>
-    <th>Actions</th>
+
+    <th align='center' width='20%'>Actions</th>
   </tr>
-  <%= render :partial=>'gift', :collection=>@gifts %>
+
+  <%= render :partial => 'gift', :collection => @gifts %>
 </table>

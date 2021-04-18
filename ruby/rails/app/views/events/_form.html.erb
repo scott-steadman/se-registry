@@ -13,15 +13,15 @@
 
   <table>
     <tr>
-      <td><%= form.label :description %></td>
+      <th><%= form.label :description %></th>
       <td><%= form.text_field :description %></td>
     </tr>
     <tr>
-      <td><%= form.label :date %></td>
+      <th><%= form.label :date %></th>
       <td><%= form.date_select :date, :start_year => Date.today.year, :end_year => Date.today.year + 1 %></td>
     </tr>
     <tr>
-      <td><%= form.label :recurring %></td>
+      <th><%= form.label :recurring %></th>
       <td><%= form.check_box :recur %></td>
     </tr>
   </table>

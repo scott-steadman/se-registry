@@ -1,6 +1,3 @@
-<h1>New Gift</h1>
-<%= form_for @gift, :url=>user_gifts_path(page_user) do |f| %>
-  <%= f.error_messages %>
-  <%= render :partial=>'form', :object=>f %>
-  <%= f.submit 'Add' %>
-<% end %>
+<h1>Create a Gift</h1>
+<%= render 'form', event: @event %>
+<%= link_to_function 'Back', 'history.back();' %>

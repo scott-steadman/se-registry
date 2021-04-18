@@ -1,8 +1,46 @@
-<%= form.label :tags %> <%= text_field_tag 'gift[tag_names]', gift.tag_names.join(' ') %><br/>
-<%= form.label :description %> <%= form.text_field :description %><br/>
-<%= form.label :url, 'URLs' %> <%= form.text_field :url %><br/>
-<%= form.label :price %> <%= form.text_field :price %><br/>
-<%= form.label :multi %> <%= form.check_box :multi %><br/>
-<% if current_user != gift.user %>
-<%= form.label :hidden %> <%= form.check_box :hidden %><br/>
+<%= form_with(:model => [page_user, gift]) do |form| %>
+  <% if gift.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(gift.errors.count, "error") %> prohibited this gift from being saved:</h2>
+
+      <ul>
+        <% gift.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+    <tr>
+      <th><%= form.label :tags %></th>
+      <td><%= text_field_tag 'gift[tag_names]', gift.tag_names.join(' ') %></td>
+    </tr>
+    <tr>
+      <th><%= form.label :description %></th>
+      <td><%= form.text_field :description, :size => 40 %></td>
+    </tr>
+    <tr>
+      <th><%= form.label :url, 'URLs' %></th>
+      <td><%= form.text_field :url, :size => 40 %></td>
+    </tr>
+    <tr>
+      <th><%= form.label :price %></th>
+      <td><%= form.text_field :price %></td>
+    </tr>
+    <tr>
+      <th><%= form.label :multi %></th>
+      <td><%= form.check_box :multi %></td>
+    </tr>
+  <% if current_user != gift.user %>
+    <tr>
+      <th><%= form.label :hidden %></th>
+      <td><%= form.check_box :hidden %></td>
+    </tr>
+  <% end %>
+  </table>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
 <% end %>

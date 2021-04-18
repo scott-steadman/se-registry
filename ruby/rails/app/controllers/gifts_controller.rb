@@ -31,29 +31,29 @@ class GiftsController < ApplicationController
   # POST /gifts
   # POST /gifts.xml
   def create
-    @gift = gifts.new(gift_params)
+    redirect_to user_gifts_path(page_user) and return unless request.post?
 
-    render :action => :new and return unless request.post?
-
-    @gift.save!
+    @gift = gifts.create!(gift_params)
 
     current_user.give(@gift) if gift.hidden?
 
+    flash[:notice] = 'Gift was successfully created.'
     redirect_to user_gifts_path(page_user)
   rescue StandardError => ex
-    @gift = Gift.new
+    @gift = gifts.new
     @gift.errors.add(:base, ex.message)
     render :action => :new
   end
 
   # GET /gifts/1/edit
   def edit
+    @gift = gifts.find(gift_id)
   end
 
   # PATCH /gifts/1
   # PATCH /gifts/1.xml
   def update
-    render :action => :edit and return unless request.patch?
+    redirect_to user_gifts_path(page_user) and return unless request.patch?
 
     if gift.update(gift_params)
       flash[:notice] = 'Gift updated!'

@@ -29,18 +29,19 @@ class GiftsControllerTest < ActionController::TestCase
     get :index, :params => {:per_page => 1}
     assert_response :success
 
-    assert_select "a[href='#{edit_user_gift_path(user, included)}']", 'edit', 'edit link should be rendered'
-    assert_select "a[href='#{edit_user_gift_path(user, excluded)}']", 0,      'edit link should NOT be rendered'
+    assert_select 'tr[class=gift-row]', 1, 'only one gift row should be rendered'
+    assert_select 'a[class=next_page]', 1, 'next page link should be rendered'
   end
 
   test 'index with tag param' do
-    included = create_gift(:user => user, :tag_names => 'foo')
+    included = create_gift(:user => user, :tag_names => 'foo bar')
     excluded = create_gift(:user => user, :tag_names => 'bar')
 
     login_as user
     get :index, :params => {:tag => 'foo'}
     assert_response :success
 
+    assert_select "a[href='/?tag=bar']",                              1,      'link to bar tag should be rendered'
     assert_select "a[href='#{edit_user_gift_path(user, included)}']", 'edit', 'edit link should be rendered'
     assert_select "a[href='#{edit_user_gift_path(user, excluded)}']", 0,      'edit link should NOT be rendered'
   end
@@ -89,11 +90,9 @@ class GiftsControllerTest < ActionController::TestCase
   test 'create fails on GET' do
     assert_no_difference 'Gift.count' do
       login_as user
-      get :create, :params => gift_params
-      assert_response :success
+      get :create
+      assert_redirected_to user_gifts_path(user)
     end
-
-    assert_select "form[action='#{user_gifts_path(user)}'][method=post]"
   end
 
   test 'create' do
@@ -122,7 +121,7 @@ class GiftsControllerTest < ActionController::TestCase
     assert_response :success
 
     assert_select "form[action='#{user_gifts_path(user)}'][method=post]"
-    assert_select "form>div[class='errorExplanation']"
+    assert_select "form>div[id=error_explanation]"
   end
 
   test 'edit requires login' do
@@ -152,9 +151,7 @@ class GiftsControllerTest < ActionController::TestCase
 
     login_as user
     get :update, :params => {:id => gift.id, :gift => gift.attributes}
-    assert_response :success
-
-    assert_select "form[action='#{user_gift_path(user, gift)}'][method=post]"
+    assert_redirected_to user_gifts_path(user)
   end
 
   test 'update' do

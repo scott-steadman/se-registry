@@ -1,11 +1,33 @@
-<tr>
-  <td><%= tags_for(gift) %></td>
-  <td><%= gift.description %> <%= links_for(gift) %></td>
+<tr class='gift-row'>
+  <td><%= gift.tags.map {|tag| tag_or_link(tag.name)}.join(' ').html_safe %></td>
+
+  <td>
+    <%= gift.description %>
+    <%- if gift.urls.any? -%>
+      (<%= gift.urls.map {|url| link_to 'link', url, :target => '_new'}.join(', ').html_safe -%>)
+    <%- end -%>
+  </td>
+
   <td><%= gift.multi ? 'Yes' : 'No' %></td>
+
   <td align='right'><%= number_to_currency(gift.price) %></td>
+
 <% if page_user != current_user %>
   <td><%= intent(gift) %></td>
 <% end %>
-  <td align='right'><%= gift_actions(gift) %></td>
+
+  <td align='right'>
+    <%- if gift.givable_by?(current_user) -%>
+      <%= link_to('will', will_user_gift_path(page_user, gift), :method=>:post) %>
+    <%- end -%>
+
+    <%- if gift.given_by?(current_user) or admin_can_remove?(gift) -%>
+      <%= delete_link_to "won't", wont_user_gift_path(page_user, gift) %>
+    <%- end -%>
+
+    <%- if gift.editable_by?(current_user) -%>
+      <%= link_to 'edit', edit_user_gift_path(page_user, gift) %>
+      <%= delete_link_to 'remove', user_gift_path(page_user, gift) %>
+    <%- end -%>
   </td>
 </tr>
