@@ -1,9 +1,3 @@
-<h1>Create <%= event_type %></h1>
-
-<%= form_for(@event, :as => :event, :url => index_path) do |f| %>
-  <%= f.error_messages %>
-  <%= render :partial=>'form', :object=>f %>
-  <p><%= f.submit 'Create' %></p>
-<% end %>
-
+<h1>Create An Event</h1>
+<%= render 'form', event: @event %>
 <%= link_to_function 'Back', 'history.back();' %>

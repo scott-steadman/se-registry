@@ -1,9 +1,10 @@
 <tr>
   <td><%= h event.description %></td>
-<%- if 'Event' == event_type -%>
-  <td align='center'><%= event.class.name %></td>
-<%- end -%>
-  <td align='center'><%= event.event_date.to_s(:db) %></td>
+  <td><%= event.class.name %></td>
+  <td align='right'><%= time_tag event.date %></td>
   <td align='center'><%= event.recur ? 'yes' : 'no' %></td>
-  <td align='center'><%= event_actions(event) %></td>
+  <td align='center'>
+    <%= link_to 'Edit',  edit_user_event_path(page_user, event) %> |
+    <%= delete_link_to user_event_path(page_user, event) %>
+  </td>
 </tr>

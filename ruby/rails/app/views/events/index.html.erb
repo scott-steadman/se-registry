@@ -1,20 +1,17 @@
 <% if current_user != page_user %>
-<h1><%= possessivize(page_user.display_name) %> <%= event_type %>s</h1>
+<h1><%= possessivize(page_user.display_name) %> Events</h1>
 <% end %>
-<%= new_event_links %>
+<%= link_to('New Occasion', new_user_occasion_path(page_user)) %>
+<%= link_to('New Reminder', new_user_reminder_path(page_user)) %>
 <br />
 <%= render :partial=>'layouts/pagination', :object=>@events %>
 <table border='1' width='100%'>
   <tr>
     <th>Description</th>
-  <%- if 'Event' == event_type -%>
     <th>Type</th>
-  <%- end -%>
-    <th width='10%'>Date</th>
-    <th width='10%'>Recurring</th>
-    <th width='10%'>Actions</th>
+    <th width='20%' align='center'>Date</th>
+    <th width='10%' align='center'>Recurring</th>
+    <th width='10%' align='center'>Actions</th>
   </tr>
-  <% @events.each do |event| %>
-    <%= render :partial=>'event', :object=>event %>
-  <% end %>
+  <%= render :partial => 'event', :collection => @events %>
 </table>

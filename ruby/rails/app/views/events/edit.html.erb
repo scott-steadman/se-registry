@@ -1,9 +1,3 @@
-<h1>Edit <%= event_type %></h1>
-
-<%= form_for(@event, :as => :event, :url => user_event_path(page_user, @event), :html => {:method => :put}) do |f| %>
-  <%= f.error_messages %>
-  <%= render :partial=>'form', :object=>f %>
-  <p><%= f.submit 'Update' %></p>
-<% end %>
-
+<h1>Edit An Event</h1>
+<%= render 'form', event: @event %>
 <%= link_to_function 'Back', 'history.back();' %>

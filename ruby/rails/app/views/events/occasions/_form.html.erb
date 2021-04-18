@@ -1,10 +1,10 @@
-<%= form_with(:model => [page_user, event]) do |form| %>
-  <% if event.errors.any? %>
+<%= form_with(:model => [page_user, occasion]) do |form| %>
+  <% if occasion.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
+      <h2><%= pluralize(occasion.errors.count, "error") %> prohibited this occasion from being saved:</h2>
 
       <ul>
-        <% event.errors.each do |error| %>
+        <% occasion.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>

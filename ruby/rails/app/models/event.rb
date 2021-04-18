@@ -30,4 +30,12 @@ class Event < ApplicationRecord
     end
   end
 
+  def date
+    event_date
+  end
+
+  def date=(value)
+    self.event_date = value
+  end
+
 end

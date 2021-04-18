@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   end
 
   resources :gifts
-  resources :occasions, :controller => :events
+  resources :occasions, :controller => 'events/occasions'
   resources :reminders, :controller => :events
 
   # allow users to upadte themselves
@@ -47,7 +47,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :occasions, :controller => :events
+    resources :occasions, :controller => 'events/occasions'
     resources :reminders, :controller => :events
   end
 
