@@ -42,7 +42,7 @@ class GiftTest < ActiveSupport::TestCase
     assert_equal ['one', 'two'], Gift.new(:tag_names => 'one, two').tag_names
   end
 
-  # Issue #84
+  # Issue 84
   test 'urls' do
     assert_equal ['one'],        Gift.new(:url => 'one').urls
     assert_equal ['one', 'two'], Gift.new(:urls => ['one', 'two']).urls

@@ -43,12 +43,12 @@ class Gift < ApplicationRecord
     super sanitize_price(value)
   end
 
-  # Issue #84
+  # Issue 84
   def urls=(array)
     self.url = array.join(' ')
   end
 
-  # Issue #84
+  # Issue 84
   def urls
     url.to_s.split(/[,\s]+/)
   end

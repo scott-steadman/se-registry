@@ -3,7 +3,7 @@ require 'test_helper'
 class GiftsHelperTest < ActionView::TestCase
   include ERB::Util
 
-  # Issue #84
+  # Issue 84
   test 'links_for' do
     links = 'http://one.com http://two.com'
     gift  = Gift.new(:description => 'desc', :url => links)
