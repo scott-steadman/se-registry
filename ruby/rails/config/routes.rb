@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
   resources :gifts
   resources :occasions, :controller => 'events/occasions'
-  resources :reminders, :controller => :events
+  resources :reminders, :controller => 'events/reminders'
 
   # allow users to upadte themselves
   patch '/users(/:id)(.:format)', :to => 'users#update'
@@ -48,7 +48,7 @@ Rails.application.routes.draw do
     end
 
     resources :occasions, :controller => 'events/occasions'
-    resources :reminders, :controller => :events
+    resources :reminders, :controller => 'events/reminders'
   end
 
 end

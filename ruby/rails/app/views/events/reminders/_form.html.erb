@@ -1,0 +1,32 @@
+<%= form_with(:model => [page_user, reminder]) do |form| %>
+  <% if reminder.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(reminder.errors.count, "error") %> prohibited this reminder from being saved:</h2>
+
+      <ul>
+        <% reminder.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+    <tr>
+      <td><%= form.label :description %></td>
+      <td><%= form.text_field :description %></td>
+    </tr>
+    <tr>
+      <td><%= form.label :date %></td>
+      <td><%= form.date_select :date, :start_year => Date.today.year, :end_year => Date.today.year + 1 %></td>
+    </tr>
+    <tr>
+      <td><%= form.label :recurring %></td>
+      <td><%= form.check_box :recur %></td>
+    </tr>
+  </table>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
