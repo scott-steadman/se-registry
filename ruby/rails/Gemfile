@@ -5,7 +5,6 @@ gem 'acts-as-taggable-on'
 gem 'authlogic'
 gem 'bootsnap',     '>= 1.4.4', require: false
 gem 'coffee-rails'
-gem 'dynamic_form', :github => 'rails/dynamic_form'
 #gem 'jbuilder',     '~> 2.7'
 gem 'jquery-rails'
 gem 'pg',           '~> 1.1'
