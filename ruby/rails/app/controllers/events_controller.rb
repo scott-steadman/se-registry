@@ -5,7 +5,7 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.xml
   def index
-    @events = events.paginate(:page=>page, :per_page=>per_page)
+    @events = events.paginate(:page => page, :per_page => per_page)
   end
 
   # GET /events/1
@@ -38,7 +38,7 @@ class EventsController < ApplicationController
   rescue StandardError => ex
     @event = events.new
     @event.errors.add(:base, ex.message)
-    render :action=>:new
+    render :action => :new
   end
 
   # PATCH /events/1
