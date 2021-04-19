@@ -1,17 +1,30 @@
 <% content_for :left do %>
   <h1>Login</h1>
-  <%= form_for user_session, :url => user_session_path do |f| %>
-    <%= f.error_messages %>
-    <%= f.label :login %><br/>
-    <%= f.text_field :login, :size=>20 %><br/>
+  <%= form_with(:model => @user_session, :url => user_session_path) do |form| %>
+    <% if @user_session.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@user_session.errors.count, "error") %> prohibited you from logging in:</h2>
+
+        <ul>
+          <% @user_session.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form.label :login %>
+    <%= form.text_field :login, :size => 20 %>
     <br/>
-    <%= f.label :password %><br/>
-    <%= f.password_field :password, :size=>20 %><br/>
+    <%= form.label :password %>
+    <%= form.password_field :password, :size => 20 %>
     <br/>
-    <%= f.check_box :remember_me %><%= f.label :remember_me %><br/>
     <br/>
-    <%= f.submit "Login" %> <%= link_to 'Sign up', new_user_path %>
+    <%= form.check_box :remember_me %> <%= form.label :remember_me, :style => 'display:inline;' %>
+    <br/>
+    <br/>
+    <%= form.submit "Login" %> <%= link_to 'Sign up', new_user_path %>
   <% end %>
-<% end %>
+<% end # content_for :left %>
 
 <%= render :partial=>'users/about' %>
