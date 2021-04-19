@@ -1,24 +1,68 @@
-<%= form.label :login %>:
-<%= form.text_field :login %><br/>
-<br/>
-<%= form.label :password, form.object.new_record? ? nil : "Change password" %>:
-<%= form.password_field :password %><br/>
-<br/>
-<%= form.label :password_confirmation %>:
-<%= form.password_field :password_confirmation %><br/>
-<br/>
-<%= form.label :notes %><br/>
-<%= form.text_area :notes, :rows=>5 %><br/>
-<hr/>
+<%= form_with(:model => user) do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited your settings from being saved:</h2>
 
-<h3>Contact Information</h3>
-<%= form.label :email %>: <%= form.text_field :email %><br/>
-<p>I want to be notified <%= form.text_field :lead_time, :size=>2 %> days prior to event.</p>
-<p>I want to be nofified every <%= form.text_field :lead_frequency, :size=>2 %> days.</p>
-<hr/>
+      <ul>
+        <% user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<% if current_user.try(:admin?) %>
-  <br/>
-  <%= form.label :role %>:
-  <%= form.text_field :role %><br/>
+
+  <table>
+    <tr>
+      <th><%= form.label :login %></th>
+      <td><%= form.text_field :login %></td>
+    </tr>
+    <tr>
+      <th><%= form.label :password, form.object.new_record? ? nil : "Change password" %></th>
+      <td><%= form.password_field :password %></td>
+    </tr>
+
+    <tr>
+      <th><%= form.label :password_confirmation %></th>
+      <td><%= form.password_field :password_confirmation %></td>
+    </tr>
+
+    <tr>
+      <th><%= form.label :notes %></th>
+      <td><%= form.text_area :notes, :rows => 5, :cols => 60, :autofocus => true %></td>
+    </tr>
+  </table>
+
+  <hr/>
+  <h3>Contact Information</h3>
+  <table>
+    <tr>
+      <th><%= form.label :email %></th>
+      <td><%= form.text_field :email, :size => 40 %></td>
+    </tr>
+    <tr>
+      <td colspan=2>I want to be notified <%= form.text_field :lead_time, :size => 2 %> days prior to event.</td>
+    </tr>
+    <tr>
+      <td colspan=2>I want to be nofified every <%= form.text_field :lead_frequency, :size => 2 %> days.</td>
+    </tr>
+  </table>
+
+  <% if current_user.try(:admin?) %>
+    <hr/>
+    <table>
+      <tr>
+        <th><%= form.label :role %></th>
+        <td><%= form.collection_select :role, User.roles, :to_s, :to_s %></td>
+      </tr>
+    </table>
+  <% end %>
+
+  <hr/>
+  <div class="actions">
+    <%= form.submit %><br/>
+  <%- unless user.new_record? -%>
+    <%= button_to 'Close Account', user_path(@user), :method => :delete, :data => {:confirm => 'Are you sure you want to close your account?'} %>
+  <%- end -%>
+  </div>
 <% end %>

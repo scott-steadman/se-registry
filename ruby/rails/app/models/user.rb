@@ -81,6 +81,14 @@ class User < ApplicationRecord
     other.is_a?(User) && !id.nil? && other.id == id
   end
 
+  def self.roles
+    %w[admin user]
+  end
+
+  def self.model_name
+    ActiveModel::Name.new(User)
+  end
+
 private
 
   def remove_from_friends

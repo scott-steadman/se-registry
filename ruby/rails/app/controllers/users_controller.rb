@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   # GET /users.xml
   def index
     @users = User.order(order).paginate :page => page, :per_page => per_page
+    @users.where!(['id != ?', page_user.id]) unless page_user.admin?
   end
 
   # GET /users/new
@@ -42,8 +43,8 @@ class UsersController < ApplicationController
   def update
     @user = page_user.becomes(User::ForAuthentication)
     if request.patch? and @user.update(user_params)
-      if params[:user_for_authentication][:role] and current_user.admin?
-        @user.role = params[:user_for_authentication][:role]
+      if params[:user][:role] and current_user.admin?
+        @user.role = params[:user][:role]
         @user.save
       end
       flash[:notice] = "Account updated!"
@@ -89,7 +90,7 @@ private
 
   def user_params
     permitted = [:login, :email, :lead_time, :load_frequency, :notes, :password, :password_confirmation]
-    params.require(:user_for_authentication).permit(permitted)
+    params.require(:user).permit(permitted)
   end
 
 end

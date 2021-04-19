@@ -9,11 +9,14 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'index' do
+    other = create_user('other')
+
     login_as user
     get :index
     assert_response :success
 
-    assert_select 'td',  user.login, 'user should be rendered'
+    assert_select 'td',  other.login, 'other should be rendered'
+    assert_select 'td',  {:count => 0, :text => user.login},  'user should NOT be rendered'
   end
 
   test 'new' do
@@ -36,7 +39,7 @@ class UsersControllerTest < ActionController::TestCase
       assert_response :success
     end
 
-    assert_select "div[id=errorExplanation]", /Login is too short/, 'error message should be rendered'
+    assert_select "div[id=error_explanation]", /Login is too short/, 'error message should be rendered'
   end
 
   test 'create requires password on signup' do
@@ -45,7 +48,7 @@ class UsersControllerTest < ActionController::TestCase
       assert_response :success
     end
 
-    assert_select "div[id=errorExplanation]", /Password is too short/, 'error message should be rendered'
+    assert_select "div[id=error_explanation]", /Password is too short/, 'error message should be rendered'
   end
 
   test 'create requires password confirmation on signup' do
@@ -54,7 +57,7 @@ class UsersControllerTest < ActionController::TestCase
       assert_response :success
     end
 
-    assert_select "div[id=errorExplanation]", /Password confirmation is too short/, 'error message should be rendered'
+    assert_select "div[id=error_explanation]", /Password confirmation is too short/, 'error message should be rendered'
   end
 
   test 'create requires email on signup' do
@@ -63,7 +66,7 @@ class UsersControllerTest < ActionController::TestCase
       assert_response :success
     end
 
-    assert_select "div[id=errorExplanation]", /Email is too short/, 'error message should be rendered'
+    assert_select "div[id=error_explanation]", /Email is too short/, 'error message should be rendered'
   end
 
   test 'show requires login' do
@@ -104,7 +107,7 @@ class UsersControllerTest < ActionController::TestCase
     get :edit
     assert_response :success
 
-    assert_select "form[id=edit_user_#{user.id}][action='#{user_path(user)}'][method=post]", 1, 'edit form should be rendered'
+    assert_select "form[action='#{user_path(user)}'][method=post]", 2, 'edit form and close account button should be rendered'
   end
 
   test 'edit other as admin' do
@@ -114,7 +117,7 @@ class UsersControllerTest < ActionController::TestCase
     get :edit, :params => {:id => other.id}
     assert_response :success
 
-    assert_select "form[id=edit_user_#{other.id}][action='#{user_path(other)}'][method=post]", 1, 'edit form should be rendered'
+    assert_select "form[action='#{user_path(other)}'][method=post]", 2, 'edit form and close account button should be rendered'
   end
 
   test 'edit other as user' do
@@ -124,8 +127,8 @@ class UsersControllerTest < ActionController::TestCase
     get :edit, :params => {:id => other.id}
     assert_response :success
 
-    assert_select "form[id=edit_user_#{user.id}][action='#{user_path(user)}'][method=post]",   1, 'edit form should be rendered'
-    assert_select "form[id=edit_user_#{other.id}][action='#{user_path(other)}'][method=post]", 0, 'edit form should NOT be rendered'
+    assert_select "form[action='#{user_path(user)}'][method=post]",  2, 'edit form and close account button should be rendered'
+    assert_select "form[action='#{user_path(other)}'][method=post]", 0, 'edit form should NOT be rendered'
   end
 
   test 'update requires login' do
@@ -147,12 +150,12 @@ class UsersControllerTest < ActionController::TestCase
     get :update, :params => {:id => create_user('other').id}
     assert_response :success
 
-    assert_select "input[id='user_for_authentication_login'][value='#{user.login}']"
+    assert_select "input[id='user_login'][value='#{user.login}']"
   end
 
   test 'update as user prevents role assignment' do
     login_as user
-    get :update, :params => {:id => user.id, :user_for_authentication => {:role => 'admin'}}
+    get :update, :params => {:id => user.id, :user => {:role => 'admin'}}
     assert_response :success
 
     assert_equal 'user', user.reload.role
@@ -162,7 +165,7 @@ class UsersControllerTest < ActionController::TestCase
     other = create_user('other')
 
     login_as admin
-    patch :update, :params => {:id => other.id, :user_for_authentication => {:role => 'admin foo'}}
+    patch :update, :params => {:id => other.id, :user => {:role => 'admin foo'}}
     assert_redirected_to home_url
 
     assert_equal 'admin foo', other.reload.role
@@ -170,7 +173,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'update' do
     login_as user
-    patch :update, :params => {:user_for_authentication => {:email => 'new@example.com'}}
+    patch :update, :params => {:user => {:email => 'new@example.com'}}
     assert_redirected_to home_url
 
     assert_equal 'new@example.com', user.reload.email
@@ -178,7 +181,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'update password' do
     login_as user
-    patch :update, :params => {:user_for_authentication => {:password => 'foo bar baz', :password_confirmation => 'foo bar baz'}}
+    patch :update, :params => {:user => {:password => 'foo bar baz', :password_confirmation => 'foo bar baz'}}
     assert_redirected_to home_url
 
     assert user.reload.valid_password?('foo bar baz'), 'password should change'
@@ -186,10 +189,10 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'update failure' do
     login_as user
-    patch :update, :params => {:user_for_authentication => {:password => 'a', :password_confirmation => 'b'}}
+    patch :update, :params => {:user => {:password => 'a', :password_confirmation => 'b'}}
     assert_response :success
 
-    assert_select "div[id=errorExplanation]"
+    assert_select "div[id=error_explanation]"
   end
 
   test 'destroy requires login' do
@@ -263,7 +266,7 @@ class UsersControllerTest < ActionController::TestCase
 private
 
   def user_params(options={})
-    { :user_for_authentication => {
+    { :user => {
         :login                 => 'quire',
         :email                 => 'quire@example.com',
         :password              => 'my password',

@@ -4,7 +4,7 @@
   <td><%= user.last_login_at.localtime %></td>
   <td><%= user.role %></td>
   <td align='right'>
-    <%= link_to 'befriend', user_friends_path(page_user, :friend_id=>user.id), :method=>:post %>
+    <%= link_to 'befriend', user_friends_path(page_user, :friend_id => user.id), :method => :post %>
     | <%= link_to 'gifts', user_gifts_path(user) %>
     | <%= link_to 'friends', user_friends_path(user) %>
     | <%= link_to 'edit', edit_user_path(user) %>
@@ -16,7 +16,7 @@
   </td>
 <% else -%>
   <td align='right'>
-    <%= link_to 'befriend', user_friends_path(page_user, :friend_id=>user.id), :method=>:post %>
+    <%= link_to 'befriend', user_friends_path(page_user, :friend_id => user.id), :method => :post %>
   </td>
 <% end -%>
   </td>
