@@ -1,4 +1,9 @@
-<%= render :partial => 'layouts/pagination', :object => @users %>
+<table width='100%'>
+  <tr>
+    <td align='right'><%= will_paginate @users %></td>
+  </tr>
+</table>
+
 <table border='1' width='100%'>
   <tr>
     <th align='center'>Login</th>

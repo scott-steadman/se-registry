@@ -7,12 +7,14 @@
 <pre><%= page_user.notes %></pre>
 
 <table width='100%'>
-  <td>
-    <%= link_to 'New',      new_user_gift_path(page_user) %> |
-    <%= link_to 'View All', user_gifts_path(page_user, :per_page=>@gifts.total_entries) if @gifts.total_pages > 1 %> |
-    <%= link_to 'Export',   user_gifts_path(page_user, :format=>'csv') %>
-  </td>
-  <td align='right'><%= will_paginate @gifts %></td>
+  <tr>
+    <td>
+      <%= link_to 'New',      new_user_gift_path(page_user) %> |
+      <%= link_to 'View All', user_gifts_path(page_user, :per_page=>@gifts.total_entries) if @gifts.total_pages > 1 %> |
+      <%= link_to 'Export',   user_gifts_path(page_user, :format=>'csv') %>
+    </td>
+    <td align='right'><%= will_paginate @gifts %></td>
+  </tr>
 </table>
 
 <table border='1' width='100%'>

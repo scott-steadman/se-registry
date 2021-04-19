@@ -1,10 +1,17 @@
 <% if current_user != page_user %>
 <h1><%= possessivize(page_user.display_name) %> Events</h1>
 <% end %>
-<%= link_to('New Occasion', new_user_occasion_path(page_user)) %>
-<%= link_to('New Reminder', new_user_reminder_path(page_user)) %>
-<br />
-<%= render :partial=>'layouts/pagination', :object=>@events %>
+
+<table width='100%'>
+  <tr>
+    <td>
+      <%= link_to('New Occasion', new_user_occasion_path(page_user)) %>
+      <%= link_to('New Reminder', new_user_reminder_path(page_user)) %>
+    </td>
+    <td align='right'><%= will_paginate @events %></td>
+  </tr>
+</table>
+
 <table border='1' width='100%'>
   <tr>
     <th>Description</th>
