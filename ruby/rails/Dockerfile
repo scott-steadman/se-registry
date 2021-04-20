@@ -40,7 +40,8 @@ USER $USER_ID:$GROUP_ID
 RUN gem install bundler -v$(tail -1 Gemfile.lock | sed -e 's/ //g') \
     && gem cleanup bundler \
     && bundle config set --local path 'vendor/bundle' \
-    && bundle install --without=development test \
+    && bundle config set --local without 'development test' \
+    && bundle install \
     && bundle exec rails assets:precompile
 
 # Check results
