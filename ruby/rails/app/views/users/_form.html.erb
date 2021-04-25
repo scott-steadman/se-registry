@@ -55,6 +55,10 @@
         <th><%= form.label :role %></th>
         <td><%= form.collection_select :role, User.roles, :to_s, :to_s %></td>
       </tr>
+      <tr>
+        <th><%= form.label :ui_version, 'UI Version' %></th>
+        <td><%= form.select :ui_version, [['default', ''], ['v2', '2']] %></td>
+      </tr>
     </table>
   <% end %>
 

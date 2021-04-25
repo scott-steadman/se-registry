@@ -89,7 +89,7 @@ private
   end
 
   def user_params
-    permitted = [:login, :email, :lead_time, :load_frequency, :notes, :password, :password_confirmation]
+    permitted = [:login, :email, :lead_time, :load_frequency, :notes, :password, :password_confirmation, :ui_version]
     params.require(:user).permit(permitted)
   end
 
