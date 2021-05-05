@@ -74,20 +74,6 @@ private
     not user_session.record.nil?
   end
 
-  helper_method :menu_items
-  def menu_items
-    @menu_items ||= [
-      ['My Gifts',      gifts_path    ],
-      ['My Friends',    friends_path  ],
-      ['My Occasions',  occasions_path],
-      ['My Reminders',  reminders_path],
-      ['My Settings',   settings_path ],
-      ['Users',         users_path    ],
-      ['About',         about_path    ],
-      ['Logout',        logout_path   ],
-    ]
-  end
-
   # Issue 11
   def add_ui_version_to_view_path
     ui_version   = params[:ui_version]

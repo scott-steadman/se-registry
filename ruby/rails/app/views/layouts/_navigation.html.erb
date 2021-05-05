@@ -1,5 +1,10 @@
 <table>
-<% menu_items.each do |item| -%>
-  <tr><td><%= link_to_unless_current *item %></td></tr>
-<% end -%>
+  <tr><td><%= link_to_unless_current 'My Gifts', gifts_path %></td></tr>
+  <tr><td><%= link_to_unless_current 'My Friends', friends_path %></td></tr>
+  <tr><td><%= link_to_unless_current 'My Occasions', occasions_path %></td></tr>
+  <tr><td><%= link_to_unless_current 'My Reminders', reminders_path %></td></tr>
+  <tr><td><%= link_to_unless_current 'My Settings', settings_path %></td></tr>
+  <tr><td><%= link_to_unless_current 'Users', users_path %></td></tr>
+  <tr><td><%= link_to_unless_current 'About', about_path %></td></tr>
+  <tr><td><%= link_to_unless_current 'Logout', logout_path %></td></tr>
 </table>
