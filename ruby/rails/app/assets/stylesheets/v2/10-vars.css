@@ -1,0 +1,39 @@
+/* 10-vars.css */
+
+:root {
+  /* using a triadic color scheme based on my primary color choice */
+  --site-primary-color:   #87e0fd;
+  --site-secondary-color: #fd87df;
+  --site-tertiary-color:  #dffd87;
+
+  /* related shades */
+  --site-primary-shade-1: #69ECF5;
+
+  /* related neutral colors */
+  --site-neutral-black: #334A52;
+  --site-neutral-gray:  #96AFB8;
+  --site-neutral-white: #EAFCFF;
+
+  --site-background-color: var(--site-primary-color);
+  --header-background-color: #7CC2F4;
+  --menu-background-color: var(--header-background-color);
+
+  /* CSS doesn't allow me to do something like:
+   * foo {
+   *  content: '&laquo;';
+   * }
+   *
+   * So I mimic it by doing:
+   * foo {
+   *  content: vars(--laquo);
+   * }
+   *
+   * Note: if this gets confusing I may change 
+   * it from --<entity> to --html-<entity>
+   */
+
+  /* HTML entities */
+  --laquo: "\00ab";
+  --raquo: "\00bb";
+
+}

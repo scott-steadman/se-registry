@@ -1,0 +1,95 @@
+/* 50-site_nav-40em.css */
+
+@media (min-width: 40em) {
+
+/* I'm not sure if this should be here
+ * or in 40-elements_40em.css.
+ */
+.is-right-handed header {
+  justify-content: flex-end;
+}
+
+#site-nav {
+  /* positioning */
+  position: relative;
+  top: 1.5em;
+
+  /* layout */
+  height: fit-content;
+  padding: 0 1em;
+  
+  /* appearance */
+  border-radius: 0;
+}
+
+.is-right-handed #site-nav {
+  /* positioning */
+  align-self: flex-start;
+}
+
+/* These changes happen when the menu
+ * is on the right side of the screen
+ */
+.is-right-handed #site-nav #site-nav__move:after {
+  order: 1;
+}
+
+.o-site-nav__dropdown ul {
+  /* layout */
+  display: none;
+}
+
+.o-site-nav__dropdown:hover ul {
+  /* layout */
+  display: flex;
+  flex-direction: column;
+}
+
+.o-site-nav__dropdown > a::after {
+  /* positioning */
+  align-content: flex-top;
+
+  /* appearance */
+  content: "▼";
+}
+
+#site-nav__links {
+  /* layout */
+  display: flex;
+  flex-direction: row;
+}
+
+#site-nav__links li {
+  /* positioning */
+  order: 2;
+
+  /* layout */
+  padding: 0 0.25em;
+}
+
+.is-right-handed #site-nav #site-nav__links li:last-child {
+  /* positioning */
+  order: 1;
+}
+
+/* I like the idea of the text "magnifying" when you hover over it */
+#site-nav__links li:hover {
+  /* appearance */
+  font-size: 110%;
+}
+
+#site-nav__move {
+  /* positioning */
+  align-self: flex-start;
+
+  /* layout */
+  margin-top: 0;
+  width: 2em;
+}
+
+#site-nav__toggle {
+  /* layout */
+  display: none;
+}
+
+} /* @media (min-width: 40em) */

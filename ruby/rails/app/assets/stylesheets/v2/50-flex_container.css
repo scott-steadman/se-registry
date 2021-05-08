@@ -1,0 +1,10 @@
+/* 50-flex_container.css */
+
+.o-flex-container {
+  /* layout */
+  display: flex;
+  flex-direction: column;
+}
+
+.o-flex-item {
+}

@@ -1,0 +1,11 @@
+/* 50-flex_container_40em.css */
+
+/* styles for larger screens */
+@media (min-width: 40em) {
+
+.o-flex-container {
+  /* layout */
+  flex-direction: row;
+}
+
+} /* @media (min-width: 40em) */

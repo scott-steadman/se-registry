@@ -1,0 +1,68 @@
+/* 40-elements.css */
+
+* {
+
+  /* layout */
+  margin: 0;
+  padding: 0;
+
+  /* appearance */
+  background-color: transparent;
+  box-sizing: border-box;
+}
+
+a {
+  /* appearance */
+  color: var(--site-neutral-black);
+}
+
+/*
+a:visited {
+}
+
+a:hover {
+}
+*/
+
+
+body {
+  /* appearance */
+  background-color: var(--site-background-color);
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 1em;
+  line-height: 1.4em;
+}
+
+footer {
+  /* positioning */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+header {
+  /* positioning */
+	position: fixed;
+  left: 0;
+  right: 0;
+	top: 0;
+  z-index: 1;
+
+  /* layout */
+  height: 4em;
+
+  /* appearance */
+  background: var(--header-background-color);
+}
+
+main {
+  /* positioning */
+  position: relative;
+  top: 5em;
+
+  /* layout */
+  margin-left: 1em;
+  margin-right: 1em;
+}
+

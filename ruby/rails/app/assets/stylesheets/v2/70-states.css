@@ -1,0 +1,22 @@
+/* 70-states.css */
+
+.is-hidden {
+  display: none !important; 
+}
+
+.is-right {
+  /* positioning */
+  right: 0;
+  text-align: right;
+}
+
+/* styles for larger screens */
+@media (min-width: 40em) {
+
+  .is-right {
+    /* positioning */
+    flex-direction: row-reverse;
+    float: right !important;
+  }
+
+

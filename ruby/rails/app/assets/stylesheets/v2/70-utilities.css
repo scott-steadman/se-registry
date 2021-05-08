@@ -1,0 +1,8 @@
+/* 70-utilities.css */
+
+.u-clearfix:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+

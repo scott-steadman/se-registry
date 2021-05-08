@@ -1,0 +1,159 @@
+/* 50-site_nav.css */
+
+#site-nav {
+  /* positioning */
+  position: static;
+  top: 0.25em;
+
+  /* layout */
+  padding: 1em 1em;
+  width: fit-content;
+
+  /* appearance */
+  background-color: var(--menu-background-color);
+  border-radius: 0.5em;
+}
+
+.is-right-handed #site-nav {
+  /* positioning */
+  align-self: flex-end;
+  float: right;
+  text-align: right;
+}
+
+#site-nav.is-open {
+
+  /* layout */
+  width: 10em;
+
+  /* appearance */
+  box-shadow: 5px 5px var(--site-neutral-gray);
+}
+
+.is-right-handed #site-nav.is-open {
+  /* appearance */
+  box-shadow: -5px 5px var(--site-neutral-gray);
+}
+
+.o-site-nav__dropdown ul {
+  /* appearance */
+  list-style-type: none;
+}
+
+/* hide links by default on small screens */
+#site-nav__links {
+  /* positioning */
+
+  /* layout */
+  display: none;
+
+  /* appearance */
+  background-color: var(--menu-background-color);
+  list-style-type: none;
+}
+
+/* show the links if the site-nav is open  on small screens */
+#site-nav.is-open #site-nav__links {
+  /* layout */
+  display: block;
+}
+
+#site-nav__links li {
+
+  /* appearance */
+  background-color: transparent;
+  padding-top: 0.5em;
+}
+
+#site-nav__move {
+  /* positioning */
+  flex-direction: column;
+
+  /* layout */
+  margin-top: 1em;
+  width: 100%;
+}
+
+/* These changes happen when the menu
+ * is on the left side of the screen
+ */
+#site-nav #site-nav__move:after {
+  /* layout */
+  text-align: center;
+  display: block;
+  width: 100%;
+
+  /* appearance */
+  content: var(--raquo);
+}
+
+/* These changes happen when the menu
+ * is on the right side of the screen
+ */
+.is-right-handed #site-nav #site-nav__move:after {
+  /* appearance */
+  content: var(--laquo);
+}
+
+#site-nav__toggle {
+  /* positioning */
+  align-self: inherit;
+
+  /* layout */
+  display: flex;
+  height: 2.5em;
+  width: 2em;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  /* appearance */
+  background-color: var(--menu-background-color);
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+
+#site-nav__toggle span {
+
+  /* layout */
+	display: block;
+	width: 2em;
+	height: 4px;
+	margin: 2px;
+
+  /* appearance */
+	transition: background-color 0.2s ease-in-out,
+							transform 0.2s ease-in-out,
+							opacity 0.2s ease-in-out;
+	background-color: gray;
+}
+
+#site-nav.is-open #site-nav__toggle span:first-child {
+  /* positioning */
+  position: absolute;
+
+  /* layouyt */
+  margin: 0;
+  width: 2em;
+
+  /* appearance */
+  transform: rotate(45deg);
+}
+
+#site-nav.is-open #site-nav__toggle span:nth-child(2) {
+  /* appearance */
+  opacity: 0;
+}
+
+#site-nav.is-open #site-nav__toggle span:last-child {
+  /* positioning */
+  position: absolute;
+
+  /* layout */
+  margin: 0;
+  width: 2em;
+
+  /* appearance */
+  transform: rotate(-45deg);
+}

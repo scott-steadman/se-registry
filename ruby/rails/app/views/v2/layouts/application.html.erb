@@ -9,19 +9,39 @@
     <%= csrf_meta_tags -%>
     <%= csp_meta_tag -%>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application-v2', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'vendor', 'data-turbolinks-track': 'reload' %>
 
     <%= yield :head -%>
   </head>
-  <body>
-    <header class='header'>
-      <nav class='header__nav'>
-        <div class='header__nav-links'>
-          <% menu_items.each do |item| -%>
-            <%= link_to_unless_current *item, {:class => 'header__nav-link'} %>
-          <% end -%>
-        </div>
+  <body class='is-right-handed'>
+    <header class='o-flex-container'>
+      <nav id='site-nav' class='o-flex-container'>
+        <button id='site-nav__toggle' type='button' aria-label='Open or close navigation menu'
+          onClick="window.site_nav.onToggleClicked(this)"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <ul id='site-nav__links'>
+          <li><%= link_to_unless_current 'My Gifts', gifts_path %></li>
+          <li><%= link_to_unless_current 'My Friends', friends_path %></li>
+          <li class='o-site-nav__dropdown'>
+            <%= link_to_unless_current 'My Events', events_path %>
+            <ul>
+              <li><%= link_to_unless_current 'My Occasions', occasions_path %></li>
+              <li><%= link_to_unless_current 'My Reminders', reminders_path %></li>
+            </ul>
+          </li>
+          <li><%= link_to_unless_current 'My Settings', settings_path %></li>
+          <li><%= link_to_unless_current 'Users', users_path %></li>
+          <li><%= link_to_unless_current 'About', about_path %></li>
+          <li><%= link_to_unless_current 'Logout', logout_path %></li>
+
+          <li><button id='site-nav__move' onClick="window.site_nav.onMoveClicked(this)"/></li>
+        </ul>
       </nav>
 
       <%= yield :header -%>
@@ -31,16 +51,18 @@
       <%= yield -%>
     </main>
 
-    <footer class='footer'>
-      <nav class='footer__nav'>
-        <div class='footer__nav-links'>
-          <a class='footer__nav-link' href='mailto:registry@stdmn.com?subject=Suggestion'>Suggestion</a>
-          <a class='footer__nav-link' href='mailto:registry@stdmn.com?subject=Contact'>Contact Me</a>
+    <footer>
+      <nav class='footer-nav'>
+        <div class='footer-nav__links'>
+          <a class='footer-nav__link' href='mailto:registry@stdmn.com?subject=Suggestion'>Suggestion</a>
+          <a class='footer-nav__link' href='mailto:registry@stdmn.com?subject=Contact'>Contact Me</a>
         </div>
-        <em class='footer__copyright'>Copyright &copy; 1998 - <%= Time.now.year %>, Steadman Enterprises, Inc.</em>
       </nav>
+      <em class='copyright'>Copyright &copy; <time>1998</time> - <time><%= Time.now.year %></time>, Steadman Enterprises, Inc.</em>
 
       <%= yield :footer -%>
+
     </footer>
+    <%= javascript_include_tag '/assets/v2/site-nav' %>
   </body>
 </html>
