@@ -67,11 +67,6 @@
   padding: 0 0.25em;
 }
 
-.is-right-handed #site-nav #site-nav__links li:last-child {
-  /* positioning */
-  order: 1;
-}
-
 /* I like the idea of the text "magnifying" when you hover over it */
 #site-nav__links li:hover {
   /* appearance */
