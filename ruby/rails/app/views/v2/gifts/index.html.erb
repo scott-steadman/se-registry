@@ -1,0 +1,19 @@
+<% if current_user != page_user %>
+<h1><%= possessivize(page_user.display_name) %> Gifts</h1>
+<% end %>
+
+<div id='notes'>
+  <h2>Notes:</h2>
+  <pre><%= page_user.notes %></pre>
+</div>
+
+<ul class='o-inline-list'>
+  <li><%= link_to 'New',    new_user_gift_path(page_user), :class => 'o-button' %></li>
+  <li><%= link_to 'Export', user_gifts_path(page_user, :format => 'csv'), :class => 'o-button' %></li>
+  <li>Tags?</li>
+  <li>Sort?</li>
+</ul>
+
+<div id='gift-list'>
+  <%= render :partial => 'gift', :collection => @gifts %>
+</div>

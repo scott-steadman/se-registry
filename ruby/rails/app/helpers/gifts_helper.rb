@@ -6,9 +6,9 @@ module GiftsHelper
     gift.givings.map {|user| user.display_name}.sort.join(', ') << ' Will'
   end
 
-  def tag_or_link(tag)
+  def tag_or_link(tag, link_options={})
     if tag != params[:tag]
-      link_to(tag, url_for(:tag => tag))
+      link_to(tag, url_for(:tag => tag), link_options.merge(:rel => 'nofollow'))
     else
       h(tag)
     end

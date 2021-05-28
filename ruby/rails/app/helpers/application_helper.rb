@@ -14,8 +14,15 @@ module ApplicationHelper
     link_to(text, '#', html_options.merge(:onClick => function))
   end
 
-  def delete_link_to(text='Delete', url)
-    link_to text, url, :method => :delete, :data => {:confirm => 'Are you sure?'}
+  def delete_link_to(text='Delete', url, options)
+    options ||= {}
+    link_to text, url, options.merge(:method => :delete, :rel => 'nofollow', :data => {:confirm => 'Are you sure?'})
+  end
+
+  def external_link_to(url)
+    # we don't want www. or .com
+    domain = URI.parse(url).host.split('.')[-2]
+    link_to domain, url, :rel => 'nofollow', :target => '_new'
   end
 
 end
