@@ -1,0 +1,10 @@
+/* 70-qa.css */
+
+.qa-hilight-black {
+  border: 1px solid black;
+}
+
+.qa-hilight-children-black * {
+  border: 1px solid black;
+}
+
