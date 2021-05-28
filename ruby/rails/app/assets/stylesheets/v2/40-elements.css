@@ -57,7 +57,7 @@ header {
   z-index: 1;
 
   /* layout */
-  height: 4em;
+  height: 3em;
 
   /* appearance */
   background: var(--header-background-color);

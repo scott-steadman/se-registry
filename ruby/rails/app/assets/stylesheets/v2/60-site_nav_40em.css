@@ -12,10 +12,10 @@
 #site-nav {
   /* positioning */
   position: relative;
-  top: 1.5em;
 
   /* layout */
   height: fit-content;
+  margin: 0.5em 0;
   padding: 0 1em;
   
   /* appearance */
