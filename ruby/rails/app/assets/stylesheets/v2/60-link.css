@@ -1,0 +1,12 @@
+/* 60-link.css */
+
+.o-link--with-icon {
+  /* layout */
+  display: inline;
+}
+
+.o-link--with-icon img {
+  /* appearance */
+  height: 1em;
+  width: 1em;
+}

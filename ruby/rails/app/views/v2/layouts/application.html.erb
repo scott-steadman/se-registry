@@ -37,7 +37,17 @@
           </li>
           <li><%= link_to_unless_current 'My Settings', settings_path %></li>
           <li><%= link_to_unless_current 'Users', users_path %></li>
-          <li><%= link_to_unless_current 'About', about_path %></li>
+          <li class='o-site-nav__dropdown'>
+            <%= link_to_unless_current 'About', about_path %>
+            <ul>
+              <li><a href='mailto:registry@stdmn.com?subject=Suggestion' class='o-link--with-icon'>
+                  Suggestion <%= image_tag('email-icon.svg') %>
+              </a></li>
+              <li><a href='mailto:registry@stdmn.com?subject=Contact' class='o-link--with-icon'>
+                  Contact Me <%= image_tag('email-icon.svg') %>
+              </a></li>
+            </ul>
+          </li>
           <li><%= link_to_unless_current 'Logout', logout_path %></li>
 
           <li><button id='site-nav__move' onClick="window.site_nav.onMoveClicked(this)"/></li>
@@ -52,12 +62,6 @@
     </main>
 
     <footer>
-      <nav class='footer-nav'>
-        <div class='footer-nav__links'>
-          <a class='footer-nav__link' href='mailto:registry@stdmn.com?subject=Suggestion'>Suggestion</a>
-          <a class='footer-nav__link' href='mailto:registry@stdmn.com?subject=Contact'>Contact Me</a>
-        </div>
-      </nav>
       <em class='copyright'>Copyright &copy; <time>1998</time> - <time><%= Time.now.year %></time>, Steadman Enterprises, Inc.</em>
 
       <%= yield :footer -%>
