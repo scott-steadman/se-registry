@@ -1,0 +1,30 @@
+/* 50-objects.css */
+
+.o-button {
+  /* layout */
+  padding: 0.1em 0.2em;
+
+  /* appearance */
+  background-color: var(--button-background-color);
+  border: 2px solid var(--button-border-color);
+  border-radius: 0.5em;
+  text-decoration: none;
+}
+
+.u-destructive {
+  background-color: var(--destructive-background-color);
+}
+
+.o-inline-list {
+  /* layout */
+  display: flex;
+  flex-direction: row;
+
+  /* appearance */
+  list-style-type: none;
+}
+
+.o-inline-list li {
+  /* layout */
+  padding-left: 1em;
+}

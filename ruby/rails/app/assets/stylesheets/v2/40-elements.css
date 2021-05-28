@@ -66,10 +66,18 @@ header {
 main {
   /* positioning */
   position: relative;
-  top: 5em;
+  top: 4em;
 
   /* layout */
-  margin-left: 1em;
-  margin-right: 1em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
 }
 
+
+pre {
+  /* layout */
+  padding: 1em;
+
+  /* appearance */
+  white-space: pre-wrap;
+}

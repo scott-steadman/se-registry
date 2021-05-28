@@ -1,0 +1,12 @@
+/* 60-notes.css */
+
+#notes {
+  /* layout */
+  margin: 0.5em 0;
+  padding: 0.25em;
+
+  /* appearance */
+  background-color: var(--notes-background-color);
+  border: 2px solid var(--notes-border-color);
+  border-radius: 1em;
+}

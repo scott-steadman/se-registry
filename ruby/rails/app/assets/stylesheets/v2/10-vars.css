@@ -12,19 +12,26 @@
   /* matching gradients */
   --site-matching-gradient-1: #7cc2f4;
   --site-matching-gradient-2: #85a3e2;
+  --site-matching-gradient-3: #8481c3;
+
+  /* squash palette */
+  --site-squash-palette-1: #fe9cb1;
 
   /* related neutral colors */
   --site-neutral-black: #334A52;
   --site-neutral-gray:  #96AFB8;
   --site-neutral-white: #EAFCFF;
 
-  --gift-border-color:        var(--site-neutral-gray);
-  --gift-background-color:    var(--site-generic-gradient-1);
-  --header-background-color:  var(--site-matching-gradient-1);
-  --menu-background-color:    var(--header-background-color);
-  --notes-background-color:   var(--site-matching-gradient-2);
-  --notes-border-color:       var(--site-neutral-black);
-  --site-background-color:    var(--site-primary-color);
+  --button-border-color:          var(--site-neutral-black);
+  --button-background-color:      var(--site-matching-gradient-1);
+  --destructive-background-color: var(--site-squash-palette-1);
+  --gift-border-color:            var(--site-neutral-gray);
+  --gift-background-color:        var(--site-generic-gradient-1);
+  --header-background-color:      var(--site-matching-gradient-1);
+  --menu-background-color:        var(--header-background-color);
+  --notes-background-color:       var(--site-matching-gradient-2);
+  --notes-border-color:           var(--site-neutral-black);
+  --site-background-color:        var(--site-primary-color);
 
   /* CSS doesn't allow me to do something like:
    * foo {
