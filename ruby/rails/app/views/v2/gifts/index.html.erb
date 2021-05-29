@@ -17,9 +17,27 @@
     <%- end -%>
   </li>
   <%- end -%>
-  <li>Sorted By: <%= select_tag('order', sort_options, :onChange => "window.location='?order='+this.value;") %></li>
+  <li>Sorted By: <%= select_tag('order', sort_options, :onChange => "window.location=replaceOrder(this.value);") %></li>
 </ul>
 
 <div id='gift-list'>
   <%= render :partial => 'gift', :collection => @gifts %>
 </div>
+
+<script>
+  function replaceOrder(value) {
+    var key       = 'order';
+    var uri       = window.location.search;
+    var regex     = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    var result    = '';
+
+    if (uri.match(regex)) {
+      result = uri.replace(regex, '$1' + key + "=" + value + '$2');
+    } else {
+      result = uri + separator + key + "=" + value;
+    }
+
+    return result;
+  }
+</script>
