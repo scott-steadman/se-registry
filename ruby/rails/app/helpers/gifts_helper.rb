@@ -14,6 +14,13 @@ module GiftsHelper
     end
   end
 
+  def sort_options
+    options_for_select([
+      ['Description', 'description ASC'],
+      ['Price', 'price ASC'],
+    ], order)
+  end
+
   def admin_can_remove?(gift)
     current_user.admin? and page_user != current_user and gift.given?
   end

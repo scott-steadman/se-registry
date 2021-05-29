@@ -10,7 +10,7 @@ class GiftsController < ApplicationController
               .includes(:tags, :user, :givings)
               .joins(joins)
               .where(conditions)
-              .order(order)
+              .order(order + ' NULLS FIRST')
               .paginate(:page => page, :per_page => per_page)
 
     respond_to do |format|

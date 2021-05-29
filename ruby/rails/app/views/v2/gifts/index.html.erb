@@ -17,7 +17,7 @@
     <%- end -%>
   </li>
   <%- end -%>
-  <li>Sort?</li>
+  <li>Sorted By: <%= select_tag('order', sort_options, :onChange => "window.location='?order='+this.value;") %></li>
 </ul>
 
 <div id='gift-list'>
