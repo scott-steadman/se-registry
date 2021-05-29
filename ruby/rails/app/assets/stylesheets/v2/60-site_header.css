@@ -1,0 +1,17 @@
+/* 60-site_header.css */
+
+#site-header {
+  /* positioning */
+	position: fixed;
+  left: 0;
+  right: 0;
+	top: 0;
+  z-index: 1;
+
+  /* layout */
+  height: 3em;
+
+  /* appearance */
+  background: var(--header-background-color);
+}
+

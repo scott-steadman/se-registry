@@ -25,6 +25,7 @@
   --button-border-color:          var(--site-neutral-black);
   --button-background-color:      var(--site-matching-gradient-1);
   --destructive-background-color: var(--site-squash-palette-1);
+  --footer-background-color:      var(--site-matching-gradient-1);
   --gift-border-color:            var(--site-neutral-gray);
   --gift-background-color:        var(--site-generic-gradient-1);
   --header-background-color:      var(--site-matching-gradient-1);

@@ -1,0 +1,13 @@
+/* 60-site_main.css */
+
+#site-main {
+  /* positioning */
+  position: relative;
+  top: 4em;
+
+  /* layout */
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+

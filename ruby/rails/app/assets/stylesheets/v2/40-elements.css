@@ -24,7 +24,6 @@ a:hover {
 }
 */
 
-
 body {
   /* appearance */
   background-color: var(--site-background-color);
@@ -32,47 +31,6 @@ body {
   font-size: 1em;
   line-height: 1.4em;
 }
-
-footer {
-  /* positioning */
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1;
-
-  /* layout */
-  height: 1.5em;
-
-  /* appearance */
-  background: var(--header-background-color);
-}
-
-header {
-  /* positioning */
-	position: fixed;
-  left: 0;
-  right: 0;
-	top: 0;
-  z-index: 1;
-
-  /* layout */
-  height: 3em;
-
-  /* appearance */
-  background: var(--header-background-color);
-}
-
-main {
-  /* positioning */
-  position: relative;
-  top: 4em;
-
-  /* layout */
-  margin-left: 0.5em;
-  margin-right: 0.5em;
-}
-
 
 pre {
   /* layout */

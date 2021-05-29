@@ -15,7 +15,7 @@
     <%= yield :head -%>
   </head>
   <body class='is-right-handed'>
-    <header class='o-flex-container'>
+    <header id='site-header' class='o-flex-container'>
       <nav id='site-nav' class='o-flex-container'>
         <button id='site-nav__toggle' type='button' aria-label='Open or close navigation menu'
           onClick="window.site_nav.onToggleClicked(this)"
@@ -57,11 +57,11 @@
       <%= yield :header -%>
     </header>
 
-    <main>
+    <main id='site-main'>
       <%= yield -%>
     </main>
 
-    <footer>
+    <footer id='site-footer'>
       <em id='copyright'>Copyright &copy; <time>1998</time> - <time><%= Time.now.year %></time>, Steadman Enterprises, Inc.</em>
 
       <%= yield :footer -%>
