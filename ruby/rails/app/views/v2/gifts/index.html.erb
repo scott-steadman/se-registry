@@ -10,7 +10,13 @@
 <ul class='o-inline-list'>
   <li><%= link_to 'New',    new_user_gift_path(page_user), :class => 'o-button' %></li>
   <li><%= link_to 'Export', user_gifts_path(page_user, :format => 'csv'), :class => 'o-button' %></li>
-  <li>Tags?</li>
+  <%- if params[:tag] -%>
+  <li>Tagged:
+    <%= link_to(url_for(:tag => nil), :class => 'o-button u-destructive o-link--with-icon') do -%>
+      <%= h(params[:tag]) %> <%= image_tag('delete-icon.svg') %>
+    <%- end -%>
+  </li>
+  <%- end -%>
   <li>Sort?</li>
 </ul>
 
