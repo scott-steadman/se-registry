@@ -14,8 +14,8 @@ module ApplicationHelper
     link_to(text, '#', html_options.merge(:onClick => function))
   end
 
-  def delete_link_to(text='Delete', url, options)
-    options ||= {}
+  def delete_link_to(url, options={})
+    text = options.delete(:text) || 'Delete'
     link_to text, url, options.merge(:method => :delete, :rel => 'nofollow', :data => {:confirm => 'Are you sure?'})
   end
 
