@@ -1,0 +1,10 @@
+/* 60-site_modal_40em.css */
+
+/* styles for larger screens */
+@media (min-width: 40em) {
+
+#site-modal__dialog {
+  min-width: 25%;
+}
+
+} /* @media (min-width: 40em) */

@@ -1,0 +1,92 @@
+/* 60-site_modal.css */
+
+#site-modal {
+  display: none;
+
+  /* appearance */
+}
+
+#site-modal footer {
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1em 1em 0.5em 1em;
+}
+
+#site-modal header {
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em 0;
+}
+
+#site-modal main {
+  /* layout */
+  display: flex;
+  align-items: left;
+  justify-content: center;
+  padding: 0.5em 0;
+}
+
+#site-modal__dialog {
+
+  /* layout */
+  border-radius: 1em;
+  min-width: 80%;
+
+	/* appearance */
+  border: 1px solid var(--dialog-border-color);
+  background-color: var(--dialog-background-color);
+}
+
+#site-modal__ok-button {
+  /* layout */
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em;
+
+  /* appearance */
+  font-weight: bold;
+  color: var(--ok-button-text-color);
+  background-color: var(--ok-button-background-color);
+  border-radius: 1em;
+  width: 5em;
+}
+
+#site-modal__ok-button:focus {
+  /* appearance */
+  box-shadow: 3px 3px var(--site-neutral-gray);
+  outline: none;
+}
+
+#site-modal__ok-button:hover {
+  /* appearance */
+  box-shadow: 3px 3px var(--site-neutral-gray);
+}
+
+
+#site-modal__overlay {
+  /* positioning */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  /* layout */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* appearance */
+  background: rgba(0,0,0,0.6);
+}
+
+#site-modal__title {
+}
+
+.is-open {
+  display: flex !important;
+}

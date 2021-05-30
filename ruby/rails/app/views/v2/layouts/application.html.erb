@@ -14,6 +14,7 @@
 
     <%= yield :head -%>
   </head>
+
   <body class='is-right-handed'>
     <header id='site-header' class='o-flex-container'>
       <nav id='site-nav' class='o-flex-container'>
@@ -63,10 +64,44 @@
 
     <footer id='site-footer'>
       <em id='copyright'>Copyright &copy; <time>1998</time> - <time><%= Time.now.year %></time>, Steadman Enterprises, Inc.</em>
-
       <%= yield :footer -%>
-
     </footer>
+
+    <div id='site-modal' aria-hidden='true'>
+      <div id='site-modal__overlay' tabindex='-1' data-micromodal-close>
+        <div id='site-modal__dialog' role='dialog' aria-model='true' aria-labelledby='site-modal__title'>
+          <header>
+            <h2 id='site-modal__title'></h2>
+          </header>
+          <main id='site-modal__content'></main>
+          <footer>
+            <button id='site-modal__ok-button' aria-label='Close modal' data-micromodal-close>Ok</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
     <%= javascript_include_tag '/assets/v2/site-nav' %>
+
+    <script src='https://cdn.jsdelivr.net/npm/micromodal/dist/micromodal.js'></script>
+    <script>
+      MicroModal.init();
+
+      window.showErrorDialog = function(title, message) {
+        var titleElement = document.getElementById('site-modal__title');
+        titleElement.innerText = title;
+
+        var contentElement = document.getElementById('site-modal__content');
+        contentElement.classList.add('is-error');
+        contentElement.innerText = message;
+
+        MicroModal.show('site-modal', {
+          // prevent click from passing through to button/link beneath dialog
+          onClose: function(modal, element, event) {event.preventDefault()},
+        });
+      }
+
+    </script>
+
   </body>
 </html>

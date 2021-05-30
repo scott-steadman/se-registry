@@ -16,6 +16,7 @@
 
   /* squash palette */
   --site-squash-palette-1: #fe9cb1;
+  --site-squash-palette-2: #7dc984;
 
   /* related neutral colors */
   --site-neutral-black: #334A52;
@@ -24,6 +25,8 @@
 
   --button-border-color:          var(--site-neutral-black);
   --button-background-color:      var(--site-matching-gradient-1);
+  --dialog-background-color:      var(--site-neutral-white);
+  --dialog-border-color:          var(--site-neutral-black);
   --destructive-background-color: var(--site-squash-palette-1);
   --footer-background-color:      var(--site-matching-gradient-1);
   --gift-border-color:            var(--site-neutral-gray);
@@ -32,6 +35,8 @@
   --menu-background-color:        var(--header-background-color);
   --notes-background-color:       var(--site-matching-gradient-2);
   --notes-border-color:           var(--site-neutral-black);
+  --ok-button-background-color:   var(--site-squash-palette-2);
+  --ok-button-text-color:         var(--site-neutral-white);
   --site-background-color:        var(--site-primary-color);
 
   /* CSS doesn't allow me to do something like:
