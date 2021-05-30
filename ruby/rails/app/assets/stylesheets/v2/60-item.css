@@ -15,6 +15,15 @@
   border-radius: 1em;
 }
 
+.c-item__actions {
+  /* layout */
+  margin-top: 0.5em;
+  padding-top: 0.5em;
+
+  /* appearance */
+  border-top: 1px solid var(--site-neutral-black);
+}
+
 .c-item__description {
   /* layout */
   margin-bottom: 1em;

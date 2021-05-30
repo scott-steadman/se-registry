@@ -1,0 +1,21 @@
+<div id='friend-<%= friend.id %>' class='c-item'>
+  <h1 class='c-item__description'><%= h(friend.login) %></h1>
+
+  <div>Last Updated:
+    <%- if friend.last_gift_updated_at -%>
+    <%= friend.last_gift_updated_at.to_date %>
+    <%- else -%>
+    never
+    <%- end -%>
+  </div>
+
+  <ul class='c-item__actions o-inline-list'>
+    Actions:
+    <li><%= link_to 'view gifts', user_gifts_path(friend), :class => 'o-button' %></li>
+    <li>
+      <%= delete_link_to user_friend_path(page_user, friend), :text => 'remove', :class => 'o-button u-destructive',
+                                                              :confirm => 'Are you sure you want to remove this friend?'
+      %>
+    </li>
+  </ul>
+</div>

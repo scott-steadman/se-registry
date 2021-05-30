@@ -24,7 +24,7 @@
   <div>Intent: <%= intent(gift) %></div>
   <% end %>
 
-  <ul class='o-inline-list'>
+  <ul class='c-item__actions o-inline-list'>
     Actions:
     <%- if gift.givable_by?(current_user) -%>
       <li><%= link_to('will', will_user_gift_path(page_user, gift), :method => :post, :class => 'o-button') %></li>
