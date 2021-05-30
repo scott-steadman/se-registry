@@ -20,7 +20,7 @@
   <li>Sorted By: <%= select_tag('order', sort_options, :onChange => "window.location=window.gifts.replaceOrder(this.value);") %></li>
 </ul>
 
-<div id='gift-list'>
+<div id='gift-list' class='c-item-list'>
   <%= render :partial => 'gift', :collection => @gifts %>
 </div>
 

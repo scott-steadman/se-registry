@@ -29,8 +29,8 @@
   --dialog-border-color:          var(--site-neutral-black);
   --destructive-background-color: var(--site-squash-palette-1);
   --footer-background-color:      var(--site-matching-gradient-1);
-  --gift-border-color:            var(--site-neutral-gray);
-  --gift-background-color:        var(--site-generic-gradient-1);
+  --item-border-color:            var(--site-neutral-gray);
+  --item-background-color:        var(--site-generic-gradient-1);
   --header-background-color:      var(--site-matching-gradient-1);
   --menu-background-color:        var(--header-background-color);
   --notes-background-color:       var(--site-matching-gradient-2);

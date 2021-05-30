@@ -1,26 +1,21 @@
-/* 60-gift.css */
+/* 60-item.css */
 
-#gift-actions ul {
-  /* layout */
-  display: inline;
-}
-
-#gift-list {
+.c-item-list {
   padding-bottom: 2em;
 }
 
-.c-gift {
+.c-item {
   /* layout */
   margin: 0.5em 0.1em;
   padding: 0.5em;
 
   /* appearance */
-  background-color: var(--gift-background-color);
-  border: 2px solid var(--gift-border-color);
+  background-color: var(--item-background-color);
+  border: 2px solid var(--item-border-color);
   border-radius: 1em;
 }
 
-.c-gift__description {
+.c-item__description {
   /* layout */
   margin-bottom: 1em;
 

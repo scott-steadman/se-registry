@@ -1,14 +1,14 @@
-/* 60-gift_40em.css */
+/* 60-item_40em.css */
 
 @media (min-width: 40em) {
 
-.c-gift {
+.c-item {
   /* layout */
   width: 33%;
 
 }
 
-#gift-list {
+.c-item-list {
   /* layout */
   display: flex;
   flex-direction: row;
