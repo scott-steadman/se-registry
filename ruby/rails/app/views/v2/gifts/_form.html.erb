@@ -1,0 +1,39 @@
+<div id='gift-new' class='c-gift'>
+<%= form_with(:model => [page_user, gift], :local => false, :data => {'replace-target' => 'gift-new'}) do |form| %>
+  <h1 class='c-gift__description'><%= form.text_field :description, :placeholder => 'Enter a description', :size => 40 %></h1>
+
+  <ul class='o-inline-list'>
+    <%= form.label :tags %>:
+    <li>
+      <%= text_field_tag 'gift[tag_names]', gift.tag_names.join(' '), :placeholder => 'Enter a space separated list of tags', :size => 40 %>
+    </li>
+  </ul>
+
+  <ul class='o-inline-list'>
+    <%= form.label :url, 'Links' %>:
+    <li><%= form.text_field :url, :placeholder => 'Enter a space separated list of URLs', :size => 40 %></li>
+  </ul>
+  <ul class='o-inline-list'>
+    <%= form.label :price %>:
+    <li><%= form.text_field :price %></li>
+  </ul>
+  <ul class='o-inline-list'>
+    <%= form.label :multi %>:
+    <li><%= form.check_box :multi %></li>
+  </ul>
+
+<% if current_user != gift.user %>
+  <ul class='o-inline-list'>
+    <%= form.label :hidden %>:
+    <li><%= form.check_box :hidden %></li>
+  </ul>
+<% end %>
+
+  <ul class='o-inline-list'>
+    Actions:
+    <li><%= form.submit 'Create', :onClick => 'window.gifts.showMenu()', :class => 'o-button' %></li>
+    <li>
+      <button type='button' class='o-button u-destructive', onClick="window.gifts.onCancelEditClicked('gift-new')">Cancel</button>
+    </li>
+  </ul>
+<% end %>
