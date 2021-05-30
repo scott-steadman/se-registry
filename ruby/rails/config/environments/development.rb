@@ -78,4 +78,6 @@ Rails.application.configure do
 
   config.hosts << ENV['HOSTNAME'].split('.').first
   config.hosts << ENV['HOSTNAME']
+
+  Rack::MiniProfiler.config.storage = Rack::MiniProfiler::MemoryStore
 end
