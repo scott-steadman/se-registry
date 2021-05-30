@@ -101,6 +101,15 @@
         });
       }
 
+      window.onAjaxSuccess = function(event, payload, result, request) {
+        var target = this.getAttribute('data-replace-target');
+        if(target) {
+          $('#'+target).replaceWith(payload);
+        }
+      }
+
+      $(document).on('ajax:success', 'form[data-replace-target]', window.onAjaxSuccess)
+
     </script>
 
   </body>

@@ -1,7 +1,11 @@
 /* 70-states.css */
 
+.is-gone {
+  display: none !important;
+}
+
 .is-hidden {
-  display: none !important; 
+  visibility: hidden !important;
 }
 
 .is-right {

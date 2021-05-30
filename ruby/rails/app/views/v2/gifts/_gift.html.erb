@@ -2,27 +2,23 @@
 
   <h1 class='c-gift__description'><%= gift.description %></h1>
 
-  <%- if gift.tags.any? -%>
   <ul class='o-inline-list'>
     Tags:
     <%- gift.tags.each do |tag| -%>
       <li><%= tag_or_link(tag.name, :class => 'o-button') %></li>
     <%- end -%>
   </ul>
-  <%- end -%>
 
-  <%- if gift.urls.any? -%>
   <ul class='o-inline-list'>
     Links:
     <%- gift.urls.each do |url| -%>
       <li><%= external_link_to url %></li>
     <%- end -%>
   </ul>
-  <%- end -%>
-
-  <div>Multi: <%= gift.multi ? 'Yes' : 'No' %></div>
 
   <div>Price: <%= number_to_currency(gift.price) %></div>
+
+  <div>Multi: <%= gift.multi ? 'Yes' : 'No' %></div>
 
   <% if page_user != current_user %>
   <div>Intent: <%= intent(gift) %></div>
@@ -40,7 +36,11 @@
 
     <%- if gift.editable_by?(current_user) -%>
       <li><%= link_to 'edit', edit_user_gift_path(page_user, gift), :rel => 'nofollow', :class => 'o-button' %></li>
-      <li><%= delete_link_to user_gift_path(page_user, gift), :text => 'remove', :class => 'o-button u-destructive' %></li>
+      <li>
+        <%= delete_link_to user_gift_path(page_user, gift), :text => 'remove', :class => 'o-button u-destructive',
+                                                            :confirm => 'Are you sure you want to remove this gift?'
+        %>
+      </li>
     <%- end -%>
   </ul>
 </div>

@@ -7,8 +7,8 @@
   <pre><%= page_user.notes %></pre>
 </div>
 
-<ul class='o-inline-list'>
-  <li><%= link_to 'New',    new_user_gift_path(page_user), :class => 'o-button' %></li>
+<ul id='gift-menu' class='o-inline-list'>
+  <li><%= link_to 'New',    '#', :onClick => 'window.gifts.onNewClicked();return false;', :class => 'o-button' %></li>
   <li><%= link_to 'Export', user_gifts_path(page_user, :format => 'csv'), :class => 'o-button' %></li>
   <%- if params[:tag] -%>
   <li>Tagged:
@@ -17,7 +17,7 @@
     <%- end -%>
   </li>
   <%- end -%>
-  <li>Sorted By: <%= select_tag('order', sort_options, :onChange => "window.location=replaceOrder(this.value);") %></li>
+  <li>Sorted By: <%= select_tag('order', sort_options, :onChange => "window.location=window.gifts.replaceOrder(this.value);") %></li>
 </ul>
 
 <div id='gift-list'>
@@ -25,19 +25,56 @@
 </div>
 
 <script>
-  function replaceOrder(value) {
-    var key       = 'order';
-    var uri       = window.location.search;
-    var regex     = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-    var result    = '';
+  window.gifts = {
+    hideMenu: function() {
+      document.getElementById('gift-menu').classList.add('is-hidden');
+    }, // hideMenu
 
-    if (uri.match(regex)) {
-      result = uri.replace(regex, '$1' + key + "=" + value + '$2');
-    } else {
-      result = uri + separator + key + "=" + value;
-    }
+    onCancelEditClicked: function(id) {
+      window.gifts.showMenu();
+      document.getElementById(id).remove();
+    }, // onCancelEditClicked
 
-    return result;
-  }
+    onNewClicked: function() {
+      window.gifts.hideMenu();
+
+      var xhttp = new XMLHttpRequest();
+
+      xhttp.onreadystatechange = function() {
+        if(this.readyState != 4) return;
+
+        if(this.status == 200) {
+          var giftList = document.getElementById('gift-list');
+          giftList.insertAdjacentHTML('afterbegin', this.responseText);
+        } else {
+          window.showErrorDialog('Error', 'Unable to create a new gift');
+        }
+      }
+
+      xhttp.open('GET', '<%= new_user_gift_path(page_user) %>', true);
+      xhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      xhttp.send();
+    }, // onNewClicked
+
+    replaceOrder: function (value) {
+      var key       = 'order';
+      var uri       = window.location.search;
+      var regex     = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+      var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+      var result    = '';
+
+      if (uri.match(regex)) {
+        result = uri.replace(regex, '$1' + key + "=" + value + '$2');
+      } else {
+        result = uri + separator + key + "=" + value;
+      }
+
+      return result;
+    }, // replaceOrder
+
+    showMenu: function() {
+      document.getElementById('gift-menu').classList.remove('is-hidden');
+    }, // showMenu
+
+  } // window.gifts
 </script>

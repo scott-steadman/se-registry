@@ -26,6 +26,8 @@ class GiftsController < ApplicationController
       gift.hidden    = hidden
       gift.tag_names = 'secret' if hidden
     end
+
+    render :layout => false if request.xhr?
   end
 
   # POST /gifts
@@ -37,8 +39,13 @@ class GiftsController < ApplicationController
 
     current_user.give(@gift) if gift.hidden?
 
-    flash[:notice] = 'Gift was successfully created.'
-    redirect_to user_gifts_path(page_user)
+    if request.xhr?
+      render :partial => 'gift', :locals => {:gift => @gift}
+    else
+      flash[:notice] = 'Gift was successfully created.'
+      redirect_to user_gifts_path(page_user)
+    end
+
   rescue StandardError => ex
     @gift = gifts.new
     @gift.errors.add(:base, ex.message)
