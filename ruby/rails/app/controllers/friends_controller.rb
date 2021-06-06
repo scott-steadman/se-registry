@@ -70,11 +70,19 @@ private
   end
 
   def friend_id
-    params[:friend_id] || params[:id]
+    @friend_id ||= params[:friend_id] || params[:id]
+  end
+
+  def friend_login
+    @friend_login ||= params[:friend_login]
   end
 
   def friend
-    @friend ||= User.find(friend_id)
+    @friend ||= if friend_login
+                  User.where("login = ?", friend_login).first
+                else
+                  User.find(friend_id)
+                end
   end
 
   def order

@@ -31,12 +31,24 @@ class FriendsControllerTest < ActionController::TestCase
     assert_no_match 'stranger', @response.body
   end
 
-  test 'create' do
+  test 'create with id' do
     another_friend = create_user('another_friend')
 
     assert_difference 'Friendship.count' do
       login_as user
       post :create, :params => {:id => another_friend.to_param}
+      assert_redirected_to user_friends_path(@user)
+    end
+
+    assert_equal 2, @user.friends.reload.size
+  end
+
+  test 'create with login' do
+    another_friend = create_user('another_friend')
+
+    assert_difference 'Friendship.count' do
+      login_as user
+      post :create, :params => {:friend_login => another_friend.login}
       assert_redirected_to user_friends_path(@user)
     end
 
