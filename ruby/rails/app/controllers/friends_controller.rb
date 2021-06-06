@@ -60,7 +60,7 @@ class FriendsController < ApplicationController
         end
       end
     end
-    send_data(data, {:filename => 'gifts.csv', :type => 'text/csv', :disposition => 'inline'})
+    send_data(data, {:filename => 'friends and gifts.csv', :type => 'text/csv', :disposition => 'inline'})
   end
 
 private
