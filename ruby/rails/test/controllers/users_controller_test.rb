@@ -281,6 +281,17 @@ class UsersControllerTest < ActionController::TestCase
     assert_select 'header', {:message => 'a/v/v2/layouts/application.html.erb should be rendered'}
   end
 
+  # Issue 11
+  test 'autocomplete' do
+    create_user('friend')
+
+    login_as user
+    get :autocomplete, :params => {:term => 'f'}
+    assert_response :success
+
+    assert_equal ['friend'].to_json, @response.body, 'autocomplete failed'
+  end
+
 private
 
   def user_params(options={})
