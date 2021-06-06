@@ -116,6 +116,15 @@ class GiftsControllerTest < ActionController::TestCase
     end
   end
 
+  # Issue 11
+  test 'create via xhr' do
+    login_as user(:ui_version => 2)
+    post :create, :params => gift_params, :xhr => true
+    assert_response :success
+
+    assert_select "a[href='#{edit_user_gift_path(user, user.gifts.last)}']", 'edit'
+  end
+
   test 'create gift for other' do
     other = create_user('other')
 
