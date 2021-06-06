@@ -35,6 +35,7 @@ Rails.application.routes.draw do
 
     collection do
       get :home # bounce uers to their home page
+      get :autocomplete
     end
 
     resources :events

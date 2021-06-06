@@ -1,13 +1,27 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag '//code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css' %>
+<% end %>
 
 <% if current_user != page_user %>
 <h1><%= possessivize(page_user.display_name) %> Friends</h1>
 <% end %>
 
 <ul id='friend-menu' class='o-inline-list'>
-  <li><input type='text' size=40 placeholder="Start typing a friend's name..."/> Add</li>
-  <li><%= link_to 'Export', :controller => 'friends', :action => 'export' %></li>
+  <li>
+    <%= form_tag user_friends_path(current_user) do %>
+      <input id='friend-autocomplete' name='friend_login' type='text' size='40' placeholder="Start typing a friend's name..."/>
+      <%= submit_tag 'Add', :class => 'o-button' %>
+    <%- end -%>
+  </li>
+  <li><%= link_to 'Export', export_friends_path, :class => 'o-button' %></li>
 </ul>
 
 <div id='friend-list' class='c-item-list'>
   <%= render :partial => 'friend', :collection => @friends %>
 </div>
+
+<script>
+  $(document).on('turbolinks:load', function() {
+    $('#friend-autocomplete').autocomplete({source: '<%= autocomplete_users_path %>'});
+  });
+</script>

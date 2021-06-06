@@ -78,6 +78,10 @@ class UsersController < ApplicationController
     store_location
   end
 
+  def autocomplete
+    render :json => User.where("login ILIKE ?", "#{params[:term]}%").pluck(:login)
+  end
+
 private
 
   def order
