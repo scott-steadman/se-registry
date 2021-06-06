@@ -12,7 +12,7 @@
   <ul class='o-inline-list'>
     Links:
     <%- gift.urls.each do |url| -%>
-      <li><%= external_link_to url %></li>
+      <li><%= external_link_to url rescue '' %></li>
     <%- end -%>
   </ul>
 

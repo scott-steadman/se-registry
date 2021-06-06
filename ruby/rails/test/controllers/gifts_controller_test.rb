@@ -21,6 +21,19 @@ class GiftsControllerTest < ActionController::TestCase
     end
   end
 
+  # Issue 11
+  test 'index ui_version=2 renders terse external link' do
+    create_gift(:user => user, :url => 'http://www.foo.com')
+
+    login_as user
+    get :index, :params => {:ui_version => 2}
+    assert_response :success
+
+    user.gifts.each do |gift|
+      assert_select "a[href='http://www.foo.com']", 'foo', 'external link should be rendered'
+    end
+  end
+
   test 'index with per_page param' do
     included = create_gift(:user => user)
     excluded = create_gift(:user => user)
