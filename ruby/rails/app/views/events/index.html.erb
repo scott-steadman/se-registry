@@ -5,8 +5,8 @@
 <table width='100%'>
   <tr>
     <td>
-      <%= link_to('New Occasion', new_user_occasion_path(page_user)) %>
-      <%= link_to('New Reminder', new_user_reminder_path(page_user)) %>
+      <%= link_to('New Occasion', new_user_occasion_path(page_user)) unless params[:controller].ends_with?('reminders') %>
+      <%= link_to('New Reminder', new_user_reminder_path(page_user)) unless params[:controller].ends_with?('occasions') %>
     </td>
     <td align='right'><%= will_paginate @events %></td>
   </tr>

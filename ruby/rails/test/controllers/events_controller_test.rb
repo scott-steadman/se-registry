@@ -78,7 +78,7 @@ class EventsControllerTest < ActionController::TestCase
       post :create
       assert_response :success
 
-      assert_select "div[id=error_explanation]", /value is empty/, 'error message should be rendered'
+      assert_select "div[id=error_explanation]", /can't be blank/, 'error message should be rendered'
     end
   end
 

@@ -17,40 +17,40 @@ class EventsController < ApplicationController
   # GET /events/new
   # GET /events/new.xml
   def new
-    @event = events.new
+    @event = build_event
   end
 
   # GET /events/1/edit
   def edit
-    @event = events.find(params[:id])
+    @event   = events.find(params[:id])
+    @event ||= build_event
   end
 
   # POST /events
   # POST /events.xml
   def create
-    redirect_to user_events_path(page_user) and return unless request.post?
+    redirect_to index_path and return unless request.post?
 
-    @event = events.create!(event_params)
+    @event = build_event
 
-    flash[:notice] = 'Event was successfully created.'
-    redirect_to user_events_path(page_user)
-
-  rescue StandardError => ex
-    @event = events.new
-    @event.errors.add(:base, ex.message)
-    render :action => :new
+    if @event.save
+      flash[:notice] = 'Event was successfully created.'
+      redirect_to index_path
+    else
+      render :action => :new
+    end
   end
 
   # PATCH /events/1
   # PATCH /events/1.xml
   def update
-    redirect_to user_events_path(page_user) and return unless request.patch?
+    redirect_to index_path and return unless request.patch?
 
     @event = events.find(params[:id])
 
     if @event.update(event_params)
       flash[:notice] = 'Event was successfully updated.'
-      redirect_to user_events_path(page_user)
+      redirect_to index_path
     else
       render :action => 'edit'
     end
@@ -59,22 +59,35 @@ class EventsController < ApplicationController
   # DELETE /events/1
   # DELETE /events/1.xml
   def destroy
-    redirect_to user_events_path(page_user) and return unless request.delete?
+    redirect_to index_path and return unless request.delete?
 
     @event = events.find(params[:id])
     @event.destroy
 
-    redirect_to user_events_path(page_user)
+    redirect_to index_path
   end
 
 private
-
-  def event_params
-    params.require(:event).permit(:description, :date, :recur)
-  end
 
   def events
     page_user.events
   end
 
-end
+  def event_params
+    params[:event]&.permit(:description, :date, :recur) || {}
+  end
+
+  def build_event
+    events.new(event_params)
+  end
+
+  def index_path
+    user_events_path(page_user)
+  end
+
+  helper_method :delete_path
+  def delete_path(event)
+    user_event_path(page_user, event)
+  end
+
+end # class EventsController

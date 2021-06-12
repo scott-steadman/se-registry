@@ -5,6 +5,6 @@
   <td align='center'><%= event.recur ? 'yes' : 'no' %></td>
   <td align='center'>
     <%= link_to 'Edit',  edit_user_event_path(page_user, event) %> |
-    <%= delete_link_to user_event_path(page_user, event) %>
+    <%= delete_link_to delete_path(event) %>
   </td>
 </tr>
