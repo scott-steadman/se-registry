@@ -1,9 +1,0 @@
-<tr>
-  <td><%= h reminder.description %></td>
-  <td align='right'>  <%= time_tag reminder.date %></td>
-  <td align='center'><%= reminder.recur ? 'yes' : 'no' %></td>
-  <td align='center'>
-    <%= link_to 'Edit',  edit_user_reminder_path(page_user, reminder) %> |
-    <%= delete_link_to user_reminder_path(page_user, reminder) %>
-  </td>
-</tr>
