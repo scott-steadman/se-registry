@@ -1,6 +1,8 @@
-<div id='gift-new' class='c-gift'>
-<%= form_with(:model => [page_user, gift], :local => false, :data => {'replace-target' => 'gift-new'}) do |form| %>
-  <h1 class='c-gift__description'><%= form.text_field :description, :placeholder => 'Enter a description', :size => 40 %></h1>
+<%- div_id = "gift-#{gift.new_record? ? 'new' : gift.id}" -%>
+
+<div id='<%= div_id %>' class='c-item'>
+<%= form_with(:model => [page_user, gift], :local => false, :data => {'replace-target' => div_id}) do |form| %>
+  <h2 class='c-item__description'><%= form.text_field :description, :placeholder => 'Enter a description', :size => 40 %></h2>
 
   <ul class='o-inline-list'>
     <%= form.label :tags %>:
@@ -29,11 +31,18 @@
   </ul>
 <% end %>
 
-  <ul class='o-inline-list'>
+  <ul class='c-item__actions o-inline-list'>
     Actions:
-    <li><%= form.submit 'Create', :onClick => 'window.gifts.showMenu()', :class => 'o-button' %></li>
+    <li><%= form.submit (gift.new_record? ? 'Create' : 'Update'), :onClick => 'window.events.showMenu()', :class => 'o-button' %></li>
     <li>
-      <button type='button' class='o-button u-destructive', onClick="window.gifts.onCancelEditClicked('gift-new')">Cancel</button>
+    <%-
+      if gift.new_record?
+        cancel_func = 'window.gifts.onCancelCreateClicked()'
+      else
+        cancel_func = "window.gifts.onCancelEditClicked('#{div_id}', '#{user_gift_path(page_user, gift)}')"
+      end
+    -%>
+      <button type='button' class='o-button u-destructive', onClick="<%= cancel_func %>">Cancel</button>
     </li>
   </ul>
 <% end %>

@@ -19,6 +19,12 @@ class GiftsController < ApplicationController
     end
   end
 
+  # GET /gifts/1
+  # GET /gifts/1.xml
+  def show
+    @gift = gifts.find(params[:id])
+  end
+
   # GET /gifts/new
   def new
     @gift = gifts.new.becomes(Gift).tap do |gift|
@@ -26,8 +32,6 @@ class GiftsController < ApplicationController
       gift.hidden    = hidden
       gift.tag_names = 'secret' if hidden
     end
-
-    render :layout => false if request.xhr?
   end
 
   # POST /gifts

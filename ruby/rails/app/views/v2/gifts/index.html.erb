@@ -1,14 +1,14 @@
 <% if current_user != page_user %>
-<h1><%= possessivize(page_user.display_name) %> Gifts</h1>
+<h2><%= possessivize(page_user.display_name) %> Gifts</h2>
 <% end %>
 
 <div id='notes'>
-  <h2>Notes:</h2>
+  <h3>Notes:</h3>
   <pre><%= page_user.notes %></pre>
 </div>
 
 <ul id='gift-menu' class='o-inline-list'>
-  <li><%= link_to 'New',    '#', :onClick => 'window.gifts.onNewClicked();return false;', :class => 'o-button' %></li>
+  <li><%= link_to_function 'New', "window.gifts.onNewClicked('#{new_user_gift_path(page_user)}')", :class => 'o-button' %></li>
   <li><%= link_to 'Export', user_gifts_path(page_user, :format => 'csv'), :class => 'o-button' %></li>
   <%- if params[:tag] -%>
   <li>Tagged:
@@ -30,31 +30,54 @@
       document.getElementById('gift-menu').classList.add('is-hidden');
     }, // hideMenu
 
-    onCancelEditClicked: function(id) {
-      window.gifts.showMenu();
-      document.getElementById(id).remove();
-    }, // onCancelEditClicked
-
-    onNewClicked: function() {
+    onEditClicked: function(gift_id, edit_gift_path) {
       window.gifts.hideMenu();
 
-      var xhttp = new XMLHttpRequest();
+      jQuery.ajax(edit_gift_path, {
 
-      xhttp.onreadystatechange = function() {
-        if(this.readyState != 4) return;
+      }).done(function(data, textStatus, jqXHR) {
+        $(`#gift-${gift_id}`).replaceWith(data);
 
-        if(this.status == 200) {
-          var giftList = document.getElementById('gift-list');
-          giftList.insertAdjacentHTML('afterbegin', this.responseText);
-        } else {
-          window.showErrorDialog('Error', 'Unable to create a new gift');
-          window.gifts.showMenu();
-        }
-      }
+      }).fail(function(jqXHR, txtStatus, errorThrown) {
+        window.showErrorDialog('Error', 'Unable to create a gift');
+        window.gifts.showMenu();
+      });
 
-      xhttp.open('GET', '<%= new_user_gift_path(page_user) %>', true);
-      xhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-      xhttp.send();
+    }, // onEditClicked
+
+    onCancelCreateClicked: function() {
+      window.gifts.showMenu();
+      $('#gift-new').remove();
+    }, // onCancelEditClicked
+
+    onCancelEditClicked: function(id, user_gift_path) {
+      window.gifts.showMenu();
+
+      jQuery.ajax(user_gift_path, {
+
+      }).done(function(data, textStatus, jqXHR) {
+        $(`#${id}`).replaceWith(data);
+
+      }).fail(function(jqXHR, txtStatus, errorThrown) {
+        // gift was probably deleted
+        $(`#${id}`).remove();
+      });
+
+    }, // onCancelEditClicked
+
+    onNewClicked: function(new_gift_path) {
+      window.gifts.hideMenu();
+
+      jQuery.ajax(new_gift_path, {
+
+      }).done(function(data, textStatus, jqXHR) {
+        document.getElementById('gift-list').insertAdjacentHTML('afterbegin', data);
+
+      }).fail(function(jqXHR, txtStatus, errorThrown) {
+        window.showErrorDialog('Error', 'Unable to create a new gift');
+        window.events.showMenu();
+      });
+
     }, // onNewClicked
 
     replaceOrder: function (value) {

@@ -71,6 +71,24 @@ class GiftsControllerTest < ActionController::TestCase
     assert_equal 2, @response.body.split(/\r\n/m).size, 'header, gift lines should be returned'
   end
 
+  test 'show requires login' do
+    gift = create_gift(:user => user, :description => 'one', :price => 1.00, :multi => false)
+
+    logout
+    get :show, :params => {:id => gift}
+    assert_redirected_to login_path
+  end
+
+  test 'show' do
+    gift = create_gift(:user => user, :description => 'one', :price => 1.00, :multi => false)
+
+    login_as user
+    get :show, :params => {:id => gift}
+    assert_response :success
+
+    assert_select "a[href='#{edit_user_gift_path(user, gift)}']", "edit", 'edit link should be rendered'
+  end
+
   test 'new requires login' do
     logout
     get :new
@@ -122,7 +140,7 @@ class GiftsControllerTest < ActionController::TestCase
     post :create, :params => gift_params, :xhr => true
     assert_response :success
 
-    assert_select "a[href='#{edit_user_gift_path(user, user.gifts.last)}']", 'edit'
+    assert_select "a[onclick*='#{edit_user_gift_path(user, user.gifts.last)}']", 'edit'
   end
 
   test 'create gift for other' do
