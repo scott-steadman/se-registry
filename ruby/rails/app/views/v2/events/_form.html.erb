@@ -1,0 +1,33 @@
+<%- div_id = "event-#{event.new_record? ? 'new' : event.id}" -%>
+
+<div id='<%= div_id %>' class='c-item'>
+<%= form_with(:model => [page_user, event], :local => false, :data => {'replace-target' => div_id}) do |form| %>
+
+  <h1><%= form.text_field :description, :placeholder => 'Enter a description', :size => 40 %></h1>
+
+  <div>
+    <%= form.label :recurring %>:
+    <%= form.check_box :recur %>
+  </div>
+
+  <div>
+    <%= form.label :date, :id => 'event__date-label' %>:
+    <%= form.date_select :date, :start_year => Date.today.year, :end_year => Date.today.year + 10 %>
+  </div>
+
+  <ul class='c-item__actions o-inline-list'>
+    Actions:
+    <li><%= form.submit (event.new_record? ? 'Create' : 'Update'), :onClick => 'window.events.showMenu()', :class => 'o-button' %></li>
+    <li>
+    <%-
+      if event.new_record?
+        cancel_func = 'window.events.onCancelCreateClicked()'
+      else
+        cancel_func = "window.events.onCancelEditClicked('event-#{event.id}', '#{user_event_path(page_user, event)}')"
+      end
+    -%>
+      <button type='button' class='o-button u-destructive', onClick="<%= cancel_func %>">Cancel</button>
+    </li>
+  </ul>
+<% end %>
+</div>

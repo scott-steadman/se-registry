@@ -7,7 +7,15 @@ class ApplicationController < ActionController::Base
   # Issue 11
   before_action :add_ui_version_to_view_path
 
+  # Issue 11
+  layout :select_layout
+
 private
+
+  # Issue 11
+  def select_layout
+    request.xhr? ? false : 'application'
+  end
 
   def page
     params[:page] || 1

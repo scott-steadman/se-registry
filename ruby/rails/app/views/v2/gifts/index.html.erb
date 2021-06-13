@@ -48,6 +48,7 @@
           giftList.insertAdjacentHTML('afterbegin', this.responseText);
         } else {
           window.showErrorDialog('Error', 'Unable to create a new gift');
+          window.gifts.showMenu();
         }
       }
 

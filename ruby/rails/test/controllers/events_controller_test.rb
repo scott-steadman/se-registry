@@ -118,6 +118,15 @@ class EventsControllerTest < ActionController::TestCase
     assert_equal 'foo', @event.reload.description, 'event should be updated'
   end
 
+  test 'update via xhr' do
+    login_as user
+    patch :update, :params => {:id => @event, :event => {:description => 'foo'}}, :xhr => true
+    assert_response :success
+
+    assert_equal 'foo', @event.reload.description, 'event should be updated'
+  end
+
+
   test 'update fails' do
     login_as user
     patch :update, :params => {:id => @event, :event => {:description => nil}}

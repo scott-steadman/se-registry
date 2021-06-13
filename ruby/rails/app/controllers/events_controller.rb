@@ -50,7 +50,12 @@ class EventsController < ApplicationController
 
     if @event.update(event_params)
       flash[:notice] = 'Event was successfully updated.'
-      redirect_to index_path
+
+      if request.xhr?
+        render :action => :show
+      else
+        redirect_to index_path
+      end
     else
       render :action => 'edit'
     end
