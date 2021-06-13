@@ -23,7 +23,7 @@
       if event.new_record?
         cancel_func = 'window.events.onCancelCreateClicked()'
       else
-        cancel_func = "window.events.onCancelEditClicked('event-#{event.id}', '#{user_event_path(page_user, event)}')"
+        cancel_func = "window.events.onCancelEditClicked('#{div_id}', '#{user_event_path(page_user, event)}')"
       end
     -%>
       <button type='button' class='o-button u-destructive', onClick="<%= cancel_func %>">Cancel</button>
