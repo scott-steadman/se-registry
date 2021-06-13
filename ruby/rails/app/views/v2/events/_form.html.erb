@@ -3,7 +3,7 @@
 <div id='<%= div_id %>' class='c-item'>
 <%= form_with(:model => [page_user, event], :local => false, :data => {'replace-target' => div_id}) do |form| %>
 
-  <h1><%= form.text_field :description, :placeholder => 'Enter a description', :size => 40 %></h1>
+  <h2><%= form.text_field :description, :placeholder => 'Enter a description', :size => 40 %></h2>
 
   <div>
     <%= form.label :recurring %>:

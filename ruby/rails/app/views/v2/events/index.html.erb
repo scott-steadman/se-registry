@@ -1,5 +1,5 @@
 <%- if current_user != page_user -%>
-<h1 class='event-header'><%= possessivize(page_user.display_name) %> <%= event_type %>s</h1>
+<h2 class='event-header'><%= possessivize(page_user.display_name) %> <%= event_type %>s</h2>
 <%- end -%>
 
 <ul id='event-menu' class='o-inline-list'>
