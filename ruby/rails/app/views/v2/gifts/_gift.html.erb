@@ -40,7 +40,7 @@
     <%- end -%>
 
     <%- if gift.given_by?(current_user) or admin_can_remove?(gift) -%>
-      <li><%= delete_link_to wont_user_gift_path(page_user, gift), :text => "won't", :class => 'o-button' %></li>
+      <li><%= delete_link_to wont_user_gift_path(page_user, gift), :text => "won't", :confirm => '', :class => 'o-button' %></li>
     <%- end -%>
 
     <%- if gift.editable_by?(current_user) -%>
