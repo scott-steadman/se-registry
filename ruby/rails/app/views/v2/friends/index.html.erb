@@ -20,8 +20,6 @@
   <%= render :partial => 'friend', :collection => @friends %>
 </div>
 
-<script>
-  $(document).on('turbolinks:load', function() {
-    $('#friend-autocomplete').autocomplete({source: '<%= autocomplete_users_path %>'});
-  });
-</script>
+<%- content_for :footer do -%>
+  <%= javascript_include_tag '/assets/v2/users.js' %>
+<%- end -%>

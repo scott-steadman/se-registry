@@ -1,0 +1,7 @@
+<div id='user-list' class='c-item-list'>
+  <%= render :partial => 'user', :collection => @users %>
+</div>
+
+<%- content_for :footer do -%>
+  <%= javascript_include_tag '/assets/v2/users.js' %>
+<%- end -%>

@@ -28,8 +28,12 @@ class FriendsController < ApplicationController
 
     page_user.befriend(friend)
 
-    flash[:notice] = "#{you_or_user} now friends with #{friend.login}."
-    redirect_to user_friends_path(current_user)
+    if request.xhr?
+      render :action => :show
+    else
+      flash[:notice] = "#{you_or_user} now friends with #{friend.login}."
+      redirect_to user_friends_path(current_user)
+    end
   end
 
   # DELETE /friends/1
@@ -39,7 +43,11 @@ class FriendsController < ApplicationController
 
     friends.delete(friend)
 
-    redirect_to user_friends_path(current_user)
+    if request.xhr?
+      render :action => :show
+    else
+      redirect_to user_friends_path(current_user)
+    end
   end
 
   # GET /friends/1/export
