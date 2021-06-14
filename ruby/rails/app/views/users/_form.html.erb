@@ -31,6 +31,11 @@
       <th><%= form.label :notes %></th>
       <td><%= form.text_area :notes, :rows => 5, :cols => 60, :autofocus => true %></td>
     </tr>
+
+    <tr>
+      <th><%= form.label :ui_version, 'UI Version' %></th>
+      <td><%= form.select :ui_version, [['default', ''], ['v2', '2']] %></td>
+    </tr>
   </table>
 
   <hr/>
@@ -50,14 +55,11 @@
 
   <% if current_user.try(:admin?) %>
     <hr/>
+    <h3>Admin Information</h3>
     <table>
       <tr>
         <th><%= form.label :role %></th>
         <td><%= form.collection_select :role, User.roles, :to_s, :to_s %></td>
-      </tr>
-      <tr>
-        <th><%= form.label :ui_version, 'UI Version' %></th>
-        <td><%= form.select :ui_version, [['default', ''], ['v2', '2']] %></td>
       </tr>
     </table>
   <% end %>
