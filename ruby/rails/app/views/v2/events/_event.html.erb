@@ -1,4 +1,4 @@
-<div id='event-<%= event.id %>' class='c-item'>
+<div id='event-<%= event.id %>' class='c-item o-flex-item'>
 
   <h2 class='c-item__description'>
     <%= h event.description %>
@@ -17,7 +17,7 @@
     <%- end -%>
   </div>
 
-  <ul class='c-item__actions o-inline-list'>
+  <ul class='c-item__actions o-flex-inline'>
     Actions:
     <li><%= link_to_function 'edit', "window.events.onEditClicked(#{event.id}, '#{edit_user_event_path(page_user, event)}')", :rel => 'nofollow', :class => 'o-button' %></li>
     <li><%= delete_link_to delete_path(event), :text => 'remove', :class => 'o-button u-destructive',

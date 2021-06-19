@@ -2,17 +2,4 @@
 
 @media (min-width: 40em) {
 
-.c-item {
-  /* layout */
-  width: 33%;
-
-}
-
-.c-item-list {
-  /* layout */
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
 } /* @media (min-width: 40em) */

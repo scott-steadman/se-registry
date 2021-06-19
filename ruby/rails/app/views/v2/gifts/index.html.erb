@@ -7,7 +7,7 @@
   <pre><%= page_user.notes %></pre>
 </div>
 
-<ul id='gift-menu' class='o-inline-list'>
+<ul id='gift-menu' class='c-item__actions o-flex-inline'>
   <li><%= link_to_function 'New', "window.gifts.onNewClicked('#{new_user_gift_path(page_user)}')", :class => 'o-button' %></li>
   <li><%= link_to 'Export', user_gifts_path(page_user, :format => 'csv'), :class => 'o-button' %></li>
   <%- if params[:tag] -%>
@@ -20,7 +20,7 @@
   <li>Sorted By: <%= select_tag('order', sort_options, :onChange => "window.location=window.gifts.replaceOrder(this.value);") %></li>
 </ul>
 
-<div id='gift-list' class='c-item-list'>
+<div id='gift-list' class='o-flex-list'>
   <%= render :partial => 'gift', :collection => @gifts %>
 </div>
 

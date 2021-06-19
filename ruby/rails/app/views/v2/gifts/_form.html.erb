@@ -1,37 +1,39 @@
 <%- div_id = "gift-#{gift.new_record? ? 'new' : gift.id}" -%>
 
-<div id='<%= div_id %>' class='c-item'>
+<div id='<%= div_id %>' class='c-item o-flex-item'>
 <%= form_with(:model => [page_user, gift], :local => false, :data => {'replace-target' => div_id}) do |form| %>
   <h2 class='c-item__description'><%= form.text_field :description, :placeholder => 'Enter a description', :size => 40 %></h2>
 
-  <ul class='o-inline-list'>
+  <div>
     <%= form.label :tags %>:
-    <li>
+    <span>
       <%= text_field_tag 'gift[tag_names]', gift.tag_names.join(' '), :placeholder => 'Enter a space separated list of tags', :size => 40 %>
-    </li>
-  </ul>
+    </span>
+  </div>
 
-  <ul class='o-inline-list'>
+  <div>
     <%= form.label :url, 'Links' %>:
-    <li><%= form.text_field :url, :placeholder => 'Enter a space separated list of URLs', :size => 40 %></li>
-  </ul>
-  <ul class='o-inline-list'>
+    <span><%= form.text_field :url, :placeholder => 'Enter a space separated list of URLs', :size => 40 %></span>
+  </div>
+
+  <div>
     <%= form.label :price %>:
-    <li><%= form.text_field :price %></li>
-  </ul>
-  <ul class='o-inline-list'>
+    <span><%= form.text_field :price %></span>
+  </div>
+
+  <div>
     <%= form.label :multi %>:
-    <li><%= form.check_box :multi %></li>
-  </ul>
+    <span><%= form.check_box :multi %></span>
+  </div>
 
 <% if current_user != gift.user %>
-  <ul class='o-inline-list'>
+  <div>
     <%= form.label :hidden %>:
-    <li><%= form.check_box :hidden %></li>
-  </ul>
+    <span><%= form.check_box :hidden %></span>
+  </div>
 <% end %>
 
-  <ul class='c-item__actions o-inline-list'>
+  <ul class='c-item__actions o-flex-inline'>
     Actions:
     <li><%= form.submit (gift.new_record? ? 'Create' : 'Update'), :onClick => 'window.events.showMenu()', :class => 'o-button' %></li>
     <li>

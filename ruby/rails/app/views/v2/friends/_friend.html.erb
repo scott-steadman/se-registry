@@ -1,4 +1,4 @@
-<div id='friend-<%= friend.id %>' class='c-item'>
+<div id='friend-<%= friend.id %>' class='c-item o-flex-item'>
   <h2 class='c-item__description'><%= h(friend.login) %></h2>
 
   <div>Last Updated:
@@ -9,7 +9,7 @@
     <%- end -%>
   </div>
 
-  <ul class='c-item__actions o-inline-list'>
+  <ul class='c-item__actions o-flex-inline'>
     Actions:
     <li><%= link_to 'view gifts', user_gifts_path(friend), :class => 'o-button' %></li>
     <li>

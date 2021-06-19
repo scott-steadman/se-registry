@@ -16,7 +16,7 @@
   </head>
 
   <body class='is-right-handed'>
-    <header id='site-header' class='o-flex-container'>
+    <header id='site-header'>
       <nav id='site-nav' class='o-flex-container'>
         <button id='site-nav__toggle' type='button' aria-label='Open or close navigation menu'
           onClick="window.site_nav.onToggleClicked(this)"
@@ -58,7 +58,7 @@
       <%= yield :header -%>
     </header>
 
-    <main id='site-main'>
+    <main id='site-main' class='o-flex-container'>
       <%= yield -%>
     </main>
 

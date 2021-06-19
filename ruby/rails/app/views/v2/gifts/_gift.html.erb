@@ -1,30 +1,39 @@
-<div id='gift-<%= gift.id %>' class='c-item'>
+<div id='gift-<%= gift.id %>' class='c-item o-flex-item'>
 
   <h2 class='c-item__description'><%= h gift.description %></h2>
 
-  <ul class='o-inline-list'>
-    Tags:
+  <div>
+    <label>Tags:</label>
     <%- gift.tags.each do |tag| -%>
-      <li><%= tag_or_link(tag.name, :class => 'o-button') %></li>
+      <span><%= tag_or_link(tag.name, :class => 'o-button') %></span>
     <%- end -%>
-  </ul>
+  </div>
 
-  <ul class='o-inline-list'>
-    Links:
+  <div>
+    <label>Links:</label>
     <%- gift.urls.each do |url| -%>
-      <li><%= external_link_to url rescue '' %></li>
+      <span><%= external_link_to url rescue '' %></span>
     <%- end -%>
-  </ul>
+  </div>
 
-  <div>Price: <%= number_to_currency(gift.price) %></div>
+  <div>
+    <label>Price:</label>
+    <span><%= number_to_currency(gift.price) %></span>
+  </div>
 
-  <div>Multi: <%= gift.multi ? 'Yes' : 'No' %></div>
+  <div>
+    <label>Multi:</label>
+    <span><%= gift.multi ? 'Yes' : 'No' %></span>
+  </div>
 
   <% if page_user != current_user %>
-  <div>Intent: <%= intent(gift) %></div>
+  <div>
+    <label>Intent:</label>
+    <span><%= intent(gift) %></span>
+  </div>
   <% end %>
 
-  <ul class='c-item__actions o-inline-list'>
+  <ul class='c-item__actions o-flex-inline'>
     Actions:
     <%- if gift.givable_by?(current_user) -%>
       <li><%= link_to('will', will_user_gift_path(page_user, gift), :method => :post, :class => 'o-button') %></li>

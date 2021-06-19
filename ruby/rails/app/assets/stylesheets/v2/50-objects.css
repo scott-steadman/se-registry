@@ -14,17 +14,3 @@
 .u-destructive {
   background-color: var(--destructive-background-color);
 }
-
-.o-inline-list {
-  /* layout */
-  display: flex;
-  flex-direction: row;
-
-  /* appearance */
-  list-style-type: none;
-}
-
-.o-inline-list li {
-  /* layout */
-  padding-left: 1em;
-}

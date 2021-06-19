@@ -6,5 +6,27 @@
   flex-direction: column;
 }
 
+.o-flex-inline {
+  /* layout */
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.5em;
+  padding-top: 0.5em;
+}
+
+.o-flex-inline > * {
+  margin-left: 0.5em;
+}
+
 .o-flex-item {
+  /* layout */
+  margin: 0.5em 0.1em;
+  padding: 0.5em;
+}
+
+.o-flex-list {
+  /* layout */
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 2em;
 }

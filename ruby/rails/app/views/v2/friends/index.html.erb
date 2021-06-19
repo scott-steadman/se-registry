@@ -6,7 +6,7 @@
 <h2><%= possessivize(page_user.display_name) %> Friends</h2>
 <% end %>
 
-<ul id='friend-menu' class='o-inline-list'>
+<ul id='friend-menu' class='c-item__actions o-flex-inline'>
   <li>
     <%= form_tag user_friends_path(current_user) do %>
       <input id='friend-autocomplete' name='friend_login' type='text' size='40' placeholder="Start typing a friend's name..."/>
@@ -16,7 +16,7 @@
   <li><%= link_to 'Export', export_friends_path, :class => 'o-button' %></li>
 </ul>
 
-<div id='friend-list' class='c-item-list'>
+<div id='friend-list' class='o-flex-list'>
   <%= render :partial => 'friend', :collection => @friends %>
 </div>
 

@@ -1,14 +1,6 @@
 /* 60-item.css */
 
-.c-item-list {
-  padding-bottom: 2em;
-}
-
 .c-item {
-  /* layout */
-  margin: 0.5em 0.1em;
-  padding: 0.5em;
-
   /* appearance */
   background-color: var(--item-background-color);
   border: 2px solid var(--item-border-color);
@@ -16,12 +8,9 @@
 }
 
 .c-item__actions {
-  /* layout */
-  margin-top: 0.5em;
-  padding-top: 0.5em;
-
   /* appearance */
   border-top: 1px solid var(--site-neutral-black);
+  list-style-type: none;
 }
 
 .c-item__description {
