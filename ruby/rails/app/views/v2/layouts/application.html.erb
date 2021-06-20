@@ -37,7 +37,9 @@
             </ul>
           </li>
           <li><%= link_to_unless_current 'My Settings', settings_path %></li>
+        <%- if current_user.admin? -%>
           <li><%= link_to_unless_current 'Users', users_path %></li>
+        <%- end -%>
           <li class='o-site-nav__dropdown'>
             <%= link_to_unless_current 'About', about_path %>
             <ul>

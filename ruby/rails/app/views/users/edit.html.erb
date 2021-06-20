@@ -1,2 +1,2 @@
-<h1>Edit My Account</h1>
+<h1><%=  (current_user == page_user) ? 'My' : possessivize(page_user.display_name) %> Settings</h1>
 <%= render 'form', :user => @user %>

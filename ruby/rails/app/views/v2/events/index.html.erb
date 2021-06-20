@@ -2,7 +2,7 @@
 <h2 class='event-header'><%= possessivize(page_user.display_name) %> <%= event_type %>s</h2>
 <%- end -%>
 
-<ul id='event-menu' class='c-item__actions o-flex-inline'>
+<ul id='event-menu' class='c-item__actions o-flex-item--centered o-flex-inline'>
   <li><%= link_to('Add Occasion', '#', :onClick => "window.events.onAddOccasionClicked('#{new_user_occasion_path(page_user)}');return false;", :class => 'o-button') unless params[:controller].ends_with?('reminders') %></li>
   <li><%= link_to('Add Reminder', '#', :onClick => "window.events.onAddReminderClicked('#{new_user_reminder_path(page_user)}');return false;", :class => 'o-button') unless params[:controller].ends_with?('occasions') %></li>
 </ul>

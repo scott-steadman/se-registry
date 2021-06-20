@@ -33,9 +33,9 @@
   </div>
 <% end %>
 
-  <ul class='c-item__actions o-flex-inline'>
+  <ul class='c-item__actions o-flex-item--centered o-flex-inline'>
     Actions:
-    <li><%= form.submit (gift.new_record? ? 'Create' : 'Update'), :onClick => 'window.events.showMenu()', :class => 'o-button' %></li>
+    <li><%= form.submit (gift.new_record? ? 'create' : 'update'), :onClick => 'window.events.showMenu()', :class => 'o-button' %></li>
     <li>
     <%-
       if gift.new_record?
@@ -44,7 +44,7 @@
         cancel_func = "window.gifts.onCancelEditClicked('#{div_id}', '#{user_gift_path(page_user, gift)}')"
       end
     -%>
-      <button type='button' class='o-button u-destructive', onClick="<%= cancel_func %>">Cancel</button>
+      <button type='button' class='o-button u-destructive', onClick="<%= cancel_func %>">cancel</button>
     </li>
   </ul>
 <% end %>

@@ -7,7 +7,7 @@
   <pre><%= page_user.notes %></pre>
 </div>
 
-<ul id='gift-menu' class='c-item__actions o-flex-inline'>
+<ul id='gift-menu' class='c-item__actions o-flex-item--cenered o-flex-inline'>
   <li><%= link_to_function 'New', "window.gifts.onNewClicked('#{new_user_gift_path(page_user)}')", :class => 'o-button' %></li>
   <li><%= link_to 'Export', user_gifts_path(page_user, :format => 'csv'), :class => 'o-button' %></li>
   <%- if params[:tag] -%>

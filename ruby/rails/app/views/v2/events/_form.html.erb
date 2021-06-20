@@ -15,9 +15,9 @@
     <%= form.date_select :date, :start_year => Date.today.year, :end_year => Date.today.year + 10 %>
   </div>
 
-  <ul class='c-item__actions o-flex-inline'>
+  <ul class='c-item__actions o-flex-item--centered o-flex-inline'>
     Actions:
-    <li><%= form.submit (event.new_record? ? 'Create' : 'Update'), :onClick => 'window.events.showMenu()', :class => 'o-button' %></li>
+    <li><%= form.submit (event.new_record? ? 'create' : 'update'), :onClick => 'window.events.showMenu()', :class => 'o-button' %></li>
     <li>
     <%-
       if event.new_record?
@@ -26,7 +26,7 @@
         cancel_func = "window.events.onCancelEditClicked('#{div_id}', '#{user_event_path(page_user, event)}')"
       end
     -%>
-      <button type='button' class='o-button u-destructive', onClick="<%= cancel_func %>">Cancel</button>
+      <button type='button' class='o-button u-destructive', onClick="<%= cancel_func %>">cancel</button>
     </li>
   </ul>
 <% end %>
