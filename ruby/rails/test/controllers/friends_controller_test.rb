@@ -43,6 +43,19 @@ class FriendsControllerTest < ActionController::TestCase
     assert_equal 2, @user.friends.reload.size
   end
 
+  # Issue 11
+  test 'create via xhr' do
+    another_friend = create_user('another_friend')
+
+    assert_difference 'Friendship.count' do
+      login_as user
+      post :create, :params => {:id => another_friend.to_param, :ui_version => '2'}, :xhr => true
+      assert_response :success
+    end
+
+    assert_equal 2, @user.friends.reload.size
+  end
+
   test 'create with login' do
     another_friend = create_user('another_friend')
 
