@@ -1,5 +1,5 @@
 <%- div_id = "user-#{user.new_record? ? 'new' : user.id}" -%>
-<div id='<%= div_id %>' class='c-item'>
+<div id='<%= div_id %>' class='c-item o-flex-item'>
 
   <h2 class='c-item__description'><%= h user.login %></h2>
 
@@ -15,7 +15,7 @@
     </div>
   <%- end -%>
 
-  <ul class='c-item__actions o-inline-list'>
+  <ul class='c-item__actions o-flex-item--centered o-flex-inline'>
     <label>Actions:</label>
 
   <%- if page_user.friends.include?(user) -%>
@@ -34,7 +34,7 @@
   </ul>
 
 <%- if current_user.admin? -%>
-  <ul class='c-item__actions o-inline-list'>
+  <ul class='c-item__actions o-flex-item--centered o-flex-inline'>
     <li><%= link_to 'edit', edit_user_path(user) %></li>
     <li><%= link_to 'friends', user_friends_path(user) %></li>
   <%- unless current_user == user -%>

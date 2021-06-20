@@ -6,6 +6,10 @@
 .o-flex-container {
 }
 
+.o-flex-container > .o-flex-container {
+  min-width: 50%;
+}
+
 .o-flex-inline {
 }
 

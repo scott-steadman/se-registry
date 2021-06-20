@@ -6,3 +6,10 @@
   display: table;
 }
 
+.u-destructive {
+  background-color: var(--destructive-background-color);
+}
+
+.u-full-width {
+  width: 100%;
+}

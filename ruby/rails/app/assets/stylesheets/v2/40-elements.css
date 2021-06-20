@@ -30,6 +30,26 @@ body {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 1em;
   line-height: 1.4em;
+  padding-bottom: 7em;
+}
+
+fieldset {
+  width: 100%;
+}
+
+h1 {
+  align-items: center;
+}
+
+input {
+  /* appearance */
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 1em;
+}
+
+legend {
+  /* appearance */
+  font-weight: bold;
 }
 
 pre {

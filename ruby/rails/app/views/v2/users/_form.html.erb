@@ -1,0 +1,78 @@
+<%= form_with(:model => user) do |form| %>
+<% if user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(user.errors.count, "error") %> prohibited your settings from being saved:</h2>
+    <ul>
+      <% user.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+  <div class='o-flex-container'>
+    <fieldset class='c-item o-flex-item o-flex-container o-flex-inline o-flex-2-col'>
+      <legend>Login Information</legend>
+
+        <%= form.label :login, 'Login:' %>
+        <span><%= form.text_field :login %></span>
+
+        <%= form.label :password, user.new_record? ? nil : "Change password:" %>
+        <span><%= form.password_field :password %></span>
+
+        <%= form.label :password_confirmation, 'Confirm password:' %>
+        <span><%= form.password_field :password_confirmation %></span>
+    </fieldset>
+
+    <fieldset class='c-item o-flex-item o-flex-container'>
+      <legend>Preferences</legend>
+
+      <div>
+        <%= form.label :notes %>:<br/>
+        <%= form.text_area :notes, :autofocus => true, :class => 'u-full-width' %>
+      </div>
+
+      <div class='o-flex-inline'>
+        <%= form.label :ui_version, 'UI Version' %>:
+        <span><%= form.select :ui_version, [['default', ''], ['v2', '2']] %></span>
+      </div> </fieldset>
+
+    <fieldset class='c-item o-flex-item o-flex-container'>
+      <legend>Contact Information</legend>
+
+      <div class='o-flex-inline'>
+        <%= form.label :email %>:
+        <span class='u-full-width'><%= form.text_field :email %></span>
+      </div>
+
+      <div class='o-flex-inline'>
+        I want to be notified every <%= form.text_field :lead_frequency %> days
+        for <%= form.text_field :lead_time, :size => 2 %> days prior to an event.
+      </div>
+    </fieldset>
+
+
+    <% if current_user.try(:admin?) %>
+      <fieldset class='c-item o-flex-item o-flex-container'>
+        <legend>Admin Information</legend>
+        <div class='o-flex-inline'>
+          <%= form.label :role %>
+          <span><%= form.collection_select :role, User.roles, :to_s, :to_s %></span>
+        </tr>
+        </div>
+      </fieldset>
+    <% end %>
+
+    <ul class='c-item__actions o-flex-item--centered o-flex-inline'>
+      Actions:
+      <li><%= form.submit 'save', :class => 'o-button' %></li>
+    <%- unless user.new_record? -%>
+      <li>
+        <%= delete_link_to user_path(user), :text => 'close account', :class => 'o-button u-destructive',
+                                            :confirm => 'Are you sure you want to close your account?'
+        %>
+      </li>
+    <%- end -%>
+  </div>
+<% end %>
+

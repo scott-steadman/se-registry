@@ -2,6 +2,8 @@
 
 .o-button {
   /* layout */
+  display: inline-block; /* force button heights to be the same*/
+  height: 2em;
   padding: 0.1em 0.2em;
 
   /* appearance */
@@ -11,6 +13,3 @@
   text-decoration: none;
 }
 
-.u-destructive {
-  background-color: var(--destructive-background-color);
-}

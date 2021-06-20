@@ -8,6 +8,7 @@
 }
 
 .c-item__actions {
+
   /* appearance */
   border-top: 1px solid var(--site-neutral-black);
   list-style-type: none;
