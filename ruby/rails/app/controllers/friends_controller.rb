@@ -43,11 +43,7 @@ class FriendsController < ApplicationController
 
     friends.delete(friend)
 
-    if request.xhr?
-      render :action => :show
-    else
-      redirect_to user_friends_path(current_user)
-    end
+    redirect_to user_friends_path(current_user)
   end
 
   # GET /friends/1/export
