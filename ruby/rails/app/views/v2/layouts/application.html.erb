@@ -17,7 +17,7 @@
 
   <body class='is-right-handed'>
     <header id='site-header'>
-      <nav id='site-nav' class='o-flex-container'>
+      <nav id='site-nav'>
         <button id='site-nav__toggle' type='button' aria-label='Open or close navigation menu'
           onClick="window.site_nav.onToggleClicked(this)"
         >
@@ -53,7 +53,7 @@
           </li>
           <li><%= link_to_unless_current 'Logout', logout_path %></li>
 
-          <li><button id='site-nav__move' onClick="window.site_nav.onMoveClicked(this)"/></li>
+          <li id='site-nav__move'><button onClick="window.site_nav.onMoveClicked(this)"/></li>
         </ul>
       </nav>
 

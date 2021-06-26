@@ -2,13 +2,16 @@
 
 #site-nav {
   /* positioning */
-  position: static;
+  position: absolute;
   top: 0.25em;
+  left: 0;
 
   /* layout */
+  display: flex;
+  flex-direction: column;
   margin: 0.5em 1em;
   padding: 0em 0em;
-  width: fit-content;
+  max-width: 50%
 
   /* appearance */
   background-color: var(--menu-background-color);
@@ -17,15 +20,13 @@
 
 .is-right-handed #site-nav {
   /* positioning */
-  align-self: flex-end;
-  float: right;
-  text-align: right;
+  left: unset;
+  right: 0;
 }
 
 #site-nav.is-open {
-
   /* layout */
-  width: 10em;
+  width: 8em;
 
   /* appearance */
   box-shadow: 5px 5px var(--site-neutral-gray);
@@ -53,10 +54,9 @@
   list-style-type: none;
 }
 
-/* show the links if the site-nav is open  on small screens */
 #site-nav.is-open #site-nav__links {
-  /* layout */
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 
 #site-nav__links li {
@@ -67,9 +67,11 @@
 }
 
 #site-nav__move {
-  /* positioning */
-  flex-direction: column;
+  align-self: center;
+  width: 90%;
+}
 
+#site-nav__move button {
   /* layout */
   margin-top: 1em;
   width: 100%;
@@ -78,27 +80,20 @@
 /* These changes happen when the menu
  * is on the left side of the screen
  */
-#site-nav #site-nav__move:after {
-  /* layout */
-  text-align: center;
-  display: block;
-  width: 100%;
-
-  /* appearance */
+#site-nav__move button:after {
   content: var(--raquo);
 }
 
 /* These changes happen when the menu
  * is on the right side of the screen
  */
-.is-right-handed #site-nav #site-nav__move:after {
-  /* appearance */
+.is-right-handed #site-nav__move button:after {
   content: var(--laquo);
 }
 
 #site-nav__toggle {
   /* positioning */
-  align-self: inherit;
+  align-self: flex-start;
 
   /* layout */
   display: flex;
@@ -114,6 +109,12 @@
   border-radius: 0.5em;
   cursor: pointer;
 }
+
+.is-right-handed #site-nav__toggle {
+  /* positioning */
+  align-self: flex-end;
+}
+
 
 #site-nav__toggle span {
 

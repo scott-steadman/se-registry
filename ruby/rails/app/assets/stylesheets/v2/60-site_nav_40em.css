@@ -2,35 +2,15 @@
 
 @media (min-width: 40em) {
 
-/* I'm not sure if this should be here
- * or in 40-elements_40em.css.
- */
-.is-right-handed header {
-  justify-content: flex-end;
-}
-
 #site-nav {
-  /* positioning */
-  position: relative;
-
   /* layout */
-  height: fit-content;
-  margin: 0.5em 0;
-  padding: 0 1em;
-  
-  /* appearance */
-  border-radius: 0;
-}
-
-.is-right-handed #site-nav {
-  /* positioning */
-  align-self: flex-start;
+  flex-direction: row;
 }
 
 /* These changes happen when the menu
  * is on the right side of the screen
  */
-.is-right-handed #site-nav #site-nav__move:after {
+.is-right-handed #site-nav #site-nav__move {
   order: 1;
 }
 
@@ -74,11 +54,14 @@
 }
 
 #site-nav__move {
-  /* positioning */
-  align-self: flex-start;
-
   /* layout */
   margin-top: 0;
+  width: 2em;
+}
+
+#site-nav__move button {
+  /* layout */
+  margin: 0;
   width: 2em;
 }
 
