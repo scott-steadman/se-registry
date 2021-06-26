@@ -83,8 +83,8 @@ private
   end
 
   # Issue 11
-  def add_ui_version_to_view_path
-    ui_version   = params[:ui_version]
+  def add_ui_version_to_view_path(ui_version=nil)
+    ui_version ||= params[:ui_version]
     ui_version ||= current_user&.ui_version
 
     if ui_version
