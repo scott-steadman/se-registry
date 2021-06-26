@@ -2,8 +2,10 @@
 
 #site-modal {
   display: none;
+}
 
-  /* appearance */
+#site-modal.is-open {
+  display: flex;
 }
 
 #site-modal footer {
@@ -87,6 +89,3 @@
 #site-modal__title {
 }
 
-.is-open {
-  display: flex !important;
-}
