@@ -66,6 +66,7 @@
     <ul class='c-item__actions o-flex-item--centered o-flex-inline'>
       Actions:
       <li><%= form.submit 'save', :class => 'o-button' %></li>
+      <li><%= link_to_function 'cancel', 'history.back()' %></li>
     <%- unless user.new_record? -%>
       <li>
         <%= delete_link_to user_path(user), :text => 'close account', :class => 'o-button u-destructive',
