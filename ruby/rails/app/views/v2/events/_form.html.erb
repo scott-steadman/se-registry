@@ -3,19 +3,19 @@
 <div id='<%= div_id %>' class='c-item o-flex-item'>
 <%= form_with(:model => [page_user, event], :local => false, :data => {'replace-target' => div_id}) do |form| %>
 
-  <h2><%= form.text_field :description, :placeholder => 'Enter a description', :size => 40 %></h2>
+  <h2 class='c-item__description'><%= form.text_field :description, :placeholder => 'Enter a description' %></h2>
 
-  <div>
-    <%= form.label :recurring %>:
-    <%= form.check_box :recur %>
-  </div>
-
-  <div>
+  <div class='o-flex-container--horizontal'>
     <%= form.label :date, :id => 'event__date-label' %>:
     <%= form.date_select :date, :start_year => Date.today.year, :end_year => Date.today.year + 10 %>
   </div>
 
-  <ul class='c-item__actions o-flex-item--centered o-flex-inline'>
+  <div class='o-flex-container--horizontal'>
+    <%= form.label :recurring %>:
+    <%= form.check_box :recur %>
+  </div>
+
+  <ul class='c-item__actions o-flex-container--horizontal'>
     Actions:
     <li><%= form.submit (event.new_record? ? 'create' : 'update'), :onClick => 'window.events.showMenu()', :class => 'o-button' %></li>
     <li>
@@ -26,7 +26,7 @@
         cancel_func = "window.events.onCancelEditClicked('#{div_id}', '#{user_event_path(page_user, event)}')"
       end
     -%>
-      <button type='button' class='o-button u-destructive', onClick="<%= cancel_func %>">cancel</button>
+      <input type='button' class='o-button u-destructive', onClick="<%= cancel_func %>" value='cancel'/>
     </li>
   </ul>
 <% end %>

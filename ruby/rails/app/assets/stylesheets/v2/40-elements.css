@@ -38,7 +38,8 @@ fieldset {
 }
 
 h1 {
-  align-items: center;
+  /* layout */
+  padding-bottom: 0.1em;
 }
 
 input {
@@ -48,8 +49,14 @@ input {
 }
 
 legend {
+  /* layout */
+  margin: 0 0.5em;
+  padding: 0 0.2em;
+
   /* appearance */
   font-weight: bold;
+  font-size: 1.5em;
+  white-space: nowrap;
 }
 
 pre {

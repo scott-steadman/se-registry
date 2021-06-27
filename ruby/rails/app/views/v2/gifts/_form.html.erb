@@ -2,38 +2,34 @@
 
 <div id='<%= div_id %>' class='c-item o-flex-item'>
 <%= form_with(:model => [page_user, gift], :local => false, :data => {'replace-target' => div_id}) do |form| %>
-  <h2 class='c-item__description'><%= form.text_field :description, :placeholder => 'Enter a description', :size => 40 %></h2>
+  <h2 class='c-item__description'><%= form.text_field :description, :placeholder => 'Enter a description' %></h2>
 
-  <div>
+  <div class='o-flex-container--horizontal'>
     <%= form.label :tags %>:
-    <span>
-      <%= text_field_tag 'gift[tag_names]', gift.tag_names.join(' '), :placeholder => 'Enter a space separated list of tags', :size => 40 %>
-    </span>
+    <%= text_field_tag 'gift[tag_names]', gift.tag_names.join(' '), :placeholder => 'Enter a space separated list of tags', :class => 'o-flex-grow' %>
   </div>
 
-  <div>
+  <div class='o-flex-container--horizontal'>
     <%= form.label :url, 'Links' %>:
-    <span><%= form.text_field :url, :placeholder => 'Enter a space separated list of URLs', :size => 40 %></span>
+    <%= form.text_field :url, :placeholder => 'Enter a space separated list of URLs', :class => 'o-flex-grow' %>
   </div>
 
-  <div>
+  <div class='o-flex-container--horizontal'>
     <%= form.label :price %>:
-    <span><%= form.text_field :price %></span>
+    <%= form.text_field :price, :class => 'o-flex-grow' %>
   </div>
 
-  <div>
+  <div class='o-flex-container--horizontal'>
     <%= form.label :multi %>:
-    <span><%= form.check_box :multi %></span>
-  </div>
+    <%= form.check_box :multi %>
 
 <% if current_user != gift.user %>
-  <div>
     <%= form.label :hidden %>:
-    <span><%= form.check_box :hidden %></span>
-  </div>
+    <%= form.check_box :hidden %>
 <% end %>
+  </div>
 
-  <ul class='c-item__actions o-flex-item--centered o-flex-inline'>
+  <ul class='c-item__actions o-flex-container--horizontal'>
     Actions:
     <li><%= form.submit (gift.new_record? ? 'create' : 'update'), :onClick => 'window.events.showMenu()', :class => 'o-button' %></li>
     <li>
@@ -44,7 +40,7 @@
         cancel_func = "window.gifts.onCancelEditClicked('#{div_id}', '#{user_gift_path(page_user, gift)}')"
       end
     -%>
-      <button type='button' class='o-button u-destructive', onClick="<%= cancel_func %>">cancel</button>
+      <input type='button' class='o-button u-destructive' onClick="<%= cancel_func %>" value='cancel'/>
     </li>
   </ul>
 <% end %>

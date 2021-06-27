@@ -1,6 +1,6 @@
 <%= form_with(:model => user) do |form| %>
 <% if user.errors.any? %>
-  <div id="error_explanation">
+  <div id="error_explanation" class='c-item'>
     <h2><%= pluralize(user.errors.count, "error") %> prohibited your settings from being saved:</h2>
     <ul>
       <% user.errors.each do |error| %>
@@ -10,8 +10,8 @@
   </div>
 <% end %>
 
-  <div class='o-flex-container'>
-    <fieldset class='c-item o-flex-item o-flex-container o-flex-inline o-flex-2-col'>
+  <div class='o-flex-container--vertical'>
+    <fieldset class='c-item flex-container--horizontal'>
       <legend>Login Information</legend>
 
         <%= form.label :login, 'Login:' %>
@@ -32,7 +32,7 @@
         <%= form.text_area :notes, :autofocus => true, :class => 'u-full-width' %>
       </div>
 
-      <div class='o-flex-inline'>
+      <div class='o-flex-container--horizontal'>
         <%= form.label :ui_version, 'UI Version' %>:
         <span><%= form.select :ui_version, [['default', ''], ['v2', '2']] %></span>
       </div> </fieldset>
@@ -40,12 +40,12 @@
     <fieldset class='c-item o-flex-item o-flex-container'>
       <legend>Contact Information</legend>
 
-      <div class='o-flex-inline'>
+      <div class='o-flex-container--horizontal'>
         <%= form.label :email %>:
         <span class='u-full-width'><%= form.text_field :email %></span>
       </div>
 
-      <div class='o-flex-inline'>
+      <div class='o-flex-container--horizontal'>
         I want to be notified every <%= form.text_field :lead_frequency %> days
         for <%= form.text_field :lead_time, :size => 2 %> days prior to an event.
       </div>
@@ -55,7 +55,7 @@
     <% if current_user.try(:admin?) %>
       <fieldset class='c-item o-flex-item o-flex-container'>
         <legend>Admin Information</legend>
-        <div class='o-flex-inline'>
+        <div class='o-flex-container--horizontal'>
           <%= form.label :role %>
           <span><%= form.collection_select :role, User.roles, :to_s, :to_s %></span>
         </tr>
@@ -63,7 +63,7 @@
       </fieldset>
     <% end %>
 
-    <ul class='c-item__actions o-flex-item--centered o-flex-inline'>
+    <ul class='c-item__actions o-flex-container--horizontal'>
       Actions:
       <li><%= form.submit 'save', :class => 'o-button' %></li>
       <li><%= link_to_function 'cancel', 'history.back()' %></li>

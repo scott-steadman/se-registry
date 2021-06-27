@@ -15,7 +15,7 @@
     </div>
   <%- end -%>
 
-  <ul class='c-item__actions o-flex-item--centered o-flex-inline'>
+  <ul class='c-item__actions o-flex-container--horizontal'>
     <label>Actions:</label>
 
   <%- if page_user.friends.include?(user) -%>
@@ -34,7 +34,7 @@
   </ul>
 
 <%- if current_user.admin? -%>
-  <ul class='c-item__actions o-flex-item--centered o-flex-inline'>
+  <ul class='c-item__actions o-flex-container--horizontal'>
     <li><%= link_to 'edit', edit_user_path(user) %></li>
     <li><%= link_to 'friends', user_friends_path(user) %></li>
   <%- unless current_user == user -%>

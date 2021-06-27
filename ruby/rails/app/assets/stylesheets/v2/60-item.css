@@ -25,3 +25,7 @@
   white-space: nowrap;
 }
 
+.c-item__description input {
+  width: 100%;
+}
+

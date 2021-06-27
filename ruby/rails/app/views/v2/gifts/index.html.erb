@@ -1,13 +1,11 @@
-<% if current_user != page_user %>
-<h2><%= possessivize(page_user.display_name) %> Gifts</h2>
-<% end %>
+<h1><%= (current_user != page_user) ? possessivize(page_user.display_name) : 'My' %> Gifts</h1>
 
-<div id='notes'>
-  <h3>Notes:</h3>
+<div id='gift__notes'>
+  <h2>Notes</h2>
   <pre><%= page_user.notes %></pre>
 </div>
 
-<ul id='gift-menu' class='c-item__actions o-flex-item--cenered o-flex-inline'>
+<ul id='gift__menu' class='c-item__actions o-flex-item--cenered o-flex-container--horizontal'>
   <li><%= link_to_function 'New', "window.gifts.onNewClicked('#{new_user_gift_path(page_user)}')", :class => 'o-button' %></li>
   <li><%= link_to 'Export', user_gifts_path(page_user, :format => 'csv'), :class => 'o-button' %></li>
   <%- if params[:tag] -%>
@@ -20,14 +18,14 @@
   <li>Sorted By: <%= select_tag('order', sort_options, :onChange => "window.location=window.gifts.replaceOrder(this.value);") %></li>
 </ul>
 
-<div id='gift-list' class='o-flex-list'>
+<div id='gift__list' class='o-flex-container'>
   <%= render :partial => 'gift', :collection => @gifts %>
 </div>
 
 <script>
   window.gifts = {
     hideMenu: function() {
-      document.getElementById('gift-menu').classList.add('is-hidden');
+      document.getElementById('gift__menu').classList.add('is-hidden');
     }, // hideMenu
 
     onEditClicked: function(gift_id, edit_gift_path) {
@@ -71,7 +69,7 @@
       jQuery.ajax(new_gift_path, {
 
       }).done(function(data, textStatus, jqXHR) {
-        document.getElementById('gift-list').insertAdjacentHTML('afterbegin', data);
+        document.getElementById('gift__list').insertAdjacentHTML('afterbegin', data);
 
       }).fail(function(jqXHR, txtStatus, errorThrown) {
         window.showErrorDialog('Error', 'Unable to create a new gift');
@@ -97,7 +95,7 @@
     }, // replaceOrder
 
     showMenu: function() {
-      document.getElementById('gift-menu').classList.remove('is-hidden');
+      document.getElementById('gift__menu').classList.remove('is-hidden');
     }, // showMenu
 
   } // window.gifts

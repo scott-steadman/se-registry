@@ -2,26 +2,26 @@
 
   <h2 class='c-item__description'><%= h gift.description %></h2>
 
-  <div>
+  <div class='o-flex-container--horizontal'>
     <label>Tags:</label>
     <%- gift.tags.each do |tag| -%>
       <span><%= tag_or_link(tag.name, :class => 'o-button') %></span>
     <%- end -%>
   </div>
 
-  <div>
+  <div class='o-flex-container--horizontal'>
     <label>Links:</label>
     <%- gift.urls.each do |url| -%>
       <span><%= external_link_to url rescue '' %></span>
     <%- end -%>
   </div>
 
-  <div>
+  <div class='o-flex-container--horizontal'>
     <label>Price:</label>
     <span><%= number_to_currency(gift.price) %></span>
   </div>
 
-  <div>
+  <div class='o-flex-container--horizontal'>
     <label>Multi:</label>
     <span><%= gift.multi ? 'Yes' : 'No' %></span>
   </div>
@@ -33,7 +33,7 @@
   </div>
   <% end %>
 
-  <ul class='c-item__actions o-flex-item--centered o-flex-inline'>
+  <ul class='c-item__actions o-flex-container--horizontal'>
     Actions:
     <%- if gift.givable_by?(current_user) -%>
       <li><%= link_to('will', will_user_gift_path(page_user, gift), :method => :post, :class => 'o-button') %></li>

@@ -4,24 +4,17 @@
 @media (min-width: 40em) {
 
 .o-flex-container {
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .o-flex-container > .o-flex-container {
   min-width: 50%;
 }
 
-.o-flex-inline {
-}
-
 .o-flex-item {
   /* layout */
   width: 33%;
-}
-
-.o-flex-list {
-  /* layout */
-  flex-direction: row;
-  flex-wrap: wrap;
 }
 
 } /* @media (min-width: 40em) */
