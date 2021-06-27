@@ -18,4 +18,8 @@ private
     user_occasion_path(page_user, event)
   end
 
+  def event_type
+    Occasion.name
+  end
+
 end # class Events::OccasionsController

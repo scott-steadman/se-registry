@@ -1,13 +1,11 @@
-<%- if current_user != page_user -%>
-<h2 class='event-header'><%= possessivize(page_user.display_name) %> <%= event_type %>s</h2>
-<%- end -%>
+<h2 class='event-header'><%= (current_user != page_user) ? possessivize(page_user.display_name) : 'My' %> <%= event_type.pluralize %></h2>
 
-<ul id='event-menu' class='c-item__actions o-flex-item--centered o-flex-inline'>
+<ul id='event-menu' class='c-item__actions o-flex-container--horizontal'>
   <li><%= link_to('Add Occasion', '#', :onClick => "window.events.onAddOccasionClicked('#{new_user_occasion_path(page_user)}');return false;", :class => 'o-button') unless params[:controller].ends_with?('reminders') %></li>
   <li><%= link_to('Add Reminder', '#', :onClick => "window.events.onAddReminderClicked('#{new_user_reminder_path(page_user)}');return false;", :class => 'o-button') unless params[:controller].ends_with?('occasions') %></li>
 </ul>
 
-<ul id='event-list' class='o-flex-list'>
+<ul id='event-list' class='o-flex-container'>
   <%= render :partial => 'event', :collection => @events %>
 </ul>
 

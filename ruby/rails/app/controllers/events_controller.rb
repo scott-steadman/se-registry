@@ -95,4 +95,9 @@ private
     user_event_path(page_user, event)
   end
 
+  helper_method :event_type
+  def event_type
+    Event.name
+  end
+
 end # class EventsController

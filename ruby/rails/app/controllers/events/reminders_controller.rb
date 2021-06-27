@@ -18,4 +18,8 @@ private
     user_reminder_path(page_user, event)
   end
 
+  def event_type
+    Reminder.name
+  end
+
 end # class Events::RemindersController
