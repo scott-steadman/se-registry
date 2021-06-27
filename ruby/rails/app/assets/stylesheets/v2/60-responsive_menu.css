@@ -1,7 +1,6 @@
 /* 60-responsive_menu.css */
 
 .c-responsive-menu__move {
-  x-position: static;
   position: relative;
 }
 
