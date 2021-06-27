@@ -66,3 +66,11 @@ pre {
   /* appearance */
   white-space: pre-wrap;
 }
+
+section {
+  margin-top: 0.5em;
+}
+
+section h2 {
+  margin-bottom: 0.5em;
+}

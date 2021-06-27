@@ -1,8 +1,9 @@
 <%= form_with(:model => user) do |form| %>
 <% if user.errors.any? %>
-  <div id="error_explanation" class='c-item'>
-    <h2><%= pluralize(user.errors.count, "error") %> prohibited your settings from being saved:</h2>
-    <ul>
+  <div class='o-flex-container--centering'>
+    <h2>Update Failed</h2>
+
+    <ul class='u-no-bullets'>
       <% user.errors.each do |error| %>
         <li><%= error.full_message %></li>
       <% end %>
@@ -10,7 +11,7 @@
   </div>
 <% end %>
 
-  <div class='o-flex-container--vertical'>
+  <div class='o-flex-container--centering'>
     <fieldset class='c-item o-flex-item o-flex-container'>
       <legend>Login Information</legend>
 
@@ -69,8 +70,7 @@
 
     <ul class='c-item__actions o-flex-container--horizontal'>
       <label>Actions</label>:
-      <li><%= form.submit 'save', :class => 'o-button' %></li>
-      <li><%= link_to_function 'cancel', 'history.back()' %></li>
+      <li><%= link_to_function((user.new_record? ? 'Sign up' : 'Save'), "'nearest', $(this.closest('form')).submit()") %></li>
     <%- unless user.new_record? -%>
       <li>
         <%= delete_link_to user_path(user), :text => 'close account', :class => 'o-button u-destructive',
@@ -78,5 +78,7 @@
         %>
       </li>
     <%- end -%>
+      <span>or</span>
+      <li><%= link_to_function 'cancel', 'history.back()' %></li>
   </div>
 <% end # form %>

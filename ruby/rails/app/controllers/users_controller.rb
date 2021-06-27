@@ -12,7 +12,8 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    @user = User::ForAuthentication.new
+    add_ui_version_to_view_path(2)
+    @user = User::ForAuthentication.new(:ui_version => 2)
   end
 
   # POST /users

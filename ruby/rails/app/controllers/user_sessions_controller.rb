@@ -4,11 +4,15 @@ class UserSessionsController < ApplicationController
   before_action :require_user,    :only => :destroy
 
   def new
+    add_ui_version_to_view_path(2)
+
     @user_session = UserSession.new
   end
 
   # Login
   def create
+    add_ui_version_to_view_path(2)
+
     if user_session.save
       flash[:notice] = "Login successful!"
       redirect_back_or_default home_url

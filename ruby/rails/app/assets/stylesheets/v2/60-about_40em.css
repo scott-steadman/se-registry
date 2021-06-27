@@ -1,0 +1,16 @@
+/* 60-about_40em.css */
+
+@media (min-width: 40em) {
+
+#about {
+  margin-top: 1em;
+  width: 60%;
+}
+
+#login-form {
+  justify-content: center;
+  margin-top: 1em;
+  width: 30%;
+}
+
+} /* media */

@@ -13,3 +13,7 @@
 .u-full-width {
   width: 100%;
 }
+
+.u-no-bullets {
+  list-style-type: none;
+}

@@ -6,8 +6,10 @@
   flex-direction: column;
 }
 
-.o-flex-container > .o-flex-container {
-  min-width: 100%;
+.o-flex-container--centering {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .o-flex-container--horizontal {

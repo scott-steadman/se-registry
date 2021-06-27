@@ -1,14 +1,15 @@
-<h1>Welcome</h1>
+<div class='o-flex-container--centering'>
+  <h1>Welcome</h1>
 
-<div class='o-flex-container'>
-  <%= render :partial => 'about' %>
+  <%= render :partial => 'users/about' %>
 
-  <%= form_with(:model => @user_session, :url => user_session_path, :class => 'c-item o-flex-item o-flex-container o-flex-inline o-flex-2-col') do |form| %>
+  <div id='login-form' class='c-item o-flex-container'>
+  <%= form_with(:model => @user_session, :url => user_session_path, :class => 'o-flex-container--vertical o-flex-grow') do |form| %>
     <% if @user_session.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@user_session.errors.count, "error") %> prohibited you from logging in:</h2>
+      <div class='o-flex-container--centering'>
+        <h2>Login Failed</h2>
 
-        <ul>
+        <ul class='u-no-bullets'>
           <% @user_session.errors.each do |error| %>
             <li><%= error.full_message %></li>
           <% end %>
@@ -16,16 +17,26 @@
       </div>
     <% end %>
 
-    <%= form.label :login %>
-    <%= form.text_field :login %>
+    <div class='o-flex-container--horizontal'>
+      <%= form.label :login %>
+      <%= form.text_field :login %>
+    </div>
 
-    <%= form.label :password %>
-    <%= form.password_field :password %>
+    <div class='o-flex-container--horizontal'>
+      <%= form.label :password %>
+      <%= form.password_field :password %>
+    </div>
 
-    <span id='remember-me'><%= form.check_box :remember_me %> <%= form.label :remember_me %></span>
-    <%= form.submit "Login" %>
+    <div class='o-flex-container--horizontal'>
+      <%= form.label :remember_me %>
+      <%= form.check_box :remember_me %>
+    </div>
 
-    <%= link_to 'Sign up', new_user_path %>
+    <div class='c-item__actions o-flex-container--horizontal'>
+      <%= link_to_function 'Login', "'nearest', $(this.closest('form')).submit()" %>
+      <span>or</span>
+      <%= link_to 'Sign up', new_user_path %>
+    </div>
   <% end %>
 
 </div>
