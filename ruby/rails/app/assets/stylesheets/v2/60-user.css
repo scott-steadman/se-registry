@@ -1,0 +1,21 @@
+/* 60-user.css */
+
+#user__notification-frequency {
+  /* layout */
+  margin-left: 0.1em;
+  padding: 0.5em;
+}
+
+#user__lead-frequency {
+  width: 2em;
+  text-align: center;
+}
+
+#user__lead-time {
+  width: 2em;
+  text-align: center;
+}
+
+#user__notes {
+  resize: none;
+}

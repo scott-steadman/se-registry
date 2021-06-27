@@ -8,10 +8,6 @@
   flex-wrap: wrap;
 }
 
-.o-flex-container > .o-flex-container {
-  min-width: 50%;
-}
-
 .o-flex-item {
   /* layout */
   width: 33%;

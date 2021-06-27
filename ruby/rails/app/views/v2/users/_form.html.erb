@@ -11,60 +11,64 @@
 <% end %>
 
   <div class='o-flex-container--vertical'>
-    <fieldset class='c-item flex-container--horizontal'>
+    <fieldset class='c-item o-flex-item o-flex-container'>
       <legend>Login Information</legend>
 
-        <%= form.label :login, 'Login:' %>
-        <span><%= form.text_field :login %></span>
+        <div class='o-flex-container--horizontal u-full-width'>
+          <%= form.label :login, 'Login:' %>
+          <%= form.text_field :login, :class => 'o-flex-grow' %>
+        </div>
 
-        <%= form.label :password, user.new_record? ? nil : "Change password:" %>
-        <span><%= form.password_field :password %></span>
+        <div class='o-flex-container--horizontal u-full-width'>
+          <%= form.label :password, user.new_record? ? nil : "Password" %>:
+          <%= form.password_field :password, :class => 'o-flex-grow' %>
+        </div>
 
-        <%= form.label :password_confirmation, 'Confirm password:' %>
-        <span><%= form.password_field :password_confirmation %></span>
+        <div class='o-flex-container--horizontal u-full-width'>
+          <%= form.label :password_confirmation, 'Confirmation' %>:
+          <%= form.password_field :password_confirmation, :class => 'o-flex-grow' %>
+        </div>
     </fieldset>
 
-    <fieldset class='c-item o-flex-item o-flex-container'>
+    <fieldset class='c-item o-flex-item o-flex-container--vertical'>
       <legend>Preferences</legend>
 
-      <div>
-        <%= form.label :notes %>:<br/>
-        <%= form.text_area :notes, :autofocus => true, :class => 'u-full-width' %>
-      </div>
+      <%= form.label :notes, 'Notes:' %>
+      <%= form.text_area :notes, :id => 'user__notes', :rows => 8  %>
 
       <div class='o-flex-container--horizontal'>
         <%= form.label :ui_version, 'UI Version' %>:
-        <span><%= form.select :ui_version, [['default', ''], ['v2', '2']] %></span>
-      </div> </fieldset>
-
-    <fieldset class='c-item o-flex-item o-flex-container'>
-      <legend>Contact Information</legend>
-
-      <div class='o-flex-container--horizontal'>
-        <%= form.label :email %>:
-        <span class='u-full-width'><%= form.text_field :email %></span>
-      </div>
-
-      <div class='o-flex-container--horizontal'>
-        I want to be notified every <%= form.text_field :lead_frequency %> days
-        for <%= form.text_field :lead_time, :size => 2 %> days prior to an event.
+        <%= form.select :ui_version, [['default', ''], ['v2', '2']] %>
       </div>
     </fieldset>
 
+    <fieldset class='c-item o-flex-item o-flex-container--vertical'>
+      <legend>Contact Information</legend>
+
+      <div class='o-flex-item o-flex-container--horizontal'>
+        <%= form.label :email, 'Email:' %>
+        <%= form.text_field :email, :class => 'o-flex-grow' %>
+      </div>
+
+      <div id='user__notification-frequency'>
+        I want to be notified every <%= form.text_field :lead_frequency, :id => 'user__lead-frequency' %> days<br/>
+        for <%= form.text_field :lead_time, :id => 'user__lead-time' %> days prior to an event.
+      </div>
+    </fieldset>
 
     <% if current_user.try(:admin?) %>
       <fieldset class='c-item o-flex-item o-flex-container'>
         <legend>Admin Information</legend>
         <div class='o-flex-container--horizontal'>
-          <%= form.label :role %>
-          <span><%= form.collection_select :role, User.roles, :to_s, :to_s %></span>
+          <%= form.label :role %>:
+          <%= form.collection_select :role, User.roles, :to_s, :to_s %>
         </tr>
         </div>
       </fieldset>
     <% end %>
 
     <ul class='c-item__actions o-flex-container--horizontal'>
-      Actions:
+      <label>Actions</label>:
       <li><%= form.submit 'save', :class => 'o-button' %></li>
       <li><%= link_to_function 'cancel', 'history.back()' %></li>
     <%- unless user.new_record? -%>
@@ -75,5 +79,4 @@
       </li>
     <%- end -%>
   </div>
-<% end %>
-
+<% end # form %>
