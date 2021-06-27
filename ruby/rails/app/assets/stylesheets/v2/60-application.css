@@ -1,0 +1,55 @@
+/* 60-application.css */
+
+/*
+ * These styles are for elements rendered in a/v/v2/layouts/application.
+ *
+ * I'm excluding the site-modal and site-nav styles so this file doesn't
+ * become too large.
+ */
+
+
+#site-header {
+  /* positioning */
+	position: fixed;
+  left: 0;
+  right: 0;
+	top: 0;
+  z-index: 1;
+
+  /* layout */
+  height: 3em;
+
+  /* appearance */
+  background: var(--header-background-color);
+}
+
+#site-main {
+  /* positioning */
+  position: relative;
+  top: 4em; /* push the top down below the header */
+
+  /* layout */
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+#site-footer {
+  /* positioning */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+
+  /* layout */
+  height: 1.5em;
+
+  /* appearance */
+  background: var(--footer-background-color);
+}
+
+#copyright {
+  font-size: 0.9em;
+}
+
+
