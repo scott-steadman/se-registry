@@ -2,11 +2,9 @@
   <%= stylesheet_link_tag '//code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css' %>
 <% end %>
 
-<% if current_user != page_user %>
-<h2><%= possessivize(page_user.display_name) %> Friends</h2>
-<% end %>
+<h1><%= (current_user != page_user) ? possessivize(page_user.display_name) : 'My' %> Friends</h1>
 
-<ul id='friend-menu' class='c-item__actions o-flex-container--horizontal'>
+<ul class='c-item__actions o-flex-container--horizontal'>
   <li>
     <%= form_tag user_friends_path(current_user) do %>
       <input id='friend-autocomplete' name='friend_login' type='text' size='40' placeholder="Start typing a friend's name..."/>

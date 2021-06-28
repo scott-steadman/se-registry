@@ -8,6 +8,8 @@
 }
 
 .c-item__actions {
+  /* layout */
+  padding: 1.5em 0;
 
   /* appearance */
   border-top: 1px solid var(--site-neutral-black);
