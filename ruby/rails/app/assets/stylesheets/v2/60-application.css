@@ -7,7 +7,6 @@
  * become too large.
  */
 
-
 #site-header {
   /* positioning */
 	position: fixed;
@@ -51,5 +50,3 @@
 #copyright {
   font-size: 0.9em;
 }
-
-
