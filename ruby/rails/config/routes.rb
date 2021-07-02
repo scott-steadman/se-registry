@@ -34,7 +34,6 @@ Rails.application.routes.draw do
   resources :users do
 
     collection do
-      get :home # bounce uers to their home page
       get :autocomplete
     end
 

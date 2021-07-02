@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   before_action :require_no_user, :only => [:new, :create]
-  before_action :require_user,    :only => [:edit, :home, :index, :show, :update, :destroy]
+  before_action :require_user,    :only => [:edit, :index, :show, :update, :destroy]
 
   # GET /users
   # GET /users.xml
@@ -73,10 +73,6 @@ class UsersController < ApplicationController
     else
       redirect_back_or_default users_url
     end
-  end
-
-  def home
-    store_location
   end
 
   def autocomplete
