@@ -1,6 +1,4 @@
-<% if current_user != page_user %>
-<h1><%= possessivize(page_user.display_name) %> Events</h1>
-<% end %>
+<h1><%= (current_user != page_user) ? possessivize(page_user.display_name) : 'My' %> <%= event_type.pluralize %></h1>
 
 <table width='100%'>
   <tr>
