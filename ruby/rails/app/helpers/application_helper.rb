@@ -23,7 +23,7 @@ module ApplicationHelper
   def external_link_to(url)
     # we don't want www. or .com
     domain = URI.parse(url).host.split('.')[-2]
-    link_to domain, url, :rel => 'nofollow', :target => '_new'
+    link_to domain, url, :rel => 'nofollow noopener', :target => '_new'
   end
 
 end

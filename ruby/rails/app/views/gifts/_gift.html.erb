@@ -4,7 +4,7 @@
   <td>
     <%= gift.description %>
     <%- if gift.urls.any? -%>
-      (<%= gift.urls.map {|url| link_to 'link', url, :target => '_new'}.join(', ').html_safe -%>)
+      (<%= gift.urls.map {|url| link_to 'link', url, :rel => 'nofollow noopener', :target => '_new'}.join(', ').html_safe -%>)
     <%- end -%>
   </td>
 
