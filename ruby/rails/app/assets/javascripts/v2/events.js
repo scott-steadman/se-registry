@@ -52,7 +52,7 @@ window.events = {
 
     }).done(function(data, textStatus, jqXHR) {
 
-      var eventList = document.getElementById('event-list');
+      var eventList = document.getElementById('event__list');
       eventList.insertAdjacentHTML('afterbegin', data);
 
       // show/hide year if recurring is un/checked
@@ -73,7 +73,7 @@ window.events = {
 
     }).done(function(data, textStatus, jqXHR) {
 
-      var eventList = document.getElementById('event-list');
+      var eventList = document.getElementById('event__list');
       eventList.insertAdjacentHTML('afterbegin', data);
 
       // show/hide year if recurring is un/checked
