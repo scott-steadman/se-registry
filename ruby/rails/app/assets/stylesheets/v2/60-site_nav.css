@@ -60,10 +60,12 @@
 }
 
 #site-nav__links li {
-
   /* appearance */
   background-color: transparent;
   padding-top: 0.5em;
+
+  /* layout */
+  white-space: nowrap;
 }
 
 #site-nav__move {
