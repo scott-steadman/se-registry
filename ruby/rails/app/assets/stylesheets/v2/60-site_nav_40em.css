@@ -65,6 +65,7 @@
 
 #site-nav__move {
   /* layout */
+  align-self: flex-start;
   margin-top: 0;
   width: 2em;
 }
