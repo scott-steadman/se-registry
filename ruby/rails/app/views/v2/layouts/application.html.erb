@@ -30,7 +30,7 @@
         <ul id='site-nav__links'>
           <li><%= link_to_unless_current 'My Gifts', gifts_path %></li>
           <li><%= link_to_unless_current 'My Friends', friends_path %></li>
-          <li class='o-site-nav__dropdown'>
+          <li id='site-nav__events-dropdown' class='o-site-nav__dropdown'>
             <%= link_to_unless_current 'My Events', events_path %>
             <ul>
               <li><%= link_to_unless_current 'My Occasions', occasions_path %></li>
@@ -41,7 +41,7 @@
         <%- if current_user.admin? -%>
           <li><%= link_to_unless_current 'Users', users_path %></li>
         <%- end -%>
-          <li class='o-site-nav__dropdown'>
+          <li id='site-nav__about-dropdown' class='o-site-nav__dropdown'>
             <%= link_to_unless_current 'About', about_path %>
             <ul>
               <li><a href='mailto:registry@stdmn.com?subject=Suggestion' class='o-link--with-icon'>

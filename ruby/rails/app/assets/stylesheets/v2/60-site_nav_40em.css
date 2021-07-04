@@ -14,6 +14,11 @@
   order: 1;
 }
 
+#site-nav__about-dropdown:hover ul {
+  /* layout */
+  width: 4em;
+}
+
 .o-site-nav__dropdown ul {
   /* layout */
   display: none;
@@ -23,6 +28,11 @@
   /* layout */
   display: flex;
   flex-direction: column;
+}
+
+#site-nav__events-dropdown:hover ul {
+  /* layout */
+  width: 6em;
 }
 
 .o-site-nav__dropdown > a::after {
