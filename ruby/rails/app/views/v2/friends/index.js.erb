@@ -1,0 +1,8 @@
+$('#friend__list').append('<%= j render :partial => 'friend', :collection => @friends %>');
+
+<% if @friends.next_page %>
+$(window.nextPageLoader.paginationSelector).replaceWith('<%= j will_paginate @friends %>');
+<% else %>
+$(window).off('scroll');
+$(window.nextPageLoader.scrollerSelector).remove();
+<% end %>

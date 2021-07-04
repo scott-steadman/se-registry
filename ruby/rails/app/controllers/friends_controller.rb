@@ -7,6 +7,11 @@ class FriendsController < ApplicationController
   # GET /friends.xml
   def index
     @friends = friends.includes(:gifts).order(order).paginate :page => page, :per_page => per_page
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.js   # index.js.erb
+    end
   end
 
   # POST /friends

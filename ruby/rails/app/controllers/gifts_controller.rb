@@ -14,8 +14,9 @@ class GiftsController < ApplicationController
               .paginate(:page => page, :per_page => per_page)
 
     respond_to do |format|
-      format.html # index.html.erb
       format.csv  { export }
+      format.html # index.html.erb
+      format.js   # index.js.erb
     end
   end
 

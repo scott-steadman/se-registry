@@ -1,0 +1,9 @@
+$('#event__list').append('<%= j render :partial => 'event', :collection => @events %>');
+
+<% if @events.next_page %>
+$(window.nextPageLoader.paginationSelector).replaceWith('<%= j will_paginate @events %>');
+<% else %>
+$(window).off('scroll');
+$(window.nextPageLoader.scrollerSelector).remove();
+<% end %>
+

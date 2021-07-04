@@ -5,9 +5,13 @@
   <li><%= link_to('Add Reminder', '#', :onClick => "window.events.onAddReminderClicked('#{new_user_reminder_path(page_user)}');return false;", :class => 'o-button') unless params[:controller].ends_with?('occasions') %></li>
 </ul>
 
-<ul id='event-list' class='o-flex-container'>
+<ul id='event__list' class='o-flex-container'>
   <%= render :partial => 'event', :collection => @events %>
 </ul>
+
+<div id='infinite-scroll'>
+  <%= will_paginate %>
+</div>
 
 <%- content_for :javascripts do -%>
   <%= javascript_include_tag '/assets/v2/events.js' %>

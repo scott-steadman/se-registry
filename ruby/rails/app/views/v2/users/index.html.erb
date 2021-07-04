@@ -1,7 +1,11 @@
 <h1>Users</h1>
 
-<div id='user-list' class='o-flex-container'>
+<div id='user__list' class='o-flex-container'>
   <%= render :partial => 'user', :collection => @users %>
+</div>
+
+<div id='infinite-scroll'>
+  <%= will_paginate %>
 </div>
 
 <%- content_for :footer do -%>

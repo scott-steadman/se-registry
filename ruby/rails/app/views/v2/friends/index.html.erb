@@ -14,10 +14,14 @@
   <li><%= link_to 'Export', export_friends_path, :class => 'o-button' %></li>
 </ul>
 
-<div id='friend-list' class='o-flex-container'>
+<div id='friend__list' class='o-flex-container'>
   <%= render :partial => 'friend', :collection => @friends %>
 </div>
 
-<%- content_for :footer do -%>
+<div id='infinite-scroll'>
+  <%= will_paginate %>
+</div>
+
+<%- content_for :javascript do -%>
   <%= javascript_include_tag '/assets/v2/users.js' %>
 <%- end -%>
