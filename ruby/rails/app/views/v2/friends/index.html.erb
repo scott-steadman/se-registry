@@ -7,7 +7,7 @@
 <ul class='c-item__actions o-flex-container--horizontal'>
   <li>
     <%= form_tag user_friends_path(current_user) do %>
-      <input id='friend-autocomplete' name='friend_login' type='text' size='40' placeholder="Start typing a friend's name..."/>
+      <input id='friend__autocomplete' name='friend_login' type='text' placeholder="Type a friend's name..."/>
       <%= submit_tag 'Add', :class => 'o-button' %>
     <%- end -%>
   </li>
@@ -22,6 +22,6 @@
   <%= will_paginate %>
 </div>
 
-<%- content_for :javascript do -%>
+<%- content_for :javascripts do -%>
   <%= javascript_include_tag '/assets/v2/users.js' %>
 <%- end -%>

@@ -54,6 +54,5 @@ window.users = {
 } // window.users
 
 $(document).on('turbolinks:load', function() {
-  $('#friend-autocomplete').autocomplete({source: '/users/autocomplete'});
+  $('#friend__autocomplete').autocomplete({source: '/users/autocomplete'});
 });
-
