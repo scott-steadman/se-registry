@@ -86,37 +86,8 @@
     </div>
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+    <script src='https://cdn.jsdelivr.net/npm/micromodal/dist/micromodal.js'></script>
 
     <%= javascript_include_tag 'application-v2' %>
-
-    <script src='https://cdn.jsdelivr.net/npm/micromodal/dist/micromodal.js'></script>
-    <script>
-      MicroModal.init();
-
-      window.showErrorDialog = function(title, message) {
-        var titleElement = document.getElementById('site-modal__title');
-        titleElement.innerText = title;
-
-        var contentElement = document.getElementById('site-modal__content');
-        contentElement.classList.add('is-error');
-        contentElement.innerText = message;
-
-        MicroModal.show('site-modal', {
-          // prevent click from passing through to button/link beneath dialog
-          onClose: function(modal, element, event) {event.preventDefault()},
-        });
-      }
-
-      window.onAjaxSuccess = function(event, payload, result, request) {
-        var target = this.getAttribute('data-replace-target');
-        if(target) {
-          $('#'+target).replaceWith(payload);
-        }
-      }
-
-      $(document).on('ajax:success', 'form[data-replace-target]', window.onAjaxSuccess)
-
-    </script>
-
   </body>
 </html>
