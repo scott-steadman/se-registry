@@ -6,7 +6,7 @@
 </div>
 
 <ul id='gift__menu' class='c-item__actions o-flex-item--cenered o-flex-container--horizontal'>
-  <li><%= link_to_function 'New', "window.gifts.onNewClicked('#{new_user_gift_path(page_user)}')", :class => 'o-button' %></li>
+  <li><%= link_to_function 'New', "App.gifts.onNewClicked('#{new_user_gift_path(page_user)}')", :class => 'o-button' %></li>
   <li><%= link_to 'Export', user_gifts_path(page_user, :format => 'csv'), :class => 'o-button' %></li>
   <%- if params[:tag] -%>
   <li>Tagged:
@@ -15,7 +15,7 @@
     <%- end -%>
   </li>
   <%- end -%>
-  <li>Sorted By: <%= select_tag('order', sort_options, :onChange => "window.location=window.gifts.replaceOrder(this.value);") %></li>
+  <li>Sorted By: <%= select_tag('order', sort_options, :onChange => "window.location=App.gifts.replaceOrder(this.value);") %></li>
 </ul>
 
 <div id='gift__list' class='o-flex-container'>

@@ -1,4 +1,4 @@
-window.users = {
+App.users = {
 
   onBefriendClicked: function(elementId, befriendPath) {
     jQuery.ajax(befriendPath, {
@@ -8,7 +8,7 @@ window.users = {
       $(elementId).replaceWith(data);
 
     }).fail(function(jqXHR, txtStatus, errorThrown) {
-      window.showErrorDialog('Error', 'Unable to befriend user');
+      App.showErrorDialog('Error', 'Unable to befriend user');
     });
 
   }, // onBefriendClicked
@@ -21,7 +21,7 @@ window.users = {
       $(elementId).replaceWith(data);
 
     }).fail(function(jqXHR, txtStatus, errorThrown) {
-      window.showErrorDialog('Error', 'Unable to befriend user');
+      App.showErrorDialog('Error', 'Unable to befriend user');
     });
 
   }, // onUnfriendClicked
@@ -33,7 +33,7 @@ window.users = {
       $(`#user-${user_id}`).replaceWith(data);
 
     }).fail(function(jqXHR, txtStatus, errorThrown) {
-      window.showErrorDialog('Error', 'Unable to create a user');
+      App.showErrorDialog('Error', 'Unable to create a user');
     });
 
   }, // onEditClicked
@@ -51,7 +51,7 @@ window.users = {
 
   }, // onCancelEditClicked
 
-} // window.users
+} // App.users
 
 $(document).on('turbolinks:load', function() {
   $('#friend__autocomplete').autocomplete({source: '/users/autocomplete'});

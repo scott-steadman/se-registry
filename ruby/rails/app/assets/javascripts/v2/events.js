@@ -1,11 +1,11 @@
-window.events = {
+App.events = {
 
   hideMenu: function() {
     document.getElementById('event-menu').classList.add('is-hidden');
   }, // hideMenu
 
   onEditClicked: function(event_id, edit_event_path) {
-    window.events.hideMenu();
+    App.events.hideMenu();
 
     jQuery.ajax(edit_event_path, {
 
@@ -15,23 +15,23 @@ window.events = {
       eventElement.replaceWith(data);
 
       // show/hide year if recurring is un/checked
-      $('input#occasion_recur').on('change', window.events.updateDateEditor);
-      window.events.updateDateEditor();
+      $('input#occasion_recur').on('change', App.events.updateDateEditor);
+      App.events.updateDateEditor();
 
     }).fail(function(jqXHR, txtStatus, errorThrown) {
-      window.showErrorDialog('Error', 'Unable to create a new occasion');
-      window.events.showMenu();
+      App.showErrorDialog('Error', 'Unable to create a new occasion');
+      App.events.showMenu();
     });
 
   }, // onEditClicked
 
   onCancelCreateClicked: function() {
-    window.events.showMenu();
+    App.events.showMenu();
     document.getElementById('event-new').remove();
   }, // onCancelCreateClicked
 
   onCancelEditClicked: function(id, user_event_path) {
-    window.events.showMenu();
+    App.events.showMenu();
 
     jQuery.ajax(user_event_path, {
 
@@ -46,7 +46,7 @@ window.events = {
   }, // onCancelEditClicked
 
   onAddOccasionClicked: function(new_user_occasion_path) {
-    window.events.hideMenu();
+    App.events.hideMenu();
 
     jQuery.ajax(new_user_occasion_path, {
 
@@ -56,18 +56,18 @@ window.events = {
       eventList.insertAdjacentHTML('afterbegin', data);
 
       // show/hide year if recurring is un/checked
-      $('input#occasion_recur').on('change', window.events.updateDateEditor);
-      window.events.updateDateEditor();
+      $('input#occasion_recur').on('change', App.events.updateDateEditor);
+      App.events.updateDateEditor();
 
     }).fail(function(jqXHR, txtStatus, errorThrown) {
-      window.showErrorDialog('Error', 'Unable to create a new occasion');
-      window.events.showMenu();
+      App.showErrorDialog('Error', 'Unable to create a new occasion');
+      App.events.showMenu();
     });
 
   }, // onAddOccasionClicked
 
   onAddReminderClicked: function(new_user_reminder_path) {
-    window.events.hideMenu();
+    App.events.hideMenu();
 
     jQuery.ajax(new_user_reminder_path, {
 
@@ -77,12 +77,12 @@ window.events = {
       eventList.insertAdjacentHTML('afterbegin', data);
 
       // show/hide year if recurring is un/checked
-      $('input#reminder_recur').on('change', window.events.updateDateEditor);
-      window.events.updateDateEditor();
+      $('input#reminder_recur').on('change', App.events.updateDateEditor);
+      App.events.updateDateEditor();
 
     }).fail(function(jqXHR, txtStatus, errorThrown) {
-      window.showErrorDialog('Error', 'Unable to create a new reminder');
-      window.events.showMenu();
+      App.showErrorDialog('Error', 'Unable to create a new reminder');
+      App.events.showMenu();
     });
 
   }, // onAddReminderClicked
@@ -105,5 +105,5 @@ window.events = {
     }
   }, // updateDateEditor
 
-} // window.events
+} // App.events
 

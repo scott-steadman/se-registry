@@ -1,6 +1,6 @@
 "use strict";
 
-window.site_nav ||= {
+App.site_nav ||= {
 
   bodyClassList: function() { return document.querySelector('body').classList; },
 
@@ -42,4 +42,4 @@ window.site_nav ||= {
   }
 }
 
-window.site_nav.loadState();
+App.site_nav.loadState();

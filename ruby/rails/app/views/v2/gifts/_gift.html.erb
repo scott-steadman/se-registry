@@ -44,7 +44,7 @@
     <%- end -%>
 
     <%- if gift.editable_by?(current_user) -%>
-      <li><%= link_to_function 'edit', "window.gifts.onEditClicked(#{gift.id}, '#{edit_user_gift_path(page_user, gift)}')", :rel => 'nofollow', :class => 'o-button' %></li>
+      <li><%= link_to_function 'edit', "App.gifts.onEditClicked(#{gift.id}, '#{edit_user_gift_path(page_user, gift)}')", :rel => 'nofollow', :class => 'o-button' %></li>
       <li>
         <%= delete_link_to user_gift_path(page_user, gift), :text => 'remove', :class => 'o-button u-destructive',
                                                             :confirm => 'Are you sure you want to remove this gift?'

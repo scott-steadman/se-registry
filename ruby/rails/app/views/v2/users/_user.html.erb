@@ -19,10 +19,10 @@
     <label>Actions:</label>
 
   <%- if page_user.friends.include?(user) -%>
-    <li><%= link_to_function 'unfriend', "window.users.onUnfriendClicked('##{div_id}', '#{user_friend_path(page_user, user)}')", :class => 'o-button u-destructive' %></li>
+    <li><%= link_to_function 'unfriend', "App.users.onUnfriendClicked('##{div_id}', '#{user_friend_path(page_user, user)}')", :class => 'o-button u-destructive' %></li>
     <li><%= link_to 'gifts', user_gifts_path(user) %></li>
   <%- else -%>
-    <li><%= link_to_function 'befriend', "window.users.onBefriendClicked('##{div_id}', '#{user_friends_path(page_user, :friend_id => user.id)}')", :class => 'o-button' %></li>
+    <li><%= link_to_function 'befriend', "App.users.onBefriendClicked('##{div_id}', '#{user_friends_path(page_user, :friend_id => user.id)}')", :class => 'o-button' %></li>
   <%- end -%>
   <%- if current_user == user and ! current_user.admin? -%>
     <li>

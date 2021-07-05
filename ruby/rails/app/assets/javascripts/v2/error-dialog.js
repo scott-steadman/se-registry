@@ -1,6 +1,6 @@
 MicroModal.init();
 
-window.showErrorDialog = function(title, message) {
+App.showErrorDialog = function(title, message) {
   var titleElement = document.getElementById('site-modal__title');
   titleElement.innerText = title;
 
@@ -14,11 +14,11 @@ window.showErrorDialog = function(title, message) {
   });
 }
 
-window.onAjaxSuccess = function(event, payload, result, request) {
+App.onAjaxSuccess = function(event, payload, result, request) {
   var target = this.getAttribute('data-replace-target');
   if(target) {
     $('#'+target).replaceWith(payload);
   }
 }
 
-$(document).on('ajax:success', 'form[data-replace-target]', window.onAjaxSuccess)
+$(document).on('ajax:success', 'form[data-replace-target]', App.onAjaxSuccess)

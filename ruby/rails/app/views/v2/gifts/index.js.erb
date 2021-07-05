@@ -1,8 +1,8 @@
 $('#gift__list').append('<%= j render :partial => 'gift', :collection => @gifts %>');
 
 <% if @gifts.next_page %>
-$(window.nextPageLoader.paginationSelector).replaceWith('<%= j will_paginate @gifts %>');
+$(App.nextPageLoader.paginationSelector).replaceWith('<%= j will_paginate @gifts %>');
 <% else %>
 $(window).off('scroll');
-$(window.nextPageLoader.scrollerSelector).remove();
+$(App.nextPageLoader.scrollerSelector).remove();
 <% end %>

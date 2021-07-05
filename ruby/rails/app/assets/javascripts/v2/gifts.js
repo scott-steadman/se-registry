@@ -1,10 +1,10 @@
-window.gifts = {
+App.gifts = {
   hideMenu: function() {
     document.getElementById('gift__menu').classList.add('is-hidden');
   }, // hideMenu
 
   onEditClicked: function(gift_id, edit_gift_path) {
-    window.gifts.hideMenu();
+    App.gifts.hideMenu();
 
     jQuery.ajax(edit_gift_path, {
 
@@ -12,19 +12,19 @@ window.gifts = {
       $(`#gift-${gift_id}`).replaceWith(data);
 
     }).fail(function(jqXHR, txtStatus, errorThrown) {
-      window.showErrorDialog('Error', 'Unable to create a gift');
-      window.gifts.showMenu();
+      App.showErrorDialog('Error', 'Unable to create a gift');
+      App.gifts.showMenu();
     });
 
   }, // onEditClicked
 
   onCancelCreateClicked: function() {
-    window.gifts.showMenu();
+    App.gifts.showMenu();
     $('#gift-new').remove();
   }, // onCancelEditClicked
 
   onCancelEditClicked: function(id, user_gift_path) {
-    window.gifts.showMenu();
+    App.gifts.showMenu();
 
     jQuery.ajax(user_gift_path, {
 
@@ -39,7 +39,7 @@ window.gifts = {
   }, // onCancelEditClicked
 
   onNewClicked: function(new_gift_path) {
-    window.gifts.hideMenu();
+    App.gifts.hideMenu();
 
     jQuery.ajax(new_gift_path, {
 
@@ -47,8 +47,8 @@ window.gifts = {
       document.getElementById('gift__list').insertAdjacentHTML('afterbegin', data);
 
     }).fail(function(jqXHR, txtStatus, errorThrown) {
-      window.showErrorDialog('Error', 'Unable to create a new gift');
-      window.events.showMenu();
+      App.showErrorDialog('Error', 'Unable to create a new gift');
+      App.events.showMenu();
     });
 
   }, // onNewClicked
@@ -73,4 +73,4 @@ window.gifts = {
     document.getElementById('gift__menu').classList.remove('is-hidden');
   }, // showMenu
 
-} // window.gifts
+} // App.gifts

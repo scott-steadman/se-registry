@@ -20,7 +20,7 @@
       <% if current_user %>
       <nav id='site-nav'>
         <button id='site-nav__toggle' type='button' aria-label='Open or close navigation menu'
-          onClick="window.site_nav.onToggleClicked(this)"
+          onClick="App.site_nav.onToggleClicked(this)"
         >
           <span></span>
           <span></span>
@@ -54,7 +54,7 @@
           </li>
           <li><%= link_to_unless_current 'Logout', logout_path %></li>
 
-          <li id='site-nav__move'><button onClick="window.site_nav.onMoveClicked(this)"/></li>
+          <li id='site-nav__move'><button onClick="App.site_nav.onMoveClicked(this)"/></li>
         </ul>
       </nav>
       <%- end -%>

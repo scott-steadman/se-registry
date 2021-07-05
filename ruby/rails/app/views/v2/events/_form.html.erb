@@ -17,13 +17,13 @@
 
   <ul class='c-item__actions o-flex-container--horizontal'>
     Actions:
-    <li><%= form.submit (event.new_record? ? 'create' : 'update'), :onClick => 'window.events.showMenu()', :class => 'o-button' %></li>
+    <li><%= form.submit (event.new_record? ? 'create' : 'update'), :onClick => 'App.events.showMenu()', :class => 'o-button' %></li>
     <li>
     <%-
       if event.new_record?
-        cancel_func = 'window.events.onCancelCreateClicked()'
+        cancel_func = 'App.events.onCancelCreateClicked()'
       else
-        cancel_func = "window.events.onCancelEditClicked('#{div_id}', '#{user_event_path(page_user, event)}')"
+        cancel_func = "App.events.onCancelEditClicked('#{div_id}', '#{user_event_path(page_user, event)}')"
       end
     -%>
       <input type='button' class='o-button u-destructive', onClick="<%= cancel_func %>" value='cancel'/>

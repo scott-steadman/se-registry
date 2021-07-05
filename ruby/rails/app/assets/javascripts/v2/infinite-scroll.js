@@ -1,5 +1,5 @@
 
-window.nextPageLoader = {
+App.nextPageLoader = {
   scrollerSelector:   '#infinite-scroll',
   nextPageSelector:   'a.next_page',
   paginationSelector: '.pagination',
@@ -7,16 +7,16 @@ window.nextPageLoader = {
   isLoading: false,
 
   loadMoreIfNecessary: function() {
-    if(window.nextPageLoader.isLoading) return;
-    window.nextPageLoader.isLoading = true;
+    if(App.nextPageLoader.isLoading) return;
+    App.nextPageLoader.isLoading = true;
 
-    window.requestAnimationFrame(function() {
-      if(window.nextPageLoader.isPaginatorVisible()) window.nextPageLoader.loadNextPage();
-      window.nextPageLoader.isLoading = false;
+    requestAnimationFrame(function() {
+      if(App.nextPageLoader.isPaginatorVisible()) App.nextPageLoader.loadNextPage();
+      App.nextPageLoader.isLoading = false;
 
       // The browser window may be large and we still haven't
       // filled the page. So we'll check again.
-      window.nextPageLoader.loadMoreIfNecessary();
+      App.nextPageLoader.loadMoreIfNecessary();
     });
 
   }, // loadMoreIfNecessary
@@ -26,27 +26,27 @@ window.nextPageLoader = {
                           // handle chrome bug where outerHeight < innerHeight
     var windowHeight    = Math.max(window.innerHeight, window.outerHeight);
     var documentBottom  = documentTop + windowHeight;
-    var elementTop      = $(window.nextPageLoader.scrollerSelector).offset().top
+    var elementTop      = $(App.nextPageLoader.scrollerSelector).offset().top
     var isVisible       = elementTop <= documentBottom;
 
     return isVisible;
   }, // isPaginatorVisible
 
   loadNextPage: function() {
-    var more_posts_url = $(window.nextPageLoader.nextPageSelector).attr('href');
+    var more_posts_url = $(App.nextPageLoader.nextPageSelector).attr('href');
     if(!more_posts_url) return;
 
-    $(window.nextPageLoader.paginationSelector).html('<img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..."/>');
+    $(App.nextPageLoader.paginationSelector).html('<img src="/assets/ajax-loader.gif" alt="Loading..." title="Loading..."/>');
     $.getScript(more_posts_url);
   }, // loadNextPage
 
-} //  window.nextPageLoader
+} //  App.nextPageLoader
 
 $(document).on('turbolinks:load', function() {
   if( $('#infinite-scroll').size() > 0 ) {
-    $(window).on('scroll', window.nextPageLoader.loadMoreIfNecessary);
+    $(window).on('scroll', App.nextPageLoader.loadMoreIfNecessary);
   }
 
   // paginator may already be visible
-  window.nextPageLoader.loadMoreIfNecessary();
+  App.nextPageLoader.loadMoreIfNecessary();
 });

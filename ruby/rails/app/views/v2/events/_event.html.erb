@@ -24,7 +24,7 @@
 
   <ul class='c-item__actions o-flex-container--horizontal'>
     Actions:
-    <li><%= link_to_function 'edit', "window.events.onEditClicked(#{event.id}, '#{edit_user_event_path(page_user, event)}')", :rel => 'nofollow', :class => 'o-button' %></li>
+    <li><%= link_to_function 'edit', "App.events.onEditClicked(#{event.id}, '#{edit_user_event_path(page_user, event)}')", :rel => 'nofollow', :class => 'o-button' %></li>
     <li><%= delete_link_to delete_path(event), :text => 'remove', :class => 'o-button u-destructive',
                                                :confirm => "Are you sure you want to remove this #{event.event_type}?"
         %>

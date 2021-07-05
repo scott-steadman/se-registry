@@ -31,13 +31,13 @@
 
   <ul class='c-item__actions o-flex-container--horizontal'>
     Actions:
-    <li><%= form.submit (gift.new_record? ? 'create' : 'update'), :onClick => 'window.events.showMenu()', :class => 'o-button' %></li>
+    <li><%= form.submit (gift.new_record? ? 'create' : 'update'), :onClick => 'App.events.showMenu()', :class => 'o-button' %></li>
     <li>
     <%-
       if gift.new_record?
-        cancel_func = 'window.gifts.onCancelCreateClicked()'
+        cancel_func = 'App.gifts.onCancelCreateClicked()'
       else
-        cancel_func = "window.gifts.onCancelEditClicked('#{div_id}', '#{user_gift_path(page_user, gift)}')"
+        cancel_func = "App.gifts.onCancelEditClicked('#{div_id}', '#{user_gift_path(page_user, gift)}')"
       end
     -%>
       <input type='button' class='o-button u-destructive' onClick="<%= cancel_func %>" value='cancel'/>
