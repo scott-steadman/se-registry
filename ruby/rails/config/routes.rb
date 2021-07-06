@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
+  # Issue 31
+  mount ActionCable.server => '/cable'
+
   root 'gifts#index'
 
   get '/about'          => 'users#about',               :as => :about

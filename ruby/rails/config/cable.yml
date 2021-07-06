@@ -1,10 +1,10 @@
 development:
-  adapter: async
+  adapter: postgresql
+  channel_prefix: registry_development
 
 test:
   adapter: test
 
 production:
-  adapter: redis
-  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
+  adapter: postgresql
   channel_prefix: registry_production
