@@ -1,9 +1,12 @@
 App.presence = App.presence || {
 
+  friendCountSelector: '#site-nav__friend-count',
+
   myUserId: null, // set in application.html.erb
 
   initialized() {
     App.presence.friendsOnline = new Set();
+    $(App.presence.friendCountSelector).tooltip({delay: 0});
   },
 
   // called when a friend visits the site
@@ -38,7 +41,18 @@ App.presence = App.presence || {
 
   updateOnlineCount() {
     var count = App.presence.friendsOnline.size;
-    if(count == 0) count = '';
+    var element = $(App.presence.friendCountSelector);
+
+    if(count == 1) {
+      element.attr('title', "1 friend is online");
+
+    } else if(count > 1) {
+      element.attr('title', count + " friends are online");
+
+    } else {
+      count = '';
+      element.tooltip('disable');
+    }
 
     element.text(count);
 

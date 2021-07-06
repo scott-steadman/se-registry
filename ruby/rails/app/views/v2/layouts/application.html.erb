@@ -29,7 +29,7 @@
 
         <ul id='site-nav__links'>
           <li><%= link_to_unless_current 'My Gifts', gifts_path %></li>
-          <li><%= link_to_unless_current 'My Friends <sub id="friend-count"></sub>'.html_safe, friends_path %></li>
+          <li><%= link_to_unless_current 'My Friends <sub id="site-nav__friend-count"></sub>'.html_safe, friends_path %></li>
           <li id='site-nav__events-dropdown' class='o-site-nav__dropdown'>
             <%= link_to_unless_current 'My Events', events_path %>
             <ul>
