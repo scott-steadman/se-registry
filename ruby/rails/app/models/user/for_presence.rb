@@ -22,8 +22,20 @@
 # Issue 31
 class User::ForPresence < User
 
+  has_and_belongs_to_many :friends_to_notify,
+    :class_name               => 'User::ForPresence',
+    :foreign_key              => 'friend_id',
+    :join_table               => 'friends',
+    :association_foreign_key  => 'user_id',
+    :autosave                 => true,
+    :uniq                     => true
+
+  # called from Presence::AppearJob
   def appear
-Rails.logger.info{"user-#{id} appeared"}
+    friends_to_notify.each do |friend|
+      PresenceChannel.broadcast_to(friend, :event => 'appear', :friend_id => id)
+    end
+
   end
 
   def disappear

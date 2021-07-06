@@ -3,7 +3,7 @@ class PresenceChannel < ApplicationCable::Channel
   def subscribed
     stream_for user
 
-    user.appear
+    Presence::AppearJob.perform_later(user);
   end
 
   def unsubscribed
