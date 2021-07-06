@@ -19,6 +19,10 @@ class User::ForPresenceTest < ActiveSupport::TestCase
   end
 
   test 'disappear' do
+    user.friends << friend
+
+    PresenceChannel.expects(:broadcast_to)
+    friend.disappear
   end
 
 private

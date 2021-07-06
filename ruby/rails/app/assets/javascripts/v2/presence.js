@@ -21,6 +21,11 @@ App.presence = App.presence || {
   },
 
   onDisappear(friend_id) {
+    // don't count self as a friend
+    if(friend_id == App.presence.myUserId) return;
+
+    App.presence.friendsOnline.delete(friend_id);
+    App.presence.updateOnlineCount();
   },
 
   isFriendOnline(friend_id) {
@@ -33,6 +38,7 @@ App.presence = App.presence || {
 
   updateOnlineCount() {
     var count = App.presence.friendsOnline.size;
+    if(count == 0) count = '';
 
     element.text(count);
 

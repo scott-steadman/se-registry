@@ -7,7 +7,7 @@ class PresenceChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
-    user.disappear
+    Presence::DisappearJob.perform_later(user);
   end
 
 private

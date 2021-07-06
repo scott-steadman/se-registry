@@ -35,11 +35,13 @@ class User::ForPresence < User
     friends_to_notify.each do |friend|
       PresenceChannel.broadcast_to(friend, :event => 'appear', :friend_id => id)
     end
-
   end
 
+  # called from Presence::DisappearJob
   def disappear
-Rails.logger.info{"user-#{id} disappeared"}
+    friends_to_notify.each do |friend|
+      PresenceChannel.broadcast_to(friend, :event => 'disappear', :friend_id => id)
+    end
   end
 
 end # class User::ForPresence
