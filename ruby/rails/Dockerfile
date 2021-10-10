@@ -35,6 +35,7 @@ ARG RAILS_PORT=3000
 ENV RAILS_PORT $RAILS_PORT
 
 ENV RAILS_LOG_TO_STDOUT=true
+ENV TZ=America/Los_Angeles
 
 USER $USER_ID:$GROUP_ID
 RUN gem install bundler -v$(tail -1 Gemfile.lock | sed -e 's/ //g') \
