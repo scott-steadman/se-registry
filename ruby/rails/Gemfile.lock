@@ -115,6 +115,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     libv8-node (15.14.0.1)
+    libv8-node (15.14.0.1-x86_64-linux)
     listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -250,7 +251,7 @@ DEPENDENCIES
   highline
   jquery-rails
   listen (~> 3.3)
-  mini_racer
+  mini_racer (~> 0.4.0)
   mocha
   pg (~> 1.1)
   puma (~> 5.5)
