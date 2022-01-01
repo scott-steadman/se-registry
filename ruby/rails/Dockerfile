@@ -1,4 +1,4 @@
-FROM ruby:2.5
+FROM ruby:2.7
 LABEL maintainer="Scott Steadman <registry@stdmn.com>"
 
 ARG builder
@@ -38,9 +38,7 @@ ENV RAILS_LOG_TO_STDOUT=true
 ENV TZ=America/Los_Angeles
 
 USER $USER_ID:$GROUP_ID
-RUN gem install bundler -v$(tail -1 Gemfile.lock | sed -e 's/ //g') \
-    && gem cleanup bundler \
-    && bundle config set --local path 'vendor/bundle' \
+RUN bundle config set --local path 'vendor/bundle' \
     && bundle config set --local without 'development test' \
     && bundle install \
     && bundle exec rails assets:precompile
