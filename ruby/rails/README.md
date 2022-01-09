@@ -35,9 +35,21 @@ The integrated debugger wouldn't exit cleanly. Which annoyed me. So I won't use 
 
 ### Run the test suite
 
-    POSTGRES_PASSWORD=changem3 rails test
+    POSTGRES_PASSWORD=changem3 rails test:coverage
 
 ## Common Tasks
+
+### Upgrading rails
+
+    git co -b rails-x.y
+    # update rails version in Gemfile
+    bundle update
+    bundle exec rails test:coverage
+    bundle exec rails app:update
+    # check updates
+    bundle exec rails test:coverage
+    # fix deprecations
+
 
 ### Run the development server
 
