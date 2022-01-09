@@ -3,6 +3,11 @@
     "vendor/bundle/**": true
   },
 
+  "ruby.lint": {
+    "rubocop": {
+      "forceExclusion": true
+    }
+  },
   "ruby.useBundler": true,
   "ruby.useLanguageServer": true,
 
