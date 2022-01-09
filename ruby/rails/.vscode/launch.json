@@ -1,0 +1,28 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Start rails server",
+      "type": "Ruby",
+      "request": "launch",
+      "useBundler": true,
+      "pathToBundler": "${workspaceRoot}/bin/bundle",
+      "showDebuggerOutput": true,
+      "pathToRDebugIDE": "/${workspaceRoot}/bin/rdebug-ide",
+      "cwd": "${workspaceRoot}",
+      "program": "${workspaceRoot}/bin/rails",
+      "args": ["server", "-b", "0.0.0.0"]
+    },
+    {
+      "name": "Debug test at cursor",
+      "type": "Ruby",
+      "request": "launch",
+      "useBundler": true,
+      "pathToBundler": "${workspaceRoot}/bin/bundle",
+      "showDebuggerOutput": true,
+      "pathToRDebugIDE": "/${workspaceRoot}/bin/rdebug-ide",
+      "cwd": "${workspaceRoot}",
+      "program": "${workspaceRoot}/bin/rails",
+      "args": ["test", "${file}:${lineNumber}"]
+    },
+  ]

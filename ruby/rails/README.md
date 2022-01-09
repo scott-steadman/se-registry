@@ -25,9 +25,8 @@ application up and running.
 
 I used [this](https://dev.to/abstractart/easy-way-to-setup-debugger-and-autocomplete-for-ruby-in-visual-studio-code-2gcc)
 tutorial to get me started.
-The integrated debugger wouldn't exit cleanly. Which annoyed me. So I won't use it.
 
-    bundle binstubs bundler solargraph --force
+    bundle binstubs bundler bundler ruby-debug-ide solargraph --force
 
 ### Create the development database
 
