@@ -5,7 +5,7 @@
 
   <div>
     <label>Last On:</label>
-    <%= user.last_login_at.localtime.to_s(:long) %>
+    <%= user.last_login_at.localtime.to_formatted_s(:long) %>
   </div>
 
   <%- if page_user.admin? -%>
