@@ -1,24 +1,18 @@
 {
-  "editor.tabSize": 2,
+  "files.watcherExclude": {
+    "vendor/bundle/**": true
+  },
+
+  "ruby.useBundler": true,
   "ruby.useLanguageServer": true,
-  "vim.history": 500,
-  "vim.hlsearch": true,
-  "vim.ignorecase": false,
-  "vim.joinspaces": false,
-  // copy these to your local settings if you're
-  // running in client-server mode.
-  "vim.normalModeKeyBindings": [
-        {
-            "before": ["leader", "t"],
-            "commands": [{
-                "command": "workbench.action.tasks.runTask",
-                "args": ["run all tests in file"]
-            }],
-        },
-        {
-            "before": ["leader", "t", "m"],
-            "commands": ["workbench.action.tasks.runTask"],
-            "args": ["run current test in file"]
-        },
-  ],
+
+  "solargraph.commandPath": "bin/solargraph",
+  "solargraph.diagnostics": true,
+  "solargraph.formatting": true,
+  
+  // Disable task autodetection
+  "grunt.autoDetect": "off",
+  "jake.autoDetect": "off",
+  "gulp.autoDetect": "off",
+  "npm.autoDetect": "off"
 }
