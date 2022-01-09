@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Issue 31
   mount ActionCable.server => '/cable'
@@ -54,4 +54,6 @@ Rails.application.routes.draw do
     resources :reminders, :controller => 'events/reminders'
   end
 
+  # Defines the root path route ("/")
+  # root "articles#index"
 end

@@ -24,4 +24,3 @@ module ApplicationCable
 
   end # class Connection
 end # module ActionCable
-
