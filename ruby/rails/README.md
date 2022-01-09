@@ -50,6 +50,15 @@ The integrated debugger wouldn't exit cleanly. Which annoyed me. So I won't use 
     bundle exec rails test:coverage
     # fix deprecations
 
+### Rebuild from scratch
+
+I like to do this after every in-place upgrade to make sure all the files
+I didn't change from rails defaults are changed.
+
+    # in ruby subdirectory
+    cleanup-upgrade.sh
+    upgrade-rails.sh
+    # reconcile files
 
 ### Run the development server
 
