@@ -22,16 +22,16 @@ group :development do
   gem 'web-console'
 end
 
+group :test do
+  gem 'docile'
+  gem 'mocha',      :require => false
+  gem 'simplecov',  :require => false
+end
+
 # VSCode-related gems
 group :development, :test do
   gem "debase",           :require => false
   gem "ruby-debug-ide",   :require => false
   gem 'solargraph',       :require => false
   gem 'solargraph-rails', :require => false
-end
-
-group :test do
-  gem 'docile'
-  gem 'mocha',      :require => false
-  gem 'simplecov',  :require => false
 end
