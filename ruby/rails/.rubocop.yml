@@ -2,6 +2,9 @@
 Bundler/OrderedGems:
   Enabled: false
 
+Layout/ExtraSpacing:
+  Enabled: false
+
 RequiredNotFound:
   Enabled: false
 
