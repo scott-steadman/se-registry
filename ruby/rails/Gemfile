@@ -28,6 +28,10 @@ group :development do
   gem 'stackprof'
 #  gem 'spring' # I think this causes problems with rails startup
   gem 'web-console',        '>= 4.1.0'
+
+  # VSCode-related gems
+  gem 'solargraph',     :require => false
+  gem 'solargraph-rails',     :require => false
 end
 
 group :test do

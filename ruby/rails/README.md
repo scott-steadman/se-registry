@@ -21,6 +21,14 @@ application up and running.
     bundle config build.pg --with-pg-config=/usr/pgsql-12/bin/pg_config
     bundle install --path vendor/bundle
 
+### Setup VSCode
+
+I used [this](https://dev.to/abstractart/easy-way-to-setup-debugger-and-autocomplete-for-ruby-in-visual-studio-code-2gcc)
+tutorial to get me started.
+The integrated debugger wouldn't exit cleanly. Which annoyed me. So I won't use it.
+
+    bundle binstubs bundler solargraph --force
+
 ### Create the development database
 
     POSTGRES_PASSWORD=changem3 rails db:create db:migrate
