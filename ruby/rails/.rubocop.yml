@@ -1,4 +1,7 @@
 
+Bundler/OrderedGems:
+  Enabled: false
+
 RequiredNotFound:
   Enabled: false
 

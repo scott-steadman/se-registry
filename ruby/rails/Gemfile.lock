@@ -87,8 +87,6 @@ GEM
       sshkit (>= 1.9.0)
     capistrano-bundler (2.0.1)
       capistrano (~> 3.1)
-    capistrano-deploy_into_docker (0.2.1)
-      sshkit-backend-docker (>= 0.1.2)
     capistrano-rails (1.6.1)
       capistrano (~> 3.1)
       capistrano-bundler (>= 1.1, < 3)
@@ -255,8 +253,6 @@ GEM
     sshkit (1.21.2)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    sshkit-backend-docker (0.1.2)
-      sshkit (>= 1.9.0)
     stackprof (0.2.17)
     thor (1.1.0)
     tilt (2.0.10)
@@ -291,7 +287,6 @@ DEPENDENCIES
   authlogic
   bootsnap (>= 1.4.4)
   byebug
-  capistrano-deploy_into_docker
   capistrano-rails
   coffee-rails
   docile (< 1.3.5)
