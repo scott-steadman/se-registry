@@ -3,6 +3,7 @@
   "editor.insertSpaces": true,
 
   "files.watcherExclude": {
+    "tmp/**": true,
     "vendor/bundle/**": true
   },
 
