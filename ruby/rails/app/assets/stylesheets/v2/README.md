@@ -98,3 +98,8 @@
 
   Utilities and helper classes with ability to override anything which goes before in the hierarchy.
   eg. hide helper class
+
+## Further reading
+
+[Naming Guide](https://blog.frankmtaylor.com/2021/10/21/a-small-guide-for-naming-stuff-in-front-end-code/)
+Lots of good tips.
