@@ -23,5 +23,8 @@
   "grunt.autoDetect": "off",
   "jake.autoDetect": "off",
   "gulp.autoDetect": "off",
-  "npm.autoDetect": "off"
+  "npm.autoDetect": "off",
+  "files.exclude": {
+    "**/.bundle": true
+  }
 }
