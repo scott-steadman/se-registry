@@ -9,7 +9,6 @@ namespace :test do
 
   desc 'Send test emails (TO=<email>)'
   task :emails => [:environment] do
-require 'pp'
     raise '**** ERROR: Email required (TO=<email>)' unless ENV['TO']
     UserNotifier.send_test_emails(ENV['TO'])
   end
