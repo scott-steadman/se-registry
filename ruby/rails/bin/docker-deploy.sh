@@ -8,6 +8,7 @@ DOCKER_NAME=prod-${PROJECT}
 
 docker stop ${DOCKER_NAME}
 docker rm   ${DOCKER_NAME}
+docker image prune --all
 
 docker run \
   --restart unless-stopped \
