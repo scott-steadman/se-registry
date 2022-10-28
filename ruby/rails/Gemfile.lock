@@ -229,9 +229,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    skylight (5.3.4)
-      activesupport (>= 5.2.0)
-    solargraph (0.44.3)
+    solargraph (0.46.0)
       backport (~> 1.2)
       benchmark
       bundler (>= 1.17.2)
@@ -304,7 +302,6 @@ DEPENDENCIES
   sassc-rails
   scrypt
   simplecov
-  skylight
   solargraph
   solargraph-rails
   turbolinks
