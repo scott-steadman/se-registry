@@ -3,14 +3,20 @@
   // for the documentation about the tasks.json format
   "version": "2.0.0",
   "tasks": [
-    { // "key": "\ t",
-      "label": "run all tests in file",
+    { // "key": "\ a",
+      "label": "analyze file",
       "type": "shell",
-      "command": "dart ${file}",
-      "problemMatcher": [],
+      "command": "dart analyze ${file}",
       "presentation": {
         "clear": true
       }
+    },{ // "key": "\ t",
+      "label": "run all tests in file",
+      "type": "shell",
+      "command": "dart ${file}",
+      "presentation": {
+        "clear": true
+      },
     }
   ]
 }

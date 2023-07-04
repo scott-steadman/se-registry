@@ -13,7 +13,7 @@
       "program": "${file}"
     },
     {
-      "name": "flutter",
+      "name": "flutter (chrome)",
       "cwd": "dart/flutter",
       "request": "launch",
       "type": "dart",
