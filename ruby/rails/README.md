@@ -79,6 +79,10 @@ I didn't change from rails defaults are changed.
 
     bundle exec bundle auit
 
+### Audit code with brakeman
+
+    bundle exec brakeman
+
 ### Annotate model classes
 
     bundle exec annotate --models --exclude
