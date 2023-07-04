@@ -43,7 +43,7 @@ class User::ForAuthentication < User
   # https://github.com/binarylogic/authlogic/blob/master/doc/use_normal_rails_validation.md
   validates :email,
     format: {
-      with: /@/,
+      with: /\A\S+@.+\.\S+\z/,
       message: "should look like an email address."
     },
     length: { within: 3..100 },
