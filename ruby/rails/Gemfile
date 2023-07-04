@@ -17,6 +17,7 @@ gem 'will_paginate'
 
 group :development do
   gem 'annotate'
+  gem 'bundler-audit'
   gem 'capistrano-rails',   :require => false
   gem 'rack-mini-profiler'
   gem 'web-console'

@@ -75,6 +75,10 @@ I didn't change from rails defaults are changed.
     rails test:coverage
   Output will be in public/coverage
 
+### Audit bundled gems
+
+    bundle exec bundle auit
+
 ### Annotate model classes
 
     bundle exec annotate --models --exclude
