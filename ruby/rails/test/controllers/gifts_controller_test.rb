@@ -54,9 +54,9 @@ class GiftsControllerTest < ActionController::TestCase
     get :index, :params => {:tag => 'foo'}
     assert_response :success
 
-    assert_select "a[href='/?tag=bar']",                              1,      'link to bar tag should be rendered'
-    assert_select "a[href='#{edit_user_gift_path(user, included)}']", 'edit', 'edit link should be rendered'
-    assert_select "a[href='#{edit_user_gift_path(user, excluded)}']", 0,      'edit link should NOT be rendered'
+    assert_select "a[href=?]", '/?tag=bar',                         1,      'link to bar tag should be rendered'
+    assert_select "a[href=?]", edit_user_gift_path(user, included), 'edit', 'edit link should be rendered'
+    assert_select "a[href=?]", edit_user_gift_path(user, excluded), 0,      'edit link should NOT be rendered'
   end
 
   test 'index with csv format' do
