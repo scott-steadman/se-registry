@@ -1,4 +1,4 @@
-FROM ruby:2.7
+FROM ruby:3.2
 LABEL maintainer="Scott Steadman <registry@stdmn.com>"
 
 ARG builder

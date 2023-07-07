@@ -10,7 +10,7 @@ gem 'puma'
 gem 'rails',        '~> 7.0.0'
 gem 'scrypt'
 gem 'sassc-rails'
-gem 'mini_racer',   '~> 0.4.0'
+gem 'mini_racer'
 gem 'turbolinks'
 gem 'will_paginate'
 
@@ -32,7 +32,8 @@ end
 
 # VSCode-related gems
 group :development, :test do
-  gem "debase",           :require => false
+  # doesn't work with Ruby 3.2
+  #gem "debase",           :require => false
   gem "ruby-debug-ide",   :require => false
   gem 'solargraph',       :require => false
   gem 'solargraph-rails', :require => false
