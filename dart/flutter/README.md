@@ -1,10 +1,10 @@
-# Overview
+# gift_registry
 
-This is a multi-platform Flutter front-end for the E-Registry.
+A new Flutter project.
 
-## Resources
+## Getting Started
 
-This comes from the README.md generated when I created the project
+This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
 
@@ -14,19 +14,3 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-
-## Setup
-
-### Setup VSCode
-
-### Run the test suite
-
-    Is there a way to write tests in Flutter?
-
-## Common Tasks
-
-### Check code coverage
-
-### Deploy to Google Play
-
-### Deploy to Apple App Store

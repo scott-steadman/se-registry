@@ -1,16 +1,14 @@
 # Miscellaneous
-.bash_history
 *.class
 *.log
 *.pyc
 *.swp
+.DS_Store
 .atom/
 .buildlog/
-.DS_Store
 .history
-migrate_working_dir/
 .svn/
-.vagrant/
+migrate_working_dir/
 
 # IntelliJ related
 *.iml
