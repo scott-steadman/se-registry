@@ -114,5 +114,6 @@ class Object
 end
 
 class ActionController::TestCase
+  include Authlogic::TestCase
   setup :activate_authlogic
 end
