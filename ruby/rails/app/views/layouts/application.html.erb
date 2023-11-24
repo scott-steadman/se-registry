@@ -2,36 +2,36 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title><%= @page_title || 'The Internet Gift Registry' %></title>
+    <title><%= @page_title || "The Internet Gift Registry" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'http://yui.yahooapis.com/combo?2.7.0/build/fonts/fonts-min.css&2.7.0/build/grids/grids-min.css' %>
-    <%= stylesheet_link_tag    'application-v1', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'vendor', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag "http://yui.yahooapis.com/combo?2.7.0/build/fonts/fonts-min.css&2.7.0/build/grids/grids-min.css" %>
+    <%= stylesheet_link_tag "application-v1", media: "all", "data-turbolinks-track": "reload" %>
+    <%= stylesheet_link_tag "application-v1", "data-turbo-track": "reload" %>
 
     <%= yield :head %>
   </head>
 
   <body>
-    <div id='doc3'>
-      <div id='hd'>
+    <div id="doc3">
+      <div id="hd">
         <%= yield :header %>
       </div>
-      <div id='bd'>
-        <div class='yui-gf'>
-          <div class='yui-u first'>
-            <%= render :partial=>'layouts/navigation' if logged_in? %>
+      <div id="bd">
+        <div class="yui-gf">
+          <div class="yui-u first">
+            <%= render :partial=>"layouts/navigation" if logged_in? %>
             <%= yield :left %>
           </div>
-          <div class='yui-u'>
-            <%= render :partial=>'layouts/flashes' %>
+          <div class="yui-u">
+            <%= render :partial=>"layouts/flashes" %>
             <%= yield %>
           </div>
         </div>
       </div>
-      <div id='ft'>
-        <%= render :partial=>'layouts/footer' %>
+      <div id="ft">
+        <%= render :partial=>"layouts/footer" %>
         <%= yield :footer %>
       </div>
     </div>

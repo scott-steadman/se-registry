@@ -149,3 +149,46 @@ git push
 git branch -d update_rails
 ```
 
+#### Re-create app and copy source over
+
+This ensures that all the rails files we haven't touched are up to date.
+
+```sh
+git co -b upgrade_rails
+
+# In the same directory as rails
+rbenv local {version}
+mv rails rails-old
+rbenv gemset init new-rails
+gem install rails
+bundle exec rails new registry --database postgresql --skip-bundle --skip-keeps --skip-git
+mv registry rails
+touch rails/vendor/.keep rails/log/.keep
+
+# copy old bundle config
+mkdir rails/bundle
+cp rails-old/.bundle/config rails/.bundle
+
+# copy old credentials
+cp rails-old/config/credentials/* rails/config/credentials/
+
+# git checkout deleted files
+git co `git st | grep deleted | sed -e 's/.*deleted://'`
+
+# resolve diffs
+
+rm Gemfile.lock
+bundle config set --local clean 'true'
+bundle config set --local path 'vendor/bundle'
+bundle install
+
+# Should be 100% coverage
+bundle exec rails test:coverage
+
+git add -p
+git commit -v
+git co master
+git merge upgrade_rails
+git push
+git branch -d upgrade_rails
+```
