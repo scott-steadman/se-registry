@@ -19,7 +19,6 @@ group :development do
   gem 'annotate'
   gem 'brakeman'
   gem 'bundler-audit'
-  gem 'capistrano-rails',   :require => false
   gem 'rack-mini-profiler'
   gem 'web-console'
 end
