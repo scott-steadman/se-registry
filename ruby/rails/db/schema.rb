@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_16_231235) do
-
+ActiveRecord::Schema[7.1].define(version: 2023_11_24_193359) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -38,8 +37,8 @@ ActiveRecord::Schema.define(version: 2021_04_16_231235) do
     t.boolean "multi", default: false
     t.boolean "hidden", default: false
     t.float "price"
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["user_id"], name: "index_gifts_on_user_id"
   end
 
@@ -74,14 +73,14 @@ ActiveRecord::Schema.define(version: 2021_04_16_231235) do
     t.string "login", null: false
     t.string "role", default: "user", null: false
     t.string "notes"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "email"
     t.string "crypted_password", null: false
     t.string "password_salt", null: false
     t.string "persistence_token"
-    t.datetime "current_login_at"
-    t.datetime "last_login_at"
+    t.datetime "current_login_at", precision: nil
+    t.datetime "last_login_at", precision: nil
     t.integer "lead_time", default: 10
     t.integer "lead_frequency", default: 10
     t.integer "ui_version"

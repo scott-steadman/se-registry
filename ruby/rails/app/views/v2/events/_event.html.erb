@@ -13,7 +13,7 @@
       <time><%= event.event_date.strftime('%B %d') %></time>
     <%- else -%>
       <label>On:</label>
-      <time><%= event.event_date.to_s(:long) %></time>
+      <time><%= event.event_date.to_formatted_s(:long) %></time>
     <%- end -%>
   </div>
 
