@@ -2,12 +2,12 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'acts-as-taggable-on'
-gem 'authlogic'
+gem 'authlogic',    :git => 'https://github.com/lsylvester/authlogic.git', :branch => 'rails-71'
 gem 'bootsnap',     :require => false
 gem 'jquery-rails'
 gem 'pg',           '~> 1.1'
 gem 'puma'
-gem 'rails',        '~> 7.0.0'
+gem 'rails',        '~> 7.1.0'
 gem 'scrypt'
 gem 'sassc-rails'
 gem 'mini_racer'

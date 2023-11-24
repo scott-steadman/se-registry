@@ -37,27 +37,6 @@ tutorial to get me started.
 
 ## Common Tasks
 
-### Upgrading rails
-
-    git co -b rails-x.y
-    # update rails version in Gemfile
-    bundle update
-    bundle exec rails test:coverage
-    bundle exec rails app:update
-    # check updates
-    bundle exec rails test:coverage
-    # fix deprecations
-
-### Rebuild from scratch
-
-I like to do this after every in-place upgrade to make sure all the files
-I didn't change from rails defaults are changed.
-
-    # in ruby subdirectory
-    cleanup-upgrade.sh
-    upgrade-rails.sh
-    # reconcile files
-
 ### Run the development server
 
     rails server -b 0.0.0.0
@@ -111,3 +90,60 @@ I didn't change from rails defaults are changed.
 ### Deploy docker image
 
     bin/docker-deploy.sh
+
+### Upgrade rails
+
+Here's what I do to upgrade rails.
+First, I update ruby.
+Then I update the rails gem in-place.
+Then I re-create the app from scratch and copy the source files over.
+
+[Rails Upgrade Guide](https://guides.rubyonrails.org/upgrading_ruby_on_rails.html)
+
+#### Update ruby
+
+```sh
+git co -b upgrade_ruby
+
+rbenv install --list
+rbenv install {latest}
+
+# update .ruby-version
+# remove ruby line from Gemfile
+rm Gemfile.lock
+bundle install
+
+# Should be 100% coverage
+bundle exec rails test:coverage
+
+git add -p
+git commit -v
+git co master
+git merge upgrade_ruby
+git push
+git branch -d upgrade_ruby
+```
+
+#### Update rails gem in-place
+
+```sh
+git co -b update_rails
+
+# Update the rails line in Gemfile
+rm Gemfile.lock
+bundle install
+
+bundle exec rails app:update
+# resolve diffs
+
+# Should be 100% coverage
+bundle exec rails test:coverage
+
+git add -p
+git commit -v
+git co master
+git merge update_rails
+git push
+git branch -d update_rails
+```
+
