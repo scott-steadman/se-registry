@@ -116,6 +116,8 @@ bundle install
 # Should be 100% coverage
 bundle exec rails test:coverage
 
+# Change FROM line in Dockerfile
+
 git add -p
 git commit -v
 git co master
