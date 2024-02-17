@@ -3,19 +3,9 @@
 # Configure Using Gemfile
 # gem "pg"
 #
-default: &default
-  adapter: postgresql
-  encoding: unicode
-  # For details on connection pooling, see Rails configuration guide
-  # https://guides.rubyonrails.org/configuring.html#database-pooling
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: localhost
-  user: postgres
-  password: <%= Rails.application.credentials.database_password %>
-
 development:
-  <<: *default
-  database: registry_development
+  adapter: postgresql
+  url: <%= Rails.application.credentials.database_url %>
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -48,8 +38,8 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
-  database: registry_test
+  adapter: postgresql
+  url: <%= Rails.application.credentials.database_url %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
