@@ -33,6 +33,7 @@ gem "bootsnap", require: false
 gem "acts-as-taggable-on"
 gem "authlogic",    :git => "https://github.com/lsylvester/authlogic.git", :branch => "rails-71"
 gem "jquery-rails"
+gem "jquery-ui-rails"
 gem "scrypt" # Used by Authlogic gem
 gem "sassc-rails"
 gem "will_paginate"

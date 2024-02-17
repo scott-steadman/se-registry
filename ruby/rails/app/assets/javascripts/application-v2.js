@@ -3,6 +3,8 @@
  * listed below.
  *
  *= require actioncable
+ *= require jquery
+ *= require jquery-ui
  *= require_self
  *= require_tree ./v2
  */
