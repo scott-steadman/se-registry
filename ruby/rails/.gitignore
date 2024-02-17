@@ -34,3 +34,6 @@
 
 # Ignore gem install directory
 /vendor/bundle
+
+/config/credentials/development.*
+/config/credentials/test.*

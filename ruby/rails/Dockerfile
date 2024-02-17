@@ -1,55 +1,63 @@
-FROM ruby:3.2
-LABEL maintainer="Scott Steadman <registry@stdmn.com>"
+# syntax = docker/dockerfile:1
 
-ARG builder
-LABEL com.stdmn.builder=$builder
+# Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
+ARG RUBY_VERSION=3.2.2
+FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 
-ARG git_sha
-LABEL com.stdmn.git-sha=$git_sha
+# Rails app lives here
+WORKDIR /rails
 
-ARG USER_ID=1000
-ARG GROUP_ID=1000
-
-RUN addgroup --gid $GROUP_ID app_group
-RUN adduser  --disabled-password --gecos 'Application User' --uid $USER_ID --gid $GROUP_ID app_user
-
-# Add Tini
-ADD https://github.com/krallin/tini/releases/download/v0.19.0/tini /tini
-RUN chmod +x /tini
-
-# Copy code
-ARG INSTALL_PATH=/opt/app
-WORKDIR $INSTALL_PATH
-COPY . $INSTALL_PATH
-RUN mkdir log tmp \
-    && chown $USER_ID:$GROUP_ID -R $INSTALL_PATH
-
-# Setup app
+# Set production environment
 ARG RAILS_ENV=production
-ENV RAILS_ENV $RAILS_ENV
-ARG RAILS_SERVER_STATIC_FILES=true
-ENV RAILS_SERVE_STATIC_FILES $RAILS_SERVER_STATIC_FILES
-ARG SMTP_HOST=aspmx.l.google.com
-ENV SMTP_HOST $SMTP_HOST
-ARG RAILS_PORT=3000
-ENV RAILS_PORT $RAILS_PORT
+ENV RAILS_ENV=$RAILS_ENV \
+    BUNDLE_DEPLOYMENT="1" \
+    BUNDLE_PATH="/usr/local/bundle" \
+    BUNDLE_WITHOUT="development test"
 
-# 2022-01-09: As of Rails 7.0
-# see config/puma.rb
-ENV PORT $RAILS_PORT
 
-ENV RAILS_LOG_TO_STDOUT=true
-ENV TZ=America/Los_Angeles
+# Throw-away build stage to reduce size of final image
+FROM base as build
 
-USER $USER_ID:$GROUP_ID
-RUN bundle config set --local path 'vendor/bundle' \
-    && bundle config set --local without 'development test' \
-    && bundle install \
-    && bundle exec rails assets:precompile
+# Install packages needed to build gems
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y build-essential git libpq-dev libvips pkg-config
 
-# Check results
-#RUN find . -ls
+# Install application gems
+COPY Gemfile Gemfile.lock ./
+RUN bundle install && \
+    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
+    bundle exec bootsnap precompile --gemfile
 
-EXPOSE $RAILS_PORT
-ENTRYPOINT ["/tini", "--", "bin/container-entrypoint"]
-HEALTHCHECK CMD wget -q -O /dev/null  http://localhost:$RAILS_PORT/ || exit 1
+# Copy application code
+COPY . .
+
+# Precompile bootsnap code for faster boot times
+RUN bundle exec bootsnap precompile app/ lib/
+
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+
+
+# Final stage for app image
+FROM base
+
+# Install packages needed for deployment
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y curl libvips postgresql-client && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Copy built artifacts: gems, application
+COPY --from=build /usr/local/bundle /usr/local/bundle
+COPY --from=build /rails /rails
+
+# Run and own only the runtime files as a non-root user for security
+RUN useradd rails --create-home --shell /bin/bash && \
+    chown -R rails:rails db log storage tmp
+USER rails:rails
+
+# Entrypoint prepares the database.
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+
+# Start the server by default, this can be overwritten at runtime
+EXPOSE 3000
+CMD ["./bin/rails", "server"]
