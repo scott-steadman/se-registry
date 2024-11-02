@@ -3,6 +3,9 @@ App.users = {
   onBefriendClicked: function(elementId, befriendPath) {
     jQuery.ajax(befriendPath, {
       method: 'post',
+      headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+      },
 
     }).done(function(data, textStatus, jqXHR) {
       $(elementId).replaceWith(data);
@@ -16,6 +19,9 @@ App.users = {
   onUnfriendClicked: function(elementId, unfriend_path) {
     jQuery.ajax(unfriend_path, {
       method: 'delete',
+      headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+      },
 
     }).done(function(data, textStatus, jqXHR) {
       $(elementId).replaceWith(data);
