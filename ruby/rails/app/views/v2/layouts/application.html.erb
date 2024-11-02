@@ -9,8 +9,7 @@
     <%= csrf_meta_tags -%>
     <%= csp_meta_tag -%>
 
-    <%= stylesheet_link_tag 'application-v2', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= stylesheet_link_tag "application-v2", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag 'application-v2', media: 'all', 'data-turbo-track': 'reload' %>
 
     <%= yield :head -%>
   </head>
@@ -87,6 +86,7 @@
 
     <script src='https://cdn.jsdelivr.net/npm/micromodal/dist/micromodal.js'></script>
 
+    <%= javascript_include_tag 'turbo', :type => :module, :crossorigin => 'anonymous' %>
     <%= javascript_include_tag 'application-v2' %>
 
   <%- if current_user -%>

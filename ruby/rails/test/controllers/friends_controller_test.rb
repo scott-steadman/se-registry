@@ -118,6 +118,14 @@ class FriendsControllerTest < ActionController::TestCase
     end
   end
 
+  test 'destroy via xhr' do
+    assert_difference 'Friendship.count', -1 do
+      login_as user
+      delete :destroy, :params => {:id => @friend.to_param, :ui_version => 2}, :xhr => true
+      assert_response :success
+    end
+  end
+
   test 'export' do
     gift = @friend.gifts.create!(:description => 'description', :price => 1.00, :multi => true)
     @user.give(gift)

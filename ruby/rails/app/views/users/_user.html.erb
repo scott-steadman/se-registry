@@ -4,19 +4,19 @@
   <td><%= user.last_login_at.localtime %></td>
   <td><%= user.role %></td>
   <td align='right'>
-    <%= link_to 'befriend', user_friends_path(page_user, :friend_id => user.id), :method => :post %>
+    <%= post_link_to user_friends_path(page_user, :friend_id => user.id), :text => 'befriend' %>
     | <%= link_to 'gifts', user_gifts_path(user) %>
     | <%= link_to 'friends', user_friends_path(user) %>
     | <%= link_to 'edit', edit_user_path(user) %>
   <% if current_user == user or user.admin? %>
     | delete
   <% else %>
-    | <%= link_to 'delete', user, :confirm => 'Are you sure?', :method => :delete %>
+    | <%= delete_link_to user_friends_path(user), :text => 'delete', :confirm => 'Are you sure?' %>
   <% end %>
   </td>
 <% else -%>
   <td align='right'>
-    <%= link_to 'befriend', user_friends_path(page_user, :friend_id => user.id), :method => :post %>
+    <%= post_link_to user_friends_path(page_user, :friend_id => user.id), :text => 'befriend' %>
   </td>
 <% end -%>
   </td>

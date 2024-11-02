@@ -42,7 +42,7 @@ App.nextPageLoader = {
 
 } //  App.nextPageLoader
 
-$(document).on('turbolinks:load', function() {
+$(document).on('turbo:load', function() {
   if( $('#infinite-scroll').size() > 0 ) {
     $(window).on('scroll', App.nextPageLoader.loadMoreIfNecessary);
   }

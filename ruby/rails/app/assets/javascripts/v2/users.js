@@ -59,6 +59,6 @@ App.users = {
 
 } // App.users
 
-$(document).on('turbolinks:load', function() {
+$(document).on('turbo:load', function() {
   $('#friend__autocomplete').autocomplete({source: '/users/autocomplete'});
 });

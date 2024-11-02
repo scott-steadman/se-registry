@@ -18,7 +18,7 @@
 
   <td align='right'>
     <%- if gift.givable_by?(current_user) -%>
-      <%= link_to('will', will_user_gift_path(page_user, gift), :method=>:post) %>
+      <%= post_link_to will_user_gift_path(page_user, gift), :text => 'will' %>
     <%- end -%>
 
     <%- if gift.given_by?(current_user) or admin_can_remove?(gift) -%>

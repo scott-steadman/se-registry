@@ -14,10 +14,15 @@ module ApplicationHelper
     link_to(text, '#', html_options.merge(:onClick => function))
   end
 
+  def post_link_to(url, options={})
+    text = options.delete(:text) || 'Post'
+    link_to text, url, options.merge(:rel => 'nofollow', :data => {:turbo_method => :post})
+  end
+
   def delete_link_to(url, options={})
     text = options.delete(:text)       || 'Delete'
     confirm = options.delete(:confirm) || 'Are you sure you want to delete this?'
-    link_to text, url, options.merge(:method => :delete, :rel => 'nofollow', :data => {:confirm => confirm})
+    link_to text, url, options.merge(:rel => 'nofollow', :data => {:turbo_method => :delete, :turbo_confirm => confirm})
   end
 
   def external_link_to(url)

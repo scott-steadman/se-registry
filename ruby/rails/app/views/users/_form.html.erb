@@ -71,5 +71,5 @@
 <% end %>
 
 <%- unless user.new_record? -%>
-  <%= button_to 'Close Account', user_path(@user), :method => :delete, :data => {:confirm => 'Are you sure you want to close your account?'} %>
+  <%= button_to 'Close Account', user_path(@user), :data => {:turbo_method => :delete, :turbo_confirm => 'Are you sure you want to close your account?'} %>
 <%- end -%>
