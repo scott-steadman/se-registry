@@ -23,7 +23,6 @@ class GiftsController < ApplicationController
   # GET /gifts/1
   # GET /gifts/1.xml
   def show
-    @gift = gifts.find(params[:id])
   end
 
   # GET /gifts/new
@@ -59,7 +58,6 @@ class GiftsController < ApplicationController
 
   # GET /gifts/1/edit
   def edit
-    @gift = gifts.find(gift_id)
   end
 
   # PATCH /gifts/1
@@ -147,7 +145,7 @@ private
 
   helper_method :gift
   def gift
-    @gift ||= gifts.find(gift_id)
+    @gift ||= gifts.where(:id => gift_id).first
   end
 
   def gift_id
