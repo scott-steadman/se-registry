@@ -7,17 +7,16 @@
 #  description :string           not null
 #  url         :string
 #  multi       :boolean          default(FALSE)
-#  hidden      :boolean          default(FALSE)
 #  price       :float
 #  created_at  :datetime
 #  updated_at  :datetime
+#  visibility  :text
 #
 class Gift::ForGiving < Gift
 
   def editable_by?(other)
     super or (hidden? and given_by?(other))
   end
-
 
   has_and_belongs_to_many :givings,
     :class_name               => 'User',

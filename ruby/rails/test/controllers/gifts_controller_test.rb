@@ -71,6 +71,18 @@ class GiftsControllerTest < ActionController::TestCase
     assert_equal 2, @response.body.split(/\r\n/m).size, 'header, gift lines should be returned'
   end
 
+  test 'index hides secret gifts' do
+    giver         = create_user('giver')
+    visible_gift  = create_gift(:user => user, :description => 'visible')
+    giver.give(visible_gift)
+    secret_gift   = create_gift(:user => user, :description => 'hidden', :tag_names => 'secret')
+    giver.give(secret_gift)
+
+    login_as user
+    get :index
+    assert_response :success
+  end
+
   test 'show requires login' do
     gift = create_gift(:user => user, :description => 'one', :price => 1.00, :multi => false)
 

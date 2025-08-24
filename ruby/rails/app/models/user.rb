@@ -24,10 +24,12 @@ class User < ApplicationRecord
   inheritance_column = :_type_disabled
 
   has_many :gifts,                                          :class_name => 'Gift::ForGiving', :dependent => :destroy
-  has_many :visible_gifts, -> { where(:hidden => false) },  :class_name => 'Gift::ForGiving'  # Issue 85
   has_many :events,        -> { order 'event_date' },       :dependent => :destroy
   has_many :reminders,     -> { order 'event_date' },       :class_name => 'Reminder'
   has_many :occasions,     -> { order 'event_date' },       :class_name => 'Occasion'
+
+  # Issue 85, GitHub Issue 58
+  has_many :visible_gifts, -> { where("coalesce(visibility, '') != 'hidden'") }, :class_name => 'Gift::ForGiving'
 
   has_and_belongs_to_many :givings,
     :class_name               => 'Gift::ForGiving',

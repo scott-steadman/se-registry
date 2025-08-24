@@ -7,10 +7,10 @@
 #  description :string           not null
 #  url         :string
 #  multi       :boolean          default(FALSE)
-#  hidden      :boolean          default(FALSE)
 #  price       :float
 #  created_at  :datetime
 #  updated_at  :datetime
+#  visibility  :text
 #
 
 class Gift < ApplicationRecord
@@ -57,6 +57,16 @@ class Gift < ApplicationRecord
   # Prevent rails helpers from generating method names like: user_gift_for_giving_path
   def self.model_name
     ActiveModel::Name.new(Gift)
+  end
+
+  # GitHub Issue 58
+  def hidden?
+    visibility == 'hidden'
+  end
+
+  # GitHub Issue 58
+  def hidden=(value)
+    self.visibility = value ? 'hidden' : nil
   end
 
 private

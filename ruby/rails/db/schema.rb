@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_24_193359) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_23_192857) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -35,10 +35,10 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_24_193359) do
     t.string "description", null: false
     t.string "url"
     t.boolean "multi", default: false
-    t.boolean "hidden", default: false
     t.float "price"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text "visibility"
     t.index ["user_id"], name: "index_gifts_on_user_id"
   end
 
