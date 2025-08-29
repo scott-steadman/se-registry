@@ -55,11 +55,12 @@ group :test do
   gem "simplecov",  :require => false
 end
 
-# VSCode-related gems
-group :development, :test do
-  # doesn't work with Ruby 3.2
-  #gem "debase",           :require => false
-  gem "ruby-debug-ide",   :require => false
-  gem "solargraph",       :require => false
-  gem "solargraph-rails", :require => false
+group :vscode do
+  gem 'debase',           :require => false
+  gem 'debug',            :require => false
+  gem 'rainbow',          :require => false
+  gem 'rdbg',             :require => false
+  gem 'ruby-debug-ide',   :require => false
+  gem 'ruby-lsp',         :require => false
+  gem 'solargraph',       :require => false
 end
