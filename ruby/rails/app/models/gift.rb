@@ -60,13 +60,17 @@ class Gift < ApplicationRecord
   end
 
   # GitHub Issue 58
-  def hidden?
-    visibility == 'hidden'
+  def secret?
+    !!secret
+  end
+
+  def secret
+    visibility == 'secret'
   end
 
   # GitHub Issue 58
-  def hidden=(value)
-    self.visibility = value ? 'hidden' : nil
+  def secret=(value)
+    self.visibility = value ? 'secret' : nil
   end
 
 private

@@ -21,10 +21,10 @@ class Gift::ForGivingTest < ActiveSupport::TestCase
   end
 
   # Issue 85
-  test 'editable_by other can edit hidden' do
-    gift  = create_gift(:user => giver, :hidden => true)
+  test 'editable_by other can edit secret' do
+    gift  = create_gift(:user => giver, :secret => true)
     recipient.give(gift)
-    assert gift.editable_by?(giver), 'others can edit hidden gifts they give'
+    assert gift.editable_by?(giver), 'others can edit secret gifts they give'
   end
 
 private

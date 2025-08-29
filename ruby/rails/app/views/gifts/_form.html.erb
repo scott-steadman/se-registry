@@ -34,8 +34,8 @@
     </tr>
   <% if current_user != gift.user %>
     <tr>
-      <th><%= form.label :hidden %></th>
-      <td><%= form.check_box :hidden %></td>
+      <th><%= form.label :secret %></th>
+      <td><%= form.check_box :secret %></td>
     </tr>
   <% end %>
   </table>

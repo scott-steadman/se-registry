@@ -28,9 +28,9 @@ class GiftsController < ApplicationController
   # GET /gifts/new
   def new
     @gift = gifts.new.becomes(Gift).tap do |gift|
-      hidden         = (page_user != current_user)
-      gift.hidden    = hidden
-      gift.tag_names = 'secret' if hidden
+      secret         = (page_user != current_user)
+      gift.secret    = secret
+      gift.tag_names = 'secret' if secret
     end
   end
 
@@ -39,9 +39,12 @@ class GiftsController < ApplicationController
   def create
     redirect_to user_gifts_path(page_user) and return unless request.post?
 
+    # GitHub Issue 58
+    params[:gift][:visibility] = 'secret' if params[:gift][:secret] == '1'
+
     @gift = gifts.create!(gift_params)
 
-    current_user.give(@gift) if gift.hidden?
+    current_user.give(@gift) if gift.secret?
 
     if request.xhr?
       render :partial => 'gift', :locals => {:gift => @gift}
@@ -101,7 +104,7 @@ class GiftsController < ApplicationController
 private
 
   def gift_params
-    params.require(:gift).permit(:description, :hidden, :multi, :price, :tag_names, :url, :urls)
+    params.require(:gift).permit(:description, :multi, :price, :tag_names, :url, :urls, :visibility)
   end
 
   def conditions

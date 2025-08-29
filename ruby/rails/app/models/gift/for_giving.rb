@@ -15,7 +15,7 @@
 class Gift::ForGiving < Gift
 
   def editable_by?(other)
-    super or (hidden? and given_by?(other))
+    super or (secret? and given_by?(other))
   end
 
   has_and_belongs_to_many :givings,

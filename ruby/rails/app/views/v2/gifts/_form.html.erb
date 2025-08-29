@@ -24,8 +24,8 @@
     <%= form.check_box :multi %>
 
 <% if current_user != gift.user %>
-    <%= form.label :hidden %>:
-    <%= form.check_box :hidden %>
+    <%= form.label :secret %>:
+    <%= form.check_box :secret, :onClick => 'App.gifts.onSecretClicked(event)' %>
 <% end %>
   </div>
 

@@ -121,7 +121,7 @@ class GiftsControllerTest < ActionController::TestCase
     get :new, :params => {:user_id => other}
     assert_response :success
 
-    assert_select "input[name='gift[hidden]'][type=checkbox][value=1]", 1, 'gifts created for others should be hidden'
+    assert_select "input[name='gift[secret]'][type=checkbox][value=1]", 1, 'gifts created for others should be secret'
     assert_select "input[name='gift[tag_names]'][value=secret]",        1, 'gifts created for others should tagged secret'
   end
 
@@ -159,11 +159,11 @@ class GiftsControllerTest < ActionController::TestCase
     other = create_user('other')
 
     login_as user
-    post :create, :params => {:user_id => other}.merge!(gift_params(:hidden => true))
+    post :create, :params => {:user_id => other}.merge!(gift_params(:secret => '1'))
     assert_redirected_to user_gifts_path(other)
 
     gift = other.gifts.first
-    assert gift.hidden?,         'gifts created for others should be hidden'
+    assert gift.secret?,         'gifts created for others should be secret'
     assert gift.given_by?(user), 'gifts created for others should be given by creator'
   end
 

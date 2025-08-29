@@ -53,6 +53,18 @@ App.gifts = {
 
   }, // onNewClicked
 
+  onSecretClicked: function(event) {
+    const checkBox = event.target;
+    const parent   = checkBox.closest('#gift-new');
+    const tagField = parent.querySelector('#gift_tag_names');
+
+    if(checkBox.checked) {
+      tagField.value = `secret ${tagField.value}`;
+    } else {
+      tagField.value = tagField.value.replace(/\s*secret\s*/ig, '');
+    }
+  }, // onSecretClicked
+
   replaceOrder: function (value) {
     var key       = 'order';
     var uri       = window.location.search;
