@@ -48,7 +48,7 @@ App.gifts = {
 
     }).fail(function(jqXHR, txtStatus, errorThrown) {
       App.showErrorDialog('Error', 'Unable to create a new gift');
-      App.events.showMenu();
+      App.gifts.showMenu();
     });
 
   }, // onNewClicked
