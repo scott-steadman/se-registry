@@ -36,6 +36,15 @@ class User::ForAuthentication < User
     config.transition_from_crypto_providers = OldCrypto
   end
 
+if Rails.env.test?
+  def save_without_session_maintenance!(**options)
+    self.skip_session_maintenance = true
+    result = save!(**options)
+    self.skip_session_maintenance = false
+    result
+  end
+end
+
   # Validate email, login, and password as you see fit.
   #
   # Authlogic < 5 added these validation for you, making them a little awkward

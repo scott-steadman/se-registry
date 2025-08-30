@@ -8,8 +8,6 @@ class UserSessionsControllerTest < ActionController::TestCase
   end
 
   test 'create when logged out redirects to home' do
-    user # create the user
-    logout
     post :create, :params => {:user_session => {:login => user.login, :password => user.password}}
     assert_redirected_to home_url
 
@@ -23,7 +21,6 @@ class UserSessionsControllerTest < ActionController::TestCase
   end
 
   test 'create with failed save' do
-    logout
     post :create, :params => {:user_session => {:login => 'user', :password => 'foo'}}
     assert_response :success
 
@@ -35,13 +32,11 @@ class UserSessionsControllerTest < ActionController::TestCase
     old_password = User::ForAuthentication::OldCrypto.encrypt('my password', old_salt)
     User.create!(:login => 'user', :crypted_password => old_password, :password_salt => old_salt)
 
-    logout
     post :create, :params => {:user_session => {:login => 'user', :password => 'my password'}}
     assert_redirected_to home_url
   end
 
   test 'destroy when logged out' do
-    logout
     get :destroy
     assert_redirected_to login_url
   end
@@ -55,7 +50,6 @@ class UserSessionsControllerTest < ActionController::TestCase
   # Issue 110
   test 'clear_cookies when logged out' do
     cookies[:foo] = 'bar'
-    logout
 
     get :clear_cookies
     assert_redirected_to login_url

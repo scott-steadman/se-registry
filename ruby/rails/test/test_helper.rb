@@ -26,12 +26,12 @@ module ActiveSupport
       if attrs.has_key?(:password)
         attrs[:password_confirmation] = attrs[:password] unless attrs.has_key?(:password_confirmation)
         klass = User::ForAuthentication
+        klass.new(attrs).tap(&:save_without_session_maintenance!)
       else
         attrs[:crypted_password] = 'dummy'
         attrs[:password_salt] = 'dummy'
+        klass.create!(attrs)
       end
-
-      klass.create!(attrs)
     end
 
     def create_event(attrs={})
