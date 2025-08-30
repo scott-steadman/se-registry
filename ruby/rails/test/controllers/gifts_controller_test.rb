@@ -74,13 +74,30 @@ class GiftsControllerTest < ActionController::TestCase
   test 'index hides secret gifts' do
     giver         = create_user('giver')
     visible_gift  = create_gift(:user => user, :description => 'visible')
-    giver.give(visible_gift)
-    secret_gift   = create_gift(:user => user, :description => 'hidden', :tag_names => 'secret')
+    secret_gift   = create_gift(:user => user, :description => 'secret', :tag_names => 'secret', :secret => true)
     giver.give(secret_gift)
 
     login_as user
     get :index
     assert_response :success
+
+    assert_match    /visible/, @response.body, 'visible gift should be rendered'
+    assert_no_match /secret/,  @response.body, 'secret gift should NOT be rendered'
+  end
+
+  # GitHub Issue 58
+  test 'index as giver hides hidden gifts' do
+    visible_gift  = create_gift(:user => user, :description => 'visible')
+    hidden_gift   = create_gift(:user => user, :description => 'hidd3n', :tag_names => 'hidden', :hidden => true)
+    giver         = create_user(:login => 'giver', :password => 'my password')
+    giver.befriend(user)
+
+    login_as giver
+    get :index, :params => {:user_id => user.id}
+    assert_response :success
+
+    assert_match    /visible/, @response.body, 'visible gift should be rendered'
+    assert_no_match /hidd3n/,  @response.body, 'hidden gift should NOT be rendered'
   end
 
   test 'show requires login' do

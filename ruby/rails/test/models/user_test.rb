@@ -69,14 +69,4 @@ class UserTest < ActiveSupport::TestCase
     assert gift.given?
   end
 
-  # Issue 85
-  test 'secret gifts' do
-    u = create_user
-    u.gifts.create!(:description => 'visible')
-    u.gifts.create!(:description => 'secret', :secret => true)
-
-    assert_equal 2, u.gifts.count,         'there should be 2 gifts'
-    assert_equal 1, u.visible_gifts.count, 'there should be 1 visible gift'
-  end
-
 end

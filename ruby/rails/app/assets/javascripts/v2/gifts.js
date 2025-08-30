@@ -53,6 +53,18 @@ App.gifts = {
 
   }, // onNewClicked
 
+  onHiddenClicked: function(event) {
+    const checkBox = event.target;
+    const parent   = checkBox.closest('#gift-new');
+    const tagField = parent.querySelector('#gift_tag_names');
+
+    if(checkBox.checked) {
+      tagField.value = `hidden ${tagField.value}`;
+    } else {
+      tagField.value = tagField.value.replace(/\s*hidden\s*/ig, '');
+    }
+  }, // onHiddenClicked
+
   onSecretClicked: function(event) {
     const checkBox = event.target;
     const parent   = checkBox.closest('#gift-new');

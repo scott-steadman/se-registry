@@ -79,7 +79,7 @@ class GiftsController < ApplicationController
   # DELETE /gifts/1
   # DELETE /gifts/1.xml
   def destroy
-    gifts.destroy(gift) if request.delete?
+    gifts.destroy(gift.id) if request.delete?
     redirect_to user_gifts_path(page_user)
   end
 
@@ -140,9 +140,9 @@ private
 
   def gifts
     if current_user == page_user
-      page_user.visible_gifts
+      page_user.gifts.where("coalesce(visibility, '') != 'secret'")
     else
-      page_user.gifts
+      page_user.gifts.where("coalesce(visibility, '') != 'hidden'")
     end
   end
 

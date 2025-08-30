@@ -32,7 +32,12 @@
       <th><%= form.label :multi %></th>
       <td><%= form.check_box :multi %></td>
     </tr>
-  <% if current_user != gift.user %>
+  <% if current_user == gift.user %>
+    <tr>
+      <th><%= form.label :hidden %></th>
+      <td><%= form.check_box :hidden %></td>
+    </tr>
+  <% else %>
     <tr>
       <th><%= form.label :secret %></th>
       <td><%= form.check_box :secret %></td>

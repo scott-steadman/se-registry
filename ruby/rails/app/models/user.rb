@@ -28,9 +28,6 @@ class User < ApplicationRecord
   has_many :reminders,     -> { order 'event_date' },       :class_name => 'Reminder'
   has_many :occasions,     -> { order 'event_date' },       :class_name => 'Occasion'
 
-  # Issue 85, GitHub Issue 58
-  has_many :visible_gifts, -> { where("coalesce(visibility, '') != 'secret'") }, :class_name => 'Gift::ForGiving'
-
   has_and_belongs_to_many :givings,
     :class_name               => 'Gift::ForGiving',
     :join_table               => 'givings',

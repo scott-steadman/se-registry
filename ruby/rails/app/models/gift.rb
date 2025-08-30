@@ -73,6 +73,20 @@ class Gift < ApplicationRecord
     self.visibility = value ? 'secret' : nil
   end
 
+  # GitHub Issue 58
+  def hidden?
+    !!hidden
+  end
+
+  def hidden
+    visibility == 'hidden'
+  end
+
+  # GitHub Issue 58
+  def hidden=(value)
+    self.visibility = value ? 'hidden' : nil
+  end
+
 private
 
   def sanitize_price(value)
