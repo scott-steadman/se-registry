@@ -112,10 +112,9 @@ Then I re-create the app from scratch and copy the source files over.
     rm Gemfile.lock
     bundle install
 
-    # Should be 100% coverage
     bundle exec rails test:coverage
 
-    # Change FROM line in Dockerfile
+    # Change RUBY_VERSION line in Dockerfile
 
     git add -p
     git commit -v
