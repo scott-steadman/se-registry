@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/login'          => 'user_sessions#new',         :as => :login
   get '/logout'         => 'user_sessions#destroy',     :as => :logout
   get '/settings'       => 'users#edit',                :as => :settings
+  get '/status'         => 'status#index',              :as => :status
 
   resource :user_session
 
