@@ -12,7 +12,7 @@ ARG RAILS_ENV=production
 ENV RAILS_ENV=$RAILS_ENV \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development test"
+    BUNDLE_WITHOUT="development test vscode"
 
 
 # Throw-away build stage to reduce size of final image
@@ -20,7 +20,7 @@ FROM base AS build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libpq-dev libvips pkg-config
+    apt-get install --no-install-recommends -y build-essential git libpq-dev libvips libyaml-dev pkg-config
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
