@@ -3,6 +3,7 @@ namespace :test do
   desc 'Generate coverage report'
   task :coverage => [:environment] do
     ENV['COVERAGE'] = 'true'
+    ENV['PARALLEL_WORKERS'] = '1'
     system('rake test')
   end
 
