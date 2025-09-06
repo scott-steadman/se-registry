@@ -134,7 +134,6 @@ Then I re-create the app from scratch and copy the source files over.
     bundle exec rails app:update
     # resolve diffs
 
-    # Should be 100% coverage
     bundle exec rails test:coverage
 
     git add -p
