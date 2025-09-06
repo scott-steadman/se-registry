@@ -2,9 +2,12 @@ require_relative "boot"
 
 require "rails/all"
 
+# Allow overriding so I can test via bin/docker-run.sh
+groups = ENV.fetch("RAILS_GROUPS_OVERRIDE", Rails.groups.join(",")).split(",")
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(*Rails.groups)
+Bundler.require(*groups)
 
 module Registry
   class Application < Rails::Application
