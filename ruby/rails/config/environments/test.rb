@@ -64,6 +64,13 @@ Rails.application.configure do
 
   config.assets.check_precompiled_asset = false
 
+  #
+  # Registry specific settings
+  #
+
+  # Rails 8.1 compatibility
+  config.active_support.to_time_preserves_timezone = :zone
+
   require 'pp'
 
   if ENV['COVERAGE']
