@@ -3,7 +3,7 @@ source "https://rubygems.org"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.2", ">= 8.0.2.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
-#gem "propshaft"
+gem "propshaft"
 # Use postgresql as the database for Active Record
 #gem "pg", "~> 1.1"
 # Use the Puma web server [https://github.com/puma/puma]
@@ -71,8 +71,6 @@ gem "jquery-rails"
 gem "jquery-ui-rails"
 gem "pg", "~> 1.5.0" # 1.6 requires GLIBC 2.29 which CentOS 8 Stream doesn't have
 gem "scrypt" # Used by Authlogic gem
-gem "sassc-rails"
-gem "sprockets-rails"
 gem "will_paginate"
 
 group :development do
