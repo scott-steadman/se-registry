@@ -14,6 +14,19 @@ module ApplicationHelper
     super(*sources, opts)
   end
 
+  def javascript_include_tag(*sources)
+    opts = sources.extract_options!
+
+    base_dir = Rails.root.join('app', 'assets', 'javascripts')
+    case sources.first
+      when :v2
+        sources = Dir.glob(base_dir.join('v2', '*.js')).map { |f| "v2/#{File.basename(f, '.js')}" }
+        sources.unshift('application-v2') unless sources.include?('application-v2')
+    end
+
+    super(*sources, opts)
+  end
+
   def possessivize(name)
     "#{name}'#{'s' if 's' != name[-1,1]}"
   end

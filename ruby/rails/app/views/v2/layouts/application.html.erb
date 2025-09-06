@@ -20,6 +20,7 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%#= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
 
+    <%= stylesheet_link_tag 'jquery-ui', media: 'all', 'data-turbo-track': 'reload' %>
     <%= stylesheet_link_tag :v2, media: 'all', 'data-turbo-track': 'reload' %>
   </head>
 
@@ -93,10 +94,11 @@
       </div>
     </div>
 
-    <script src='https://cdn.jsdelivr.net/npm/micromodal/dist/micromodal.js'></script>
-
     <%= javascript_include_tag 'turbo', :type => :module, :crossorigin => 'anonymous' %>
-    <%= javascript_include_tag 'application-v2' %>
+    <%= javascript_include_tag 'actioncable' %>
+    <%= javascript_include_tag 'jquery' %>
+    <%= javascript_include_tag 'jquery-ui' %>
+    <%= javascript_include_tag :v2 %>
 
   <%- if current_user -%>
     <script>
