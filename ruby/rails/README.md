@@ -159,10 +159,15 @@ This ensures that all the rails files we haven't touched are up to date.
     touch rails/vendor/.keep rails/log/.keep
 
     # copy old bundle config
-    mkdir rails/bundle
+    mkdir rails/.bundle
     cp rails-old/.bundle/config rails/.bundle
 
+    # copy old vscode config
+    mkdir rails/.vscode
+    cp rails-old/.vscode/* rails/.vscode
+
     # copy old credentials
+    mkdir rails/config/redentials
     cp rails-old/config/credentials/* rails/config/credentials/
 
     # git checkout deleted files
