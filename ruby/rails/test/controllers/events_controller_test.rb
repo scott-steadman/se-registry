@@ -2,40 +2,43 @@ require 'test_helper'
 
 class EventsControllerTest < ActionController::TestCase
 
-  def setup
-    @occasion = create_occasion(:user => user, :description => 'Occasion Description')
-    @reminder = create_reminder(:user => user, :description => 'Reminder Description')
-    @event    = create_event(:user => user, :description => 'Event Description')
-  end
-
   test 'index requires login' do
     logout
     get :index
     assert_redirected_to login_path
   end
 
+  test 'index no events' do
+    login_as user
+    get :index
+    assert_response :success
+  end
+
   test 'index with no path shows all events' do
+    # create some events
+    events = [event, occasion, reminder]
+
     login_as user
     get :index
     assert_response :success
 
-    [@event, @occasion, @reminder].each do |event|
-      assert_select "td", event.description, 'event should be rendered'
+    events.each do |ii|
+      assert_select "td", ii.description, 'event should be rendered'
     end
   end
 
   test 'show requires login' do
     logout
-    get :show, :params => {:id => @event}
+    get :show, :params => {:id => event}
     assert_redirected_to login_path
   end
 
   test 'show' do
     login_as user
-    get :show, :params => {:id => @event}
+    get :show, :params => {:id => event}
     assert_response :success
 
-    assert_select "a[href='#{edit_event_path(@event)}']", "Edit", 'edit link should be rendered'
+    assert_select "a[href='#{edit_event_path(event)}']", "Edit", 'edit link should be rendered'
   end
 
   test 'new requires login' do
@@ -90,10 +93,10 @@ class EventsControllerTest < ActionController::TestCase
 
   test 'edit' do
     login_as user
-    get :edit, :params => {:id => @event}
+    get :edit, :params => {:id => event}
     assert_response :success
 
-    assert_select "form[action='#{user_event_path(user, @event)}'][method=post]", 1, "edit form should be rendered"
+    assert_select "form[action='#{user_event_path(user, event)}'][method=post]", 1, "edit form should be rendered"
   end
 
   test 'update requires login' do
@@ -104,32 +107,31 @@ class EventsControllerTest < ActionController::TestCase
 
   test 'update fails on GET' do
     login_as user
-    get :update, :params => {:id => @event, :event => {:description => 'foo'}}
+    get :update, :params => {:id => event, :event => {:description => 'foo'}}
     assert_redirected_to user_events_path(user)
 
-    assert_not_equal 'foo', @event.reload.description, 'event should NOT be updated'
+    assert_not_equal 'foo', event.reload.description, 'event should NOT be updated'
   end
 
   test 'update' do
     login_as user
-    patch :update, :params => {:id => @event, :event => {:description => 'foo'}}
+    patch :update, :params => {:id => event, :event => {:description => 'foo'}}
     assert_redirected_to user_events_path(user)
 
-    assert_equal 'foo', @event.reload.description, 'event should be updated'
+    assert_equal 'foo', event.reload.description, 'event should be updated'
   end
 
   test 'update via xhr' do
     login_as user
-    patch :update, :params => {:id => @event, :event => {:description => 'foo'}}, :xhr => true
+    patch :update, :params => {:id => event, :event => {:description => 'foo'}}, :xhr => true
     assert_response :success
 
-    assert_equal 'foo', @event.reload.description, 'event should be updated'
+    assert_equal 'foo', event.reload.description, 'event should be updated'
   end
-
 
   test 'update fails' do
     login_as user
-    patch :update, :params => {:id => @event, :event => {:description => nil}}
+    patch :update, :params => {:id => event, :event => {:description => nil}}
     assert_response :success
 
     assert_select 'div[id=error_explanation]', /Description can't be blank/, 'error message should be rendered'
@@ -142,19 +144,37 @@ class EventsControllerTest < ActionController::TestCase
   end
 
   test 'destroy fails on GET' do
+    event # create an event
+
     assert_no_difference 'Event.count' do
       login_as user
-      get :destroy, :params => {:id => @event}
+      get :destroy, :params => {:id => event}
       assert_redirected_to user_events_path(user)
     end
   end
 
   test 'destroy' do
+    event # create an event
+
     assert_difference 'Event.count', -1 do
       login_as user
-      delete :destroy, :params => {:id => @event}
+      delete :destroy, :params => {:id => event}
       assert_redirected_to user_events_path(user)
     end
+  end
+
+private
+
+  def occasion
+    @occasion ||= create_occasion(:user => user, :description => 'Occasion Description')
+  end
+
+  def reminder
+    @reminder ||= create_reminder(:user => user, :description => 'Reminder Description')
+  end
+
+  def event
+    @event ||= create_event(:user => user, :description => 'Event Description')
   end
 
 end
