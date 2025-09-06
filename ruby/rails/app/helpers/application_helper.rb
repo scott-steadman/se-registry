@@ -1,5 +1,19 @@
 module ApplicationHelper
 
+  def stylesheet_link_tag(*sources)
+    opts = sources.extract_options!
+
+    base_dir = Rails.root.join('app', 'assets', 'stylesheets')
+    case sources.first
+      when :v1
+        sources = Dir.glob(base_dir.join('v1', '*.css')).map { |f| "v1/#{File.basename(f, '.css')}" }
+      when :v2
+        sources = Dir.glob(base_dir.join('v2', '*.css')).map { |f| "v2/#{File.basename(f, '.css')}" }
+    end
+
+    super(*sources, opts)
+  end
+
   def possessivize(name)
     "#{name}'#{'s' if 's' != name[-1,1]}"
   end
