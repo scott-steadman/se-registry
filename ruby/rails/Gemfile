@@ -81,6 +81,7 @@ end
 
 group :test do
   gem "docile"
+  gem 'minitest', '~> 5.0'
   gem "mocha",      require: false
   gem "simplecov",  require: false
 end
