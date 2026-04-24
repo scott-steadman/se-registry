@@ -27,6 +27,9 @@
 !/app/assets/builds/.keep
 /public/assets
 
+# in case I accidentally leave this lying around.
+/public/coverage
+
 # Ignore CI service files.
 /.github
 
