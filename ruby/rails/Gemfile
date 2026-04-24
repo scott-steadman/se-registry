@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.2", ">= 8.0.2.1"
+gem "rails", "~> 8.0.5"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use postgresql as the database for Active Record
@@ -68,7 +68,7 @@ gem "acts-as-taggable-on"
 gem "authlogic"
 gem "csv"
 gem "jquery-rails"
-gem "pg", "~> 1.5.0" # 1.6 requires GLIBC 2.29 which CentOS 8 Stream doesn't have
+gem "pg"
 gem "rack", "~> 3.1.0" # Rack 3.2 doesn't play well with Rails
 gem "scrypt" # Used by Authlogic gem
 gem "will_paginate"
