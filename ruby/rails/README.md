@@ -102,90 +102,100 @@ Then I re-create the app from scratch and copy the source files over.
 
 #### Update ruby
 
-    git co -b upgrade_ruby
+  ```sh
+  git co -b upgrade_ruby
 
-    rbenv install --list
-    rbenv install {latest}
+  rbenv install --list
+  rbenv install {latest}
 
-    # update .ruby-version
-    # remove ruby line from Gemfile
-    rm Gemfile.lock
-    bundle install
+  # update .ruby-version
 
-    bundle exec rails test:coverage
+  # remove ruby line from Gemfile
 
-    # Change RUBY_VERSION line in Dockerfile
+  rm Gemfile.lock
+  bundle install
 
-    git add -p
-    git commit -v
-    git co master
-    git merge upgrade_ruby
-    git push
-    git branch -d upgrade_ruby
+  bundle exec rails test:coverage
+
+  # Change RUBY_VERSION line in Dockerfile
+
+  git add -p
+  git commit -v
+  git co master
+  git merge upgrade_ruby
+  git push
+  git branch -d upgrade_ruby
+  ```
 
 #### Update rails gem in-place
 
-    git co -b update_rails
+  ```sh
+  git co -b update_rails
 
-    # Update the rails line in Gemfile
-    rm Gemfile.lock
-    bundle install
+  # Update the rails line in Gemfile
 
-    bundle exec rails app:update
-    # resolve diffs
+  rm Gemfile.lock
+  bundle install
 
-    bundle exec rails test:coverage
+  bundle exec rails app:update
 
-    git add -p
-    git commit -v
-    git co master
-    git merge update_rails
-    git push
-    git branch -d update_rails
+  # resolve diffs
+
+  bundle exec rails test:coverage
+
+  git add -p
+  git commit -v
+  git co master
+  git merge update_rails
+  git push
+  git branch -d update_rails
+  ```
 
 #### Re-create app and copy source over
 
 This ensures that all the rails files we haven't touched are up to date.
 
-    git co -b upgrade_rails
+  ```sh
+  git co -b upgrade_rails
 
-    # In the same directory as rails
-    rbenv local {version}
-    mv rails rails-old
-    rbenv gemset init new-rails
-    gem install rails
-    bundle exec rails new registry --database postgresql --skip-bundle --skip-keeps --skip-git
-    mv registry rails
-    touch rails/vendor/.keep rails/log/.keep
+  # In the same directory as rails
+  rbenv local {version}
+  mv rails rails-old
+  rbenv gemset init new-rails
+  gem install rails
+  bundle exec rails new registry --database postgresql --skip-bundle --skip-keeps --skip-git
+  mv registry rails
+  touch rails/vendor/.keep rails/log/.keep
 
-    # copy old bundle config
-    mkdir rails/.bundle
-    cp rails-old/.bundle/config rails/.bundle
+  # copy old bundle config
+  mkdir rails/.bundle
+  cp rails-old/.bundle/config rails/.bundle
 
-    # copy old vscode config
-    mkdir rails/.vscode
-    cp rails-old/.vscode/* rails/.vscode
+  # copy old vscode config
+  mkdir rails/.vscode
+  cp rails-old/.vscode/* rails/.vscode
 
-    # copy old credentials
-    mkdir rails/config/redentials
-    cp rails-old/config/credentials/* rails/config/credentials/
+  # copy old credentials
+  mkdir rails/config/redentials
+  cp rails-old/config/credentials/* rails/config/credentials/
 
-    # git checkout deleted files
-    git co `git st | grep deleted | sed -e 's/.*deleted://'`
+  # git checkout deleted files
+  git co `git st | grep deleted | sed -e 's/.*deleted://'`
 
-    # resolve diffs
+  # resolve diffs
 
-    rm Gemfile.lock
-    bundle config set --local clean 'true'
-    bundle config set --local path 'vendor/bundle'
-    bundle install
+  rm Gemfile.lock
+  bundle config set --local clean 'true'
+  bundle config set --local path 'vendor/bundle'
+  bundle install
 
-    # Should be 100% coverage
-    bundle exec rails test:coverage
+  # Should be 100% coverage
+  bundle exec rails test:coverage
 
-    git add -p
-    git commit -v
-    git co master
-    git merge upgrade_rails
-    git push
-    git branch -d upgrade_rails
+  git add -p
+  git commit -v
+  git co master
+  git merge upgrade_rails
+  git push
+  git branch -d upgrade_rails
+  ```
