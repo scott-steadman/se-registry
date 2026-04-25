@@ -87,10 +87,12 @@ group :test do
 end
 
 group :vscode do
-  #  gem 'debase',           :require => false
+  # Install these locally
+  #gem 'debase',           require: false
+  #gem "rdbg",             require: false
+  #gem "solargraph-rails", require: false
+
   gem "rainbow",          require: false
-  gem "rdbg",             require: false
   gem "ruby-debug-ide",   require: false
   gem "ruby-lsp",         require: false
-  gem "solargraph",       require: false
 end

@@ -15,10 +15,10 @@
   "ruby.useBundler": true,
   "ruby.useLanguageServer": true,
 
-  "solargraph.commandPath": "bin/solargraph",
+  "solargraph.commandPath": "",
   "solargraph.diagnostics": true,
   "solargraph.formatting": true,
-  
+
   // Disable task autodetection
   "grunt.autoDetect": "off",
   "jake.autoDetect": "off",
