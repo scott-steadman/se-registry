@@ -26,6 +26,9 @@
 # App-specific entries
 #
 
+# my ephemeral notes file
+notes.txt
+
 # Ignore coverage output
 /public/coverage
 
