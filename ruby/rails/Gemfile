@@ -94,5 +94,5 @@ group :vscode do
 
   gem "rainbow",          require: false
   gem "ruby-debug-ide",   require: false
-  gem "ruby-lsp",         require: false
+  gem "ruby-lsp-rails",   require: false
 end
