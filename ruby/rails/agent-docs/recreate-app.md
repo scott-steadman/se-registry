@@ -33,7 +33,7 @@ app-specific updates after the boilerplate if possible.
 ## Example
 
   ```sh
-  git co -b upgrade_rails
+  git co -b recreate_app
 
   # In the same directory as rails
   rbenv local {version}
@@ -71,7 +71,7 @@ app-specific updates after the boilerplate if possible.
   git add -p
   git commit -v
   git co master
-  git merge upgrade_rails
+  git merge recreate_app
   git push
-  git branch -d upgrade_rails
+  git branch -d recreate_app
   ```
