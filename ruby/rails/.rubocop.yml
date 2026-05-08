@@ -13,9 +13,6 @@ Bundler/OrderedGems:
 Layout/ExtraSpacing:
   Enabled: false
 
-RequiredNotFound:
-  Enabled: false
-
 Style/Documentation:
   Enabled: false
 

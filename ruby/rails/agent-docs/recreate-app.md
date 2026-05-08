@@ -1,24 +1,24 @@
 # How to recreate the app
 
-- create a branch so we can revert to master if things go awry
-- cd ..
-- rename rails to rails-old
-- create a gemset called new-rails
-- install rails
-- create a new version of the app: bundle exec rails new registry --database postgresql --skip-bundle --skip-keeps --skip-git
-- move rename the registry to rails
-- touch rails/vendor.keep and rails/log/.keep
-- copy the old configs and docs over: .bundle, .vscode, agent-docs, README.md, AGENTS.md
-- copy credentials files over
-- resolve diffs
-- run bundle exec rails test
-- fix warnings, deprecations, and broken tests (there shouldn't be any)
-- have human review code
-- commit changes
-- merge into master
-- git push master
-- delete branch
-- delete rbenv gemset and remove .rbenv-gemsets
+1. Create a branch so you can diff and back out cleanly.
+2. From `ruby/`, rename `rails` to `rails-old`.
+3. Create a clean gemset for bootstrapping Rails and install the target Rails version there.
+4. Generate a fresh app from `ruby/`:
+   `rails _8.1.3_ new registry --database=postgresql --skip-bundle --skip-keeps --skip-git`
+5. Rename `registry` to `rails`.
+6. Restore repo-specific files that are not part of fresh Rails boilerplate, including:
+   `.bash_history` (if you want to preserve it), `.bundle`, `.gitattributes`, `.gitignore`,
+   `.rubocop.yml`, the `.ruby-version` symlink, `.vscode`, `AGENTS.md`, `README.md`,
+   `agent-docs`, credentials, and other app-specific source, tests, assets, tasks, and scripts.
+7. Recreate keep files Rails skipped: `touch rails/vendor/.keep rails/log/.keep`.
+8. Restore missing files first, then resolve the remaining diffs in files that Rails also generated
+   such as `Gemfile`, `Dockerfile`, `config/application.rb`, `config/environments/*`,
+   `config/routes.rb`, and layout/controller helpers.
+9. Prefer the new Rails boilerplate where possible, then re-apply registry-specific behavior.
+10. Run setup, lint, and tests.
+11. Have a human review the diff.
+12. Remove `rails-old` once you no longer need it.
+13. Commit, merge, push, and remove the temporary gemset.
 
 ## Why
 
@@ -30,48 +30,52 @@ and to remove cruft that accumulates with each upgrade.
 Try to keep the new rails boilerplate and put
 app-specific updates after the boilerplate if possible.
 
+Do not use `bundle exec rails new` after moving `rails` out of the way. Once the app directory has
+been renamed, there is no app `Gemfile` left to execute against, so use the installed `rails`
+executable from the clean bootstrap gemset instead.
+
 ## Example
 
-  ```sh
-  git co -b recreate_app
+```sh
+git switch -c recreate-app
 
-  # In the same directory as rails
-  rbenv local {version}
-  mv rails rails-old
-  rbenv gemset init new-rails
-  gem install rails
-  bundle exec rails new registry --database postgresql --skip-bundle --skip-keeps --skip-git
-  mv registry rails
-  touch rails/vendor/.keep rails/log/.keep
+cd ruby
+mv rails rails-old
 
-  # copy old bundle config
-  mkdir rails/.bundle
-  cp rails-old/.bundle/config rails/.bundle
+rbenv gemset init new-rails
+gem install rails -v 8.1.3
+rails _8.1.3_ new registry --database=postgresql --skip-bundle --skip-keeps --skip-git
+mv registry rails
 
-  # copy old vscode config
-  mkdir rails/.vscode
-  cp rails-old/.vscode/* rails/.vscode
+mkdir -p rails/.bundle rails/.vscode rails/config/credentials
+cp -p rails-old/.bash_history rails/.bash_history
+cp -p rails-old/.bundle/config rails/.bundle/
+cp -p rails-old/.gitattributes rails/.gitignore rails-old/.rubocop.yml rails/
+ln -s "$(readlink rails-old/.ruby-version)" rails/.ruby-version
+cp -pr rails-old/.vscode/. rails/.vscode/
+cp -pr rails-old/agent-docs rails/
+cp -p rails-old/AGENTS.md rails-old/README.md rails/
+cp -pr rails-old/config/credentials/. rails/config/credentials/
+cp -p rails-old/config/master.key rails/config/master.key
+touch rails/vendor/.keep rails/log/.keep
 
-  # copy old credentials
-  mkdir rails/config/redentials
-  cp rails-old/config/credentials/* rails/config/credentials/
+rsync -a --ignore-existing \
+  --exclude='.bash_history' \
+  --exclude='log/*' \
+  --exclude='tmp/***' \
+  --exclude='vendor/bundle/***' \
+  --exclude='public/coverage/***' \
+  rails-old/ rails/
 
-  # git checkout deleted files
-  git co `git st | grep deleted | sed -e 's/.*deleted://'`
+# resolve remaining diffs by hand
 
-  # resolve diffs
-
-  rm Gemfile.lock
-  bundle config set --local clean 'true'
-  bundle config set --local path 'vendor/bundle'
-  bundle install
-
-  bundle exec rails test
-
-  git add -p
-  git commit -v
-  git co master
-  git merge recreate_app
-  git push
-  git branch -d recreate_app
-  ```
+cd rails
+bundle config set --local clean 'true'
+bundle config set --local path 'vendor/bundle'
+bundle install
+bin/setup --skip-server
+bin/rubocop
+bin/brakeman --no-pager
+bin/importmap audit
+RAILS_ENV=test DATABASE_URL=postgres://postgres:postgres@localhost:5432 bin/rails db:test:prepare test test:system
+```
