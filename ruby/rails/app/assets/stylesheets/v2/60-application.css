@@ -50,3 +50,27 @@
 #copyright {
   font-size: 0.8em;
 }
+
+#pwa-install-button {
+  /* positioning */
+  float: right;
+
+  /* layout */
+  display: none; /* shown by JS when prompt available */
+  margin-left: 1rem;
+  padding: 0.45rem 0.9rem;
+
+  /* appearance */
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.18);
+  font-weight: 700;
+}
+
+#pwa-install-button:focus {
+  /* appearance */
+  outline: 2px solid rgba(255,255,255,0.6);
+  outline-offset: 2px;
+}

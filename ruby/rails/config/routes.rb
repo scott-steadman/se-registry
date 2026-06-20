@@ -2,18 +2,18 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Issue 31
-  mount ActionCable.server => '/cable'
+  mount ActionCable.server => "/cable"
 
-  root 'gifts#index'
+  root "gifts#index"
 
-  get '/about'          => 'users#about',               :as => :about
-  get '/clear_cookies'  => 'user_sessions#clear_cookies'                # Issue 110
-  get '/friends'        => 'friends#index',             :as => :friends
-  get '/home'           => 'gifts#index',               :as => :home
-  get '/login'          => 'user_sessions#new',         :as => :login
-  get '/logout'         => 'user_sessions#destroy',     :as => :logout
-  get '/settings'       => 'users#edit',                :as => :settings
-  get '/status'         => 'status#index',              :as => :status
+  get "/about"          => "users#about",               :as => :about
+  get "/clear_cookies"  => "user_sessions#clear_cookies"                # Issue 110
+  get "/friends"        => "friends#index",             :as => :friends
+  get "/home"           => "gifts#index",               :as => :home
+  get "/login"          => "user_sessions#new",         :as => :login
+  get "/logout"         => "user_sessions#destroy",     :as => :logout
+  get "/settings"       => "users#edit",                :as => :settings
+  get "/status"         => "status#index",              :as => :status
 
   resource :user_session
 
@@ -26,17 +26,16 @@ Rails.application.routes.draw do
   end
 
   resources :gifts
-  resources :occasions, :controller => 'events/occasions'
-  resources :reminders, :controller => 'events/reminders'
+  resources :occasions, :controller => "events/occasions"
+  resources :reminders, :controller => "events/reminders"
 
   # allow users to upadte themselves
-  patch '/users(/:id)(.:format)', :to => 'users#update'
+  patch "/users(/:id)(.:format)", :to => "users#update"
 
   # allow users to close their own accounts
-  delete '/users(/:id)(.:format)', :to => 'users#destroy'
+  delete "/users(/:id)(.:format)", :to => "users#destroy"
 
   resources :users do
-
     collection do
       get :autocomplete
     end
@@ -51,17 +50,17 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :occasions, :controller => 'events/occasions'
-    resources :reminders, :controller => 'events/reminders'
+    resources :occasions, :controller => "events/occasions"
+    resources :reminders, :controller => "events/reminders"
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
+  # Render dynamic PWA files from app/views/pwa/*
+  get "manifest" => "pwa#manifest", as: :pwa_manifest
+  get "service-worker.js" => "pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
   # root "posts#index"

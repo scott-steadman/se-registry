@@ -10,12 +10,10 @@
 
     <%= yield :head -%>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <!--link rel="icon" href="/icon.png" type="image/png" -->
-    <!--link rel="icon" href="/icon.svg" type="image/svg+xml" -->
-    <link rel="apple-touch-icon" href="/icon.png">
+    <%= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" href="<%= asset_path("icon-192.png") %>" type="image/png">
+    <link rel="apple-touch-icon" href="<%= asset_path("icon-192.png") %>">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%#= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
@@ -76,8 +74,9 @@
     </main>
 
     <footer id='site-footer'>
-      <em id='copyright'>Copyright &copy; <time>1998</time> - <time><%= Time.now.year %></time>, Steadman Enterprises, Inc.</em>
+      <em id='copyright'>&copy; <time>1998</time> - <time><%= Time.now.year %></time>, Steadman Enterprises, Inc.</em>
       <%= yield :footer -%>
+      <button id="pwa-install-button" aria-label="Install App">Install App</button>
     </footer>
 
     <div id='site-modal' aria-hidden='true'>
