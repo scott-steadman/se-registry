@@ -22,12 +22,16 @@ App.nextPageLoader = {
   }, // loadMoreIfNecessary
 
   isPaginatorVisible: function() {
-    var documentTop     = window.scrollY;
+
+    const scroller = $(App.nextPageLoader.scrollerSelector);
+    if(scroller.length == 0) return false;
+    const scrollerTop = scroller.offset().top
+
+    const documentTop     = window.scrollY;
                           // handle chrome bug where outerHeight < innerHeight
-    var windowHeight    = Math.max(window.innerHeight, window.outerHeight);
-    var documentBottom  = documentTop + windowHeight;
-    var elementTop      = $(App.nextPageLoader.scrollerSelector).offset().top
-    var isVisible       = elementTop <= documentBottom;
+    const windowHeight    = Math.max(window.innerHeight, window.outerHeight);
+    const documentBottom  = documentTop + windowHeight;
+    const isVisible       = scrollerTop <= documentBottom;
 
     return isVisible;
   }, // isPaginatorVisible
