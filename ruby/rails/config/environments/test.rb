@@ -61,8 +61,8 @@ Rails.application.configure do
     require 'simplecov'
     SimpleCov.start 'rails' do
       # we're not using this functionality
-      add_filter   'app/channels'
-      add_filter   'app/jobs'
+      skip 'app/channels'
+      skip 'app/jobs'
 
       coverage_dir 'public/coverage'
     end
