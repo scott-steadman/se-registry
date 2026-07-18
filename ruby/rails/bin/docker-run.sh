@@ -6,8 +6,8 @@
 PROJECT=registry
 RAILS_ENV=${1:-development}
 
-docker run \
-  --env HOSTNAME=${HOSTNAME} \
+docker -H ssh://scott.steadman@stdmn-001 run \
+  --network host \
   --env RAILS_ENV=${RAILS_ENV} \
   --env RAILS_GROUPS_OVERRIDE="default,production" \
   --env RAILS_MASTER_KEY=$(cat config/credentials/${RAILS_ENV}.key) \

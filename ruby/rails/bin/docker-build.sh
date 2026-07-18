@@ -6,7 +6,7 @@
 PROJECT=registry
 TIMESTAMP=$(date +"%Y%m%d-%H%M")
 
-docker build \
+docker -H ssh://scott.steadman@stdmn-001 build \
   --pull \
   --tag ${PROJECT}:${TIMESTAMP} \
   --tag ${PROJECT}:latest \
